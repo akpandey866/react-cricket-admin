@@ -21,7 +21,7 @@ import BonusPoint from './views/BonusPoint/BonusPoint'
 import PlayerAvailability from './views/PlayerAvailability/PlayerAvailability'
 import VerifyUser from './views/VerifyUser/VerifyUser'
 import User from './views/User/User'
-import GameNotification from './views/GameNotification'
+import GameNotification from './views/GameNotification/GameNotification'
 
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
 const Colors = React.lazy(() => import('./views/theme/colors/Colors'))
