@@ -1,0 +1,7 @@
+first_name: '',
+last_name: '',
+position: '',
+svalue: '',
+team: '',
+bat_style: '',
+bowl_style: '',
