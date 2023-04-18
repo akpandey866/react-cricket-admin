@@ -69,7 +69,7 @@ const AddForm = (props) => {
         <CCol md={6}>
           <CFormLabel htmlFor="title">Name</CFormLabel>
           <CFormInput
-            placeholder="Title"
+            placeholder="Name"
             className={
               'form-control' + (formik.errors.title && formik.touched.title ? ' is-invalid' : '')
             }
@@ -90,8 +90,8 @@ const AddForm = (props) => {
             onEditorStateChange={onEditorStateChange}
             editorStyle={{ border: '1px solid', height: '150px' }}
           />
-          {formik.errors.title && formik.touched.title && (
-            <CFormFeedback invalid>{formik.errors.title}</CFormFeedback>
+          {formik.errors.description && formik.touched.description && (
+            <CFormFeedback invalid>{formik.errors.description}</CFormFeedback>
           )}
         </CCol>
         <CCol md={6}>
