@@ -27,12 +27,12 @@ const EditForm = (props) => {
 
   const [loader, setLoader] = useState(false)
   const validationSchema = Yup.object().shape({
-    title: Yup.string().required('Title is required'),
+    title: Yup.string().required('Name is required'),
   })
   const formik = useFormik({
     initialValues: {
-      title: categoryDetail?.title,
-      message: categoryDetail?.message,
+      title: categoryDetail?.name,
+      message: categoryDetail?.description,
     },
     enableReinitialize: true,
     validationSchema,
@@ -75,7 +75,7 @@ const EditForm = (props) => {
     <>
       <CForm className="row g-3" onSubmit={formik.handleSubmit}>
         <CCol md={6}>
-          <CFormLabel htmlFor="title">Title</CFormLabel>
+          <CFormLabel htmlFor="title">Name</CFormLabel>
           <input
             type="text"
             name="title"
@@ -84,7 +84,7 @@ const EditForm = (props) => {
             }
             id="title"
             placeholder="title"
-            defaultValue={categoryDetail?.title}
+            defaultValue={categoryDetail?.name}
             onChange={formik.handleChange}
           />
           {formik.errors.title && formik.touched.title && (
@@ -95,6 +95,7 @@ const EditForm = (props) => {
           <CFormLabel htmlFor="Entry Fee Info">Entry Fee Info</CFormLabel>
           <Editor
             toolbarHidden={false}
+            defaultValue={'asdasdasdasd'}
             editorState={description.editorState}
             onEditorStateChange={onEditorStateChange}
             editorStyle={{ border: '1px solid', height: '150px' }}

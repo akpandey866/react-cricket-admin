@@ -31,10 +31,10 @@ const Table = (props) => {
   const [details, setDetails] = useState([])
   const columns = [
     {
-      key: 'title',
+      key: 'name',
       _style: { width: '20%' },
     },
-    { key: 'message', _style: { width: '60%' } },
+    { key: 'description', _style: { width: '60%' } },
     { label: 'Created On', key: 'created_at', _style: { width: '20%' } },
     {
       key: 'show_details',
@@ -113,7 +113,7 @@ const Table = (props) => {
         }}
         scopedColumns={{
           created_at: (item) => <td>{moment(item.created_at).format('D.MM.YYYY')}</td>,
-          message: (item) => <td>{changeText(item.message)}</td>,
+          description: (item) => <td>{changeText(item.description)}</td>,
           is_active: (item) => (
             <td>
               <CBadge color={getBadge(item.is_active)}>

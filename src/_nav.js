@@ -277,7 +277,7 @@ const _nav = [
       {
         component: CNavItem,
         name: 'Feedback Category Manager',
-        to: '/',
+        to: '/feedback-fantasy/category',
       },
       {
         component: CNavItem,

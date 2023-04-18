@@ -14,9 +14,9 @@ const editCategory = async (data) => {
   const response = await agent.post(API_URL + 'feedback-fantasy/edit-category', data)
   return response.data
 }
+
 const getCategoryDetail = async (id) => {
-  const response = await agent.get(`${API_URL}
-  /${id}`)
+  const response = await agent.get(`${API_URL}feedback-fantasy/category-details/${id}`)
   return response.data
 }
 const deleteCategory = async (data) => {

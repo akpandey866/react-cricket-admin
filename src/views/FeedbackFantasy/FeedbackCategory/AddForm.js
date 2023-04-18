@@ -18,7 +18,7 @@ import FeedbackFantasyService from 'src/service/FeedbackFantasyService'
 const AddForm = (props) => {
   const [loader, setLoader] = useState(false)
   const validationSchema = Yup.object().shape({
-    title: Yup.string().required('Title is required'),
+    title: Yup.string().required('Name is required'),
     // message: Yup.string().required('Message is required'),
   })
   const formik = useFormik({
@@ -67,7 +67,7 @@ const AddForm = (props) => {
     <>
       <CForm className="row g-3" onSubmit={formik.handleSubmit}>
         <CCol md={6}>
-          <CFormLabel htmlFor="title">Title</CFormLabel>
+          <CFormLabel htmlFor="title">Name</CFormLabel>
           <CFormInput
             placeholder="Title"
             className={
@@ -83,7 +83,7 @@ const AddForm = (props) => {
           )}
         </CCol>
         <CCol md={6}>
-          <CFormLabel htmlFor="message">Message</CFormLabel>
+          <CFormLabel htmlFor="message">Description</CFormLabel>
           <Editor
             toolbarHidden={false}
             editorState={description.editorState}

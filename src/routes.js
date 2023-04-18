@@ -22,6 +22,7 @@ import PlayerAvailability from './views/PlayerAvailability/PlayerAvailability'
 import VerifyUser from './views/VerifyUser/VerifyUser'
 import User from './views/User/User'
 import GameNotification from './views/GameNotification/GameNotification'
+import FeedbackCategory from './views/FeedbackFantasy/FeedbackCategory/FeedbackCategory'
 
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
 const Colors = React.lazy(() => import('./views/theme/colors/Colors'))
@@ -115,6 +116,7 @@ const routes = [
   { path: '/verify-users', name: 'Verify Users', element: VerifyUser },
   { path: '/users', name: 'Users', element: User },
   { path: '/game-notifications', name: 'Game Notifications', element: GameNotification },
+  { path: '/feedback-fantasy/category', name: 'Category', element: FeedbackCategory },
 
   { path: '/theme', name: 'Theme', element: Colors, exact: true },
   { path: '/theme/colors', name: 'Colors', element: Colors },
