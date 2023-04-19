@@ -36,6 +36,14 @@ const deleteFeedbackManager = async (data) => {
   const response = await agent.post(API_URL + 'feedback-fantasy/delete-manager', data)
   return response.data
 }
+const manageAccessByTeam = async (data) => {
+  const response = await agent.get(`${API_URL}feedback-fantasy/manage-access-by-team`)
+  return response.data
+}
+const saveManageAccessByTeam = async (data) => {
+  const response = await agent.post(API_URL + 'feedback-fantasy/save-manage-access-by-team', data)
+  return response.data
+}
 const FeedbackFantasyService = {
   getCategory,
   saveCategory,
@@ -45,6 +53,8 @@ const FeedbackFantasyService = {
   managerListing,
   saveFeedbackManager,
   deleteFeedbackManager,
+  manageAccessByTeam,
+  saveManageAccessByTeam,
 }
 
 export default FeedbackFantasyService

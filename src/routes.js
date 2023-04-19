@@ -24,6 +24,8 @@ import User from './views/User/User'
 import GameNotification from './views/GameNotification/GameNotification'
 import FeedbackCategory from './views/FeedbackFantasy/FeedbackCategory/FeedbackCategory'
 import FeedbackCoach from './views/FeedbackFantasy/FeedbackCoach/FeedbackCoach'
+import ManageAccessByTeam from './views/FeedbackFantasy/ManageAccess/ManageAccessByTeam'
+import ManageAccessByFixture from './views/FeedbackFantasy/ManageAccessByFixture/ManageAccessByFixture'
 
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
 const Colors = React.lazy(() => import('./views/theme/colors/Colors'))
@@ -119,6 +121,16 @@ const routes = [
   { path: '/game-notifications', name: 'Game Notifications', element: GameNotification },
   { path: '/feedback-fantasy/category', name: 'Category', element: FeedbackCategory },
   { path: '/feedback-fantasy/managers', name: 'Feedback Manager', element: FeedbackCoach },
+  {
+    path: '/feedback-fantasy/manage-access-by-team',
+    name: 'Manage Access by Team',
+    element: ManageAccessByTeam,
+  },
+  {
+    path: '/feedback-fantasy/manage-access-by-fixture',
+    name: 'Manage Access by Fixture',
+    element: ManageAccessByFixture,
+  },
 
   { path: '/theme', name: 'Theme', element: Colors, exact: true },
   { path: '/theme/colors', name: 'Colors', element: Colors },

@@ -5,16 +5,20 @@ import AddForm from './AddForm'
 import { useEffect } from 'react'
 import FeedbackFantasyService from 'src/service/FeedbackFantasyService'
 import ToastComponent from 'src/components/common/TaostComponent'
-const FeedbackCoach = () => {
+const ManageAccessByFixture = () => {
+  const [options, setOptions] = useState([])
+  const [userList, setUserList] = useState([])
   const [users, setUsers] = useState([])
   const [managerDropdown, setManagerDropdown] = useState([])
   const [loader, setLoader] = useState(false)
   useEffect(() => {
-    FeedbackFantasyService.managerListing()
+    FeedbackFantasyService.manageAccessByTeam()
       .then((res) => {
         if (res.status === 200) {
           setUsers(res.data)
-          setManagerDropdown(res.coach_listing)
+          setOptions(res.team_list)
+          setUserList(res.user_list)
+          // setManagerDropdown(res.coach_listing)
         }
       })
       .catch((e) => {
@@ -29,7 +33,7 @@ const FeedbackCoach = () => {
           <CCardHeader>
             <CRow>
               <CCol xs={10}>
-                <strong>Add</strong> <small> Feedback Manager</small>
+                <strong>Manage Access</strong> <small>By Access</small>
               </CCol>
             </CRow>
           </CCardHeader>
@@ -38,6 +42,9 @@ const FeedbackCoach = () => {
               setUsers={setUsers}
               managerDropdown={managerDropdown}
               setManagerDropdown={setManagerDropdown}
+              options={options}
+              userList={userList}
+              setUserList={setUserList}
             />
           </CCardBody>
         </CCard>
@@ -51,4 +58,4 @@ const FeedbackCoach = () => {
   )
 }
 
-export default FeedbackCoach
+export default ManageAccessByFixture

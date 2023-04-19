@@ -290,9 +290,21 @@ const _nav = [
         to: '/feedback-fantasy/managers',
       },
       {
-        component: CNavItem,
+        component: CNavGroup,
         name: 'Manager Access',
         to: '/',
+        items: [
+          {
+            component: CNavItem,
+            name: 'By Team',
+            to: '/feedback-fantasy/manage-access-by-team',
+          },
+          {
+            component: CNavItem,
+            name: 'By Fixture',
+            to: '/feedback-fantasy/manage-access-by-fixture',
+          },
+        ],
       },
       {
         component: CNavItem,
