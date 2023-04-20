@@ -33,7 +33,7 @@ const ManageAccessByTeam = () => {
           <CCardHeader>
             <CRow>
               <CCol xs={10}>
-                <strong>Manage Access</strong> <small>By Access</small>
+                <strong>Manage Access</strong> <small>By Teams</small>
               </CCol>
             </CRow>
           </CCardHeader>

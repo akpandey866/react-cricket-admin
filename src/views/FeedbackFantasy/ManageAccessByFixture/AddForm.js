@@ -7,11 +7,12 @@ import {
   CLoadingButton,
   CMultiSelect,
 } from '@coreui/react-pro'
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import ToastComponent from 'src/components/common/TaostComponent'
 import FeedbackFantasyService from 'src/service/FeedbackFantasyService'
+import moment from 'moment'
 const AddForm = (props) => {
   const [loader, setLoader] = useState(false)
   const [userId, setUserId] = useState(false)
@@ -29,16 +30,16 @@ const AddForm = (props) => {
       data.team = selectedValue
       actions.resetForm({
         values: {
-          grade: '',
+          user: '',
         },
       })
       setLoader(true)
-      FeedbackFantasyService.saveManageAccessByTeam(data)
+      FeedbackFantasyService.saveManageAccessByFixture(data)
         .then((res) => {
           if (res.status === 200) {
             props.setUsers(res.data)
             props.setUserList(res.user_list)
-            props.setManagerDropdown(res.coach_listing)
+            props.setFixtureList(res.fixture_list)
             ToastComponent(res.message, 'success')
             setLoader(false)
           } else {
@@ -55,11 +56,58 @@ const AddForm = (props) => {
   })
   const [selectedValue, setSelectedValue] = useState([])
   const handleChange = (e) => {
-    setSelectedValue(Array.isArray(e) ? e.map((x) => x.value) : [])
+    console.log('value is here', e)
+    setSelectedValue((oldArray) => [...oldArray, e])
+    // setSelectedValue(Array.isArray(e) ? e.map((x) => console.log(x.value)) : [])
   }
   return (
     <>
       <CForm className="row g-3" onSubmit={formik.handleSubmit}>
+        <CCol md={6}>
+          <table className="main-table table table-bordered innertable">
+            <thead>
+              <tr>
+                <th>Team Name</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Check All</th>
+              </tr>
+            </thead>
+            <tbody>
+              {props.fixtureList &&
+                props.fixtureList.map((item, key) => (
+                  <tr key={key}>
+                    <th>{item?.team_name}</th>
+                    <th>{moment(item.start_date).format('D.MM.YYYY')}</th>
+                    <th>{moment(item.end_date).format('D.MM.YYYY')}</th>
+                    <th>
+                      <input
+                        type="checkbox"
+                        id={`custom-checkbox-${key}`}
+                        name={'team'}
+                        value={item.id}
+                        onChange={() => {
+                          handleChange(item.id)
+                        }}
+                      />
+                      {/* <input
+                        type="checkbox"
+                        name={'team_id'}
+                        checked={false}
+                        value={props.fixtureList.filter((obj) => selectedValue.includes(obj.id))}
+                        onChange={handleChange}
+                      /> */}
+                    </th>
+                  </tr>
+                ))}
+              {props.fixtureList.length <= 0 && (
+                <tr>
+                  <td colSpan={4}>No record yet available.</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </CCol>
         <CCol md={6}>
           <CFormLabel htmlFor="manager">Manager</CFormLabel>
           <CFormSelect
@@ -89,22 +137,8 @@ const AddForm = (props) => {
           {formik.errors.user && formik.touched.user && (
             <CFormFeedback invalid>{formik.errors.user}</CFormFeedback>
           )}
-        </CCol>
-        <CCol md={6}>
-          <CFormLabel htmlFor="description">Teams</CFormLabel>
-          <CMultiSelect
-            options={props.options}
-            selectionType="tags"
-            name="team"
-            onChange={handleChange}
-            value={props.options.filter((obj) => selectedValue.includes(obj.value))}
-          />
-          {formik.errors.team && formik.touched.team && (
-            <CFormFeedback invalid>{formik.errors.title}</CFormFeedback>
-          )}
-        </CCol>
-        <CCol md={6}>
           <CLoadingButton
+            className="mt-2"
             type="submit"
             color="success"
             variant="outline"

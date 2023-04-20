@@ -56,6 +56,7 @@ const AddForm = (props) => {
   const [selectedValue, setSelectedValue] = useState([])
   const handleChange = (e) => {
     setSelectedValue(Array.isArray(e) ? e.map((x) => x.value) : [])
+    console.log('value is here', selectedValue)
   }
   return (
     <>

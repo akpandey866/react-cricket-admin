@@ -6,19 +6,17 @@ import { useEffect } from 'react'
 import FeedbackFantasyService from 'src/service/FeedbackFantasyService'
 import ToastComponent from 'src/components/common/TaostComponent'
 const ManageAccessByFixture = () => {
-  const [options, setOptions] = useState([])
   const [userList, setUserList] = useState([])
   const [users, setUsers] = useState([])
-  const [managerDropdown, setManagerDropdown] = useState([])
+  const [fixtureList, setFixtureList] = useState([])
   const [loader, setLoader] = useState(false)
   useEffect(() => {
-    FeedbackFantasyService.manageAccessByTeam()
+    FeedbackFantasyService.manageAccessByFixture()
       .then((res) => {
         if (res.status === 200) {
           setUsers(res.data)
-          setOptions(res.team_list)
+          setFixtureList(res.fixture_list)
           setUserList(res.user_list)
-          // setManagerDropdown(res.coach_listing)
         }
       })
       .catch((e) => {
@@ -33,22 +31,28 @@ const ManageAccessByFixture = () => {
           <CCardHeader>
             <CRow>
               <CCol xs={10}>
-                <strong>Manage Access</strong> <small>By Access</small>
+                <strong>Manage Access</strong> <small>By Fixtures</small>
               </CCol>
             </CRow>
           </CCardHeader>
           <CCardBody>
             <AddForm
               setUsers={setUsers}
-              managerDropdown={managerDropdown}
-              setManagerDropdown={setManagerDropdown}
-              options={options}
               userList={userList}
               setUserList={setUserList}
+              fixtureList={fixtureList}
+              setFixtureList={setFixtureList}
             />
           </CCardBody>
         </CCard>
         <CCard className="mb-4">
+          <CCardHeader>
+            <CRow>
+              <CCol xs={10}>
+                <strong>Manager List</strong>
+              </CCol>
+            </CRow>
+          </CCardHeader>
           <CCardBody>
             <Table users={users} setUsers={setUsers} setLoader={setLoader} />
           </CCardBody>

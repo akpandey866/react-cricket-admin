@@ -40,8 +40,30 @@ const manageAccessByTeam = async (data) => {
   const response = await agent.get(`${API_URL}feedback-fantasy/manage-access-by-team`)
   return response.data
 }
+const manageAccessByFixture = async (data) => {
+  const response = await agent.get(`${API_URL}feedback-fantasy/manage-access-by-fixtures`)
+  return response.data
+}
 const saveManageAccessByTeam = async (data) => {
   const response = await agent.post(API_URL + 'feedback-fantasy/save-manage-access-by-team', data)
+  return response.data
+}
+const saveManageAccessByFixture = async (data) => {
+  const response = await agent.post(
+    API_URL + 'feedback-fantasy/save-manage-access-by-fixtures',
+    data,
+  )
+  return response.data
+}
+const showFixtureListing = async (id) => {
+  const response = await agent.get(`${API_URL}feedback-fantasy/show-fixture-listing/${id}`)
+  return response.data
+}
+
+const deleteManagerFixture = async (id, managerAccessId) => {
+  const response = await agent.get(
+    `${API_URL}feedback-fantasy/delete-manager-fixture/${id}/${managerAccessId}`,
+  )
   return response.data
 }
 const FeedbackFantasyService = {
@@ -55,6 +77,10 @@ const FeedbackFantasyService = {
   deleteFeedbackManager,
   manageAccessByTeam,
   saveManageAccessByTeam,
+  manageAccessByFixture,
+  saveManageAccessByFixture,
+  showFixtureListing,
+  deleteManagerFixture,
 }
 
 export default FeedbackFantasyService
