@@ -8,11 +8,9 @@ import FixtureModal from './FixtureModal'
 const Table = (props) => {
   const deleteManager = (id) => {
     props.setLoader(true)
-    const data = {}
-    data.id = id
-    FeedbackFantasyService.deleteFeedbackManager(data).then((res) => {
+    FeedbackFantasyService.deleteManagerAccess(id).then((res) => {
       if (res.status === 200) {
-        props.setUsers(res.data)
+        props.setUsers((current) => current.filter((fruit) => fruit.id !== id))
         ToastComponent(res.message, 'success')
         props.setLoader(false)
       }

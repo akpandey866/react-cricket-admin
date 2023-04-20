@@ -282,7 +282,7 @@ const _nav = [
       {
         component: CNavItem,
         name: 'Feedback Point System',
-        to: '/',
+        to: '/feedback-fantasy/point-system',
       },
       {
         component: CNavItem,
@@ -309,7 +309,7 @@ const _nav = [
       {
         component: CNavItem,
         name: 'Display Settings',
-        to: '/',
+        to: '/feedback-fantasy/display-setting',
       },
     ],
   },

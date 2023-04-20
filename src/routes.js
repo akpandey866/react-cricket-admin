@@ -26,6 +26,8 @@ import FeedbackCategory from './views/FeedbackFantasy/FeedbackCategory/FeedbackC
 import FeedbackCoach from './views/FeedbackFantasy/FeedbackCoach/FeedbackCoach'
 import ManageAccessByTeam from './views/FeedbackFantasy/ManageAccess/ManageAccessByTeam'
 import ManageAccessByFixture from './views/FeedbackFantasy/ManageAccessByFixture/ManageAccessByFixture'
+import PointSystem from './views/FeedbackFantasy/PointSystem/PointSystem'
+import DisplaySetting from './views/FeedbackFantasy/DisplaySetting/DisplaySetting'
 
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
 const Colors = React.lazy(() => import('./views/theme/colors/Colors'))
@@ -121,6 +123,8 @@ const routes = [
   { path: '/game-notifications', name: 'Game Notifications', element: GameNotification },
   { path: '/feedback-fantasy/category', name: 'Category', element: FeedbackCategory },
   { path: '/feedback-fantasy/managers', name: 'Feedback Manager', element: FeedbackCoach },
+  { path: '/feedback-fantasy/point-system', name: 'Point System', element: PointSystem },
+  { path: '/feedback-fantasy/display-setting', name: 'Display Setting', element: DisplaySetting },
   {
     path: '/feedback-fantasy/manage-access-by-team',
     name: 'Manage Access by Team',

@@ -1,17 +1,29 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { CButton } from '@coreui/react-pro'
 import moment from 'moment'
 import ToastComponent from 'src/components/common/TaostComponent.js'
 import FeedbackFantasyService from 'src/service/FeedbackFantasyService'
+import TeamModal from './TeamModal'
 const Table = (props) => {
   const deleteManager = (id) => {
     props.setLoader(true)
-    const data = {}
-    data.id = id
-    FeedbackFantasyService.deleteFeedbackManager(data).then((res) => {
+    FeedbackFantasyService.deleteManagerAccess(id).then((res) => {
       if (res.status === 200) {
-        props.setUsers(res.data)
+        props.setUsers((current) => current.filter((fruit) => fruit.id !== id))
         ToastComponent(res.message, 'success')
+        props.setLoader(false)
+      }
+    })
+  }
+  const [visible, setVisible] = useState(false)
+  const [teamDetail, setTeamDetail] = useState([])
+  const [feedbackManagerId, setFeedbackManagerId] = useState([])
+  const viewTeam = (id) => {
+    setVisible(true)
+    setFeedbackManagerId(id)
+    FeedbackFantasyService.showTeamListing(id).then((res) => {
+      if (res.status === 200) {
+        setTeamDetail(res.data)
         props.setLoader(false)
       }
     })
@@ -33,9 +45,16 @@ const Table = (props) => {
               <tr key={key}>
                 <th>{key + 1}</th>
                 <th>{item.username}</th>
-                <th>{item.email}</th>
                 <th>{moment(item.created_at).format('D.MM.YYYY')}</th>
                 <td>
+                  <CButton
+                    size="sm"
+                    color="success"
+                    className="ml-3"
+                    onClick={() => viewTeam(item.id)}
+                  >
+                    View
+                  </CButton>
                   <CButton
                     size="sm"
                     color="danger"
@@ -54,6 +73,13 @@ const Table = (props) => {
           )}
         </tbody>
       </table>
+      <TeamModal
+        visible={visible}
+        setVisible={setVisible}
+        teamDetail={teamDetail}
+        setTeamDetail={setTeamDetail}
+        feedbackManagerId={feedbackManagerId}
+      />
     </>
   )
 }
