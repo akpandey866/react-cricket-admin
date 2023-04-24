@@ -28,6 +28,8 @@ import ManageAccessByTeam from './views/FeedbackFantasy/ManageAccess/ManageAcces
 import ManageAccessByFixture from './views/FeedbackFantasy/ManageAccessByFixture/ManageAccessByFixture'
 import PointSystem from './views/FeedbackFantasy/PointSystem/PointSystem'
 import DisplaySetting from './views/FeedbackFantasy/DisplaySetting/DisplaySetting'
+import FixtureVote from './views/Vote/FixtureVote/FixtureVote'
+import UserPlayerVote from './views/Vote/FixtureVote/UserPlayerVote'
 
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
 const Colors = React.lazy(() => import('./views/theme/colors/Colors'))
@@ -134,6 +136,14 @@ const routes = [
     path: '/feedback-fantasy/manage-access-by-fixture',
     name: 'Manage Access by Fixture',
     element: ManageAccessByFixture,
+  },
+
+  // Fixture Voting
+  { path: '/fixture-voting', name: 'Fixture Voting', element: FixtureVote },
+  {
+    path: '/fixture-voting/user-player-voting/:fixtureId',
+    name: 'Fixture Votes - By Users',
+    element: UserPlayerVote,
   },
 
   { path: '/theme', name: 'Theme', element: Colors, exact: true },

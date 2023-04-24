@@ -46,7 +46,7 @@ const ButtonGroups = () => {
             </p>
             <DocsExample href="components/button-group">
               <CButtonGroup>
-                <CButton href="#" color="primary" active>
+                <CButton href="new button is" color="primary" active>
                   Active link
                 </CButton>
                 <CButton href="#" color="primary">

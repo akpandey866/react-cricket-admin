@@ -96,6 +96,10 @@ const displaySetting = async () => {
   const response = await agent.get(`${API_URL}feedback-fantasy/display-setting`)
   return response.data
 }
+const getFixtureVoting = async () => {
+  const response = await agent.get(`${API_URL}feedback-fantasy/get-fixture-voting`)
+  return response.data
+}
 const FeedbackFantasyService = {
   getCategory,
   saveCategory,
@@ -118,6 +122,7 @@ const FeedbackFantasyService = {
   saveFeedbackPointSystem,
   displaySetting,
   updateDisplaySetting,
+  getFixtureVoting,
 }
 
 export default FeedbackFantasyService
