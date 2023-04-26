@@ -211,6 +211,7 @@ const AddForm = (props) => {
             defaultValue={formik.values.start_date}
             date={startDate}
             onDateChange={handleStartDate}
+            popper={false}
           />
 
           {formik.errors.start_date && formik.touched.start_date && (
@@ -226,6 +227,7 @@ const AddForm = (props) => {
             defaultValue={formik.values.end_date}
             date={endDate}
             onDateChange={handleEndDate}
+            popper={false}
           />
 
           {formik.errors.end_date && formik.touched.end_date && (

@@ -23,32 +23,26 @@ import ToastComponent from 'src/components/common/TaostComponent'
 import { useNavigate } from 'react-router-dom'
 
 const BonusCardModal = (props) => {
-  const navigate = useNavigate()
   const onModalClose = () => {
     let data = { name: 'example', type: 'closed from child' }
     props.onCloseModal(data)
   }
   const [loader, setLoader] = useState(false)
   const validationSchema = Yup.object().shape({
-    title: Yup.string().required('Title is required'),
+    title: Yup.string().required('Bonus Card Name is required'),
     description: Yup.string().required('Description is required'),
   })
   const formik = useFormik({
     initialValues: {
-      title: '',
-      description: '',
+      title: props.bonusCardDetail.name,
+      description: props.bonusCardDetail.description,
       player: '',
     },
+    enableReinitialize: true,
     validationSchema,
-    onSubmit: (data, actions) => {
+    onSubmit: (data) => {
       data.player = selectedValue
       data.round = props.roundNumber
-      actions.resetForm({
-        values: {
-          title: '',
-          description: '',
-        },
-      })
       setLoader(true)
       CommonService.saveBonusCard(data)
         .then((res) => {
@@ -57,7 +51,6 @@ const BonusCardModal = (props) => {
             props.onCloseModal(data)
             ToastComponent(res.message, 'success')
             setLoader(false)
-            navigate('/bonus-cards')
           } else {
             setLoader(false)
             ToastComponent(res.message, 'error')
@@ -71,19 +64,13 @@ const BonusCardModal = (props) => {
     },
   })
 
-  const [options, setOptions] = useState([])
-  useEffect(() => {
-    CommonService.clubPlayers().then((result) => {
-      setOptions(result.data)
-    })
-  }, [])
   const [selectedValue, setSelectedValue] = useState([])
   const handleChange = (e) => {
     setSelectedValue(Array.isArray(e) ? e.map((x) => x.value) : [])
   }
   return (
     <>
-      <CModal scrollable visible={props.IsModalOpened} size="lg">
+      <CModal visible={props.IsModalOpened} size="lg">
         <form className="" onSubmit={formik.handleSubmit}>
           <CModalBody>
             <CCard className="mb-4">
@@ -102,7 +89,7 @@ const BonusCardModal = (props) => {
                     }
                     id="title"
                     placeholder="Bonus Card Name"
-                    defaultValue={formik.values.name}
+                    defaultValue={props.bonusCardDetail.name}
                     onChange={formik.handleChange}
                   />
                   {formik.errors.title && formik.touched.title && (
@@ -120,7 +107,7 @@ const BonusCardModal = (props) => {
                       (formik.errors.description && formik.touched.description ? ' is-invalid' : '')
                     }
                     placeholder="Description"
-                    defaultValue={formik.values.description}
+                    defaultValue={props.bonusCardDetail.description}
                     onChange={formik.handleChange}
                   />
                   {formik.errors.description && formik.touched.description && (
@@ -130,11 +117,11 @@ const BonusCardModal = (props) => {
                 <CCol md={6}>
                   <CFormLabel htmlFor="description">Players</CFormLabel>
                   <CMultiSelect
-                    options={options}
+                    options={props.options}
                     selectionType="tags"
                     name="player"
                     onChange={handleChange}
-                    value={options.filter((obj) => selectedValue.includes(obj.value))}
+                    value={props.options.filter((obj) => selectedValue.includes(obj.value))}
                   />
                   {formik.errors.player && formik.touched.player && (
                     <CFormFeedback invalid>{formik.errors.title}</CFormFeedback>

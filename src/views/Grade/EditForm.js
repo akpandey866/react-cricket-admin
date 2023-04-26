@@ -29,7 +29,6 @@ const EditForm = (props) => {
     }
   }, [props])
 
-  const navigate = useNavigate()
   const [loader, setLoader] = useState(false)
   const validationSchema = Yup.object().shape({
     grade: Yup.string().required('Grade is required'),

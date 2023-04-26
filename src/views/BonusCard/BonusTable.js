@@ -3,7 +3,6 @@ import { CBadge, CButton } from '@coreui/react-pro'
 import { toast } from 'react-toastify'
 
 import { useNavigate } from 'react-router-dom'
-import ToastComponent from 'src/components/common/TaostComponent.js'
 import CommonService from 'src/service/CommonService'
 import Loader from 'src/components/Loader'
 import BonusCardModal from './BonusCardModal'
@@ -12,8 +11,6 @@ const BonusTable = (props) => {
   const [users, setUsers] = useState([])
   const [loading, setLoading] = useState(false)
   const [roundNumber, setRoundNumber] = useState(false)
-  const navigate = useNavigate()
-
   useEffect(() => {
     setLoading(true)
     CommonService.roundListing().then((result) => {
@@ -24,21 +21,38 @@ const BonusTable = (props) => {
   const [modalIsOpen, setIsOpen] = useState(false)
   const [playerModalOpen, setPlayerModalOpen] = useState(false)
   const handleCloseModal = (data) => {
-    console.log(JSON.stringify(data))
     setIsOpen(false)
   }
 
   const handlePlayerCloseModal = (data) => {
-    console.log(JSON.stringify(data))
     setPlayerModalOpen(false)
   }
 
-  function openFromParentForPlayer(roundId) {
+  const [playerData, setPlayerData] = useState([])
+
+  // Point Modal Box
+  function openFromParentForPlayer(teamPowerId, roundId) {
+    CommonService.bonusCardPlayer(teamPowerId).then((result) => {
+      setPlayerData(result.data)
+    })
     setPlayerModalOpen(true)
     setRoundNumber(roundId)
   }
 
+  const [bonusCardDetail, setBonusCardDetail] = useState({})
+  const [selectedPlayer, setSelectedPlayer] = useState([])
+  const [options, setOptions] = useState([])
+
+  // Set Up Modal Box
   function openFromParent(roundId) {
+    CommonService.bonusCardSelectedPlayer(roundId).then((result) => {
+      setOptions(result.data)
+    })
+    CommonService.getBonusCardDetail(roundId).then((result) => {
+      setBonusCardDetail(result.data)
+      setSelectedPlayer(result.selected_player)
+    })
+
     setIsOpen(true)
     setRoundNumber(roundId)
   }
@@ -72,7 +86,7 @@ const BonusTable = (props) => {
                   <CButton
                     className="mx-2"
                     color="success"
-                    onClick={() => openFromParentForPlayer(item.round)}
+                    onClick={() => openFromParentForPlayer(item.team_power_id, item.round)}
                   >
                     Points
                   </CButton>
@@ -90,11 +104,15 @@ const BonusTable = (props) => {
         IsModalOpened={modalIsOpen}
         onCloseModal={handleCloseModal}
         roundNumber={roundNumber}
+        bonusCardDetail={bonusCardDetail}
+        selectedPlayer={selectedPlayer}
+        options={options}
       />
       <BonusCardPlayer
         IsModalOpened={playerModalOpen}
         onCloseModal={handlePlayerCloseModal}
         roundNumber={roundNumber}
+        playerData={playerData}
       />
     </>
   )

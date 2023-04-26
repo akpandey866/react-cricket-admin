@@ -16,13 +16,11 @@ import draftToHtml from 'draftjs-to-html'
 import React, { useState } from 'react'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
-import { useNavigate } from 'react-router-dom'
 import ToastComponent from 'src/components/common/TaostComponent'
 import PreviewImage from '../PreviewImage'
 import ArticleService from 'src/service/ArticleService'
 
-const AddForm = () => {
-  const navigate = useNavigate()
+const AddForm = (props) => {
   const [loader, setLoader] = useState(false)
   const [date, setDate] = useState('')
   const validationSchema = Yup.object().shape({
@@ -70,7 +68,7 @@ const AddForm = () => {
     },
     enableReinitialize: true,
     validationSchema,
-    onSubmit: (data, actions) => {
+    onSubmit: (data) => {
       var formData = new FormData()
       formData.append('title', data.title)
       formData.append('date', date)
@@ -82,9 +80,9 @@ const AddForm = () => {
       ArticleService.saveArticle(formData)
         .then((res) => {
           if (res.status === 200) {
+            props.setUsers((current) => [...current, res.data])
             ToastComponent(res.message, 'success')
             setLoader(false)
-            navigate('/articles')
           } else {
             setLoader(false)
             ToastComponent(res.message, 'error')
@@ -115,6 +113,9 @@ const AddForm = () => {
       editorState: editorValue,
     })
   }
+  const clearDate = () => {
+    console.log('close date')
+  }
   return (
     <>
       <CForm className="row g-3" onSubmit={formik.handleSubmit}>
@@ -139,6 +140,9 @@ const AddForm = () => {
           <CFormLabel htmlFor="Date">Date *</CFormLabel>
           <CDatePicker
             date={date}
+            cleaner={false}
+            popper={false}
+            // closeOnSelect={clearDate}
             locale="en-US"
             name="date"
             placeholder={'Date'}

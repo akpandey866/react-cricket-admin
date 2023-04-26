@@ -24,8 +24,18 @@ const editPowerControl = async (data) => {
   return response.data
 }
 
-const bonusCardPlayer = async (roundNumber) => {
-  const response = await agent.get(`${API_URL}common/bonus-card-players/${roundNumber}`)
+const bonusCardPlayer = async (teamPowerId) => {
+  const response = await agent.get(`${API_URL}common/bonus-card-players/${teamPowerId}`)
+  return response.data
+}
+
+const bonusCardSelectedPlayer = async (roundNumber) => {
+  const response = await agent.get(`${API_URL}common/bonus-card-selected-players/${roundNumber}`)
+  return response.data
+}
+
+const getBonusCardDetail = async (roundNumber) => {
+  const response = await agent.get(`${API_URL}common/get-bonus-card-details/${roundNumber}`)
   return response.data
 }
 
@@ -81,6 +91,27 @@ const saveVerifyUser = async (data) => {
   return response.data
 }
 
+const getTotwData = async () => {
+  const response = await agent.get(API_URL + 'common/get-totw-listing')
+  return response.data
+}
+const saveTotw = async (data) => {
+  const response = await agent.post(API_URL + 'common/save-totw', data)
+  return response.data
+}
+
+const totwSelectedPlayer = async (roundNumber) => {
+  const response = await agent.get(`${API_URL}common/totw-selected-players/${roundNumber}`)
+  return response.data
+}
+const totwPlayerList = async (round) => {
+  const response = await agent.get(`${API_URL}common/totw-player-list/${round}`)
+  return response.data
+}
+const updateTotwPlayerPoint = async (data) => {
+  const response = await agent.post(API_URL + 'common/update-totw-player-points', data)
+  return response.data
+}
 const CommonService = {
   roundListing,
   bonusCardPlayer,
@@ -99,6 +130,13 @@ const CommonService = {
   updateBonusPoint,
   getVerifyUser,
   saveVerifyUser,
+  getBonusCardDetail,
+  bonusCardSelectedPlayer,
+  getTotwData,
+  saveTotw,
+  totwSelectedPlayer,
+  totwPlayerList,
+  updateTotwPlayerPoint,
 }
 
 export default CommonService

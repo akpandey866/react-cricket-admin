@@ -24,7 +24,7 @@ const Table = (props) => {
   const [columnSorter, setColumnSorter] = useState(null)
   const [itemsPerPage, setItemsPerPage] = useState(10)
   const [selectedId, setSelectedId] = useState(0)
-  const [users, setUsers] = useState({})
+  const [users, setUsers] = useState(props.users)
   const navigate = useNavigate()
 
   const [details, setDetails] = useState([])
@@ -64,7 +64,8 @@ const Table = (props) => {
     if (position !== -1) {
       newDetails.splice(position, 1)
     } else {
-      newDetails = [...details, index]
+      //newDetails = [...details, index]
+      newDetails = [index]
     }
     setDetails(newDetails)
     //Set Article Detail Data
@@ -75,6 +76,8 @@ const Table = (props) => {
     ArticleService.getArticleDetail(index)
       .then((res) => {
         if (res.status === 200) {
+          //setArticleDetail((current) => [...current, res.data])
+
           setArticleDetail(res.data)
           setDate(res.data.date)
           setDescription(res.data.description)
@@ -95,11 +98,9 @@ const Table = (props) => {
     // setUsers((previousEmployeeData) => previousEmployeeData.data.filter((data) => data.id !== id))
     ArticleService.deleteArticle(data).then((res) => {
       if (res.status === 200) {
-        toast.dismiss()
-        setUsers(res.data)
+        props.setUsers((current) => current.filter((fruit) => fruit.id !== id))
         ToastComponent(res.message, 'success')
         setLoading(false)
-        navigate('/articles')
       }
     })
   }

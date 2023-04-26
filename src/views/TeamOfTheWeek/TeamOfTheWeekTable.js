@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { CBadge, CButton } from '@coreui/react-pro'
-import { toast } from 'react-toastify'
-
-import { useNavigate } from 'react-router-dom'
 import ToastComponent from 'src/components/common/TaostComponent.js'
 import CommonService from 'src/service/CommonService'
 import Loader from 'src/components/Loader'
@@ -12,11 +9,9 @@ const BonusTable = (props) => {
   const [users, setUsers] = useState([])
   const [loading, setLoading] = useState(false)
   const [roundNumber, setRoundNumber] = useState(false)
-  const navigate = useNavigate()
-
   useEffect(() => {
     setLoading(true)
-    CommonService.roundListing().then((result) => {
+    CommonService.getTotwData().then((result) => {
       setUsers(result.data)
       setLoading(false)
     })
@@ -33,16 +28,24 @@ const BonusTable = (props) => {
     setPlayerModalOpen(false)
   }
 
-  function openFromParentForPlayer(roundId) {
+  const [playerData, setPlayerData] = useState([])
+  function openModalForPoint(round) {
+    setPlayerData([])
+    CommonService.totwPlayerList(round).then((result) => {
+      setPlayerData(result.data)
+    })
     setPlayerModalOpen(true)
-    setRoundNumber(roundId)
+    setRoundNumber(round)
   }
 
-  function openFromParent(roundId) {
+  const [options, setOptions] = useState([])
+  function openModalForSetUp(roundId) {
+    CommonService.totwSelectedPlayer(roundId).then((result) => {
+      setOptions(result.data)
+    })
     setIsOpen(true)
     setRoundNumber(roundId)
   }
-
   return loading ? (
     <Loader />
   ) : (
@@ -64,13 +67,13 @@ const BonusTable = (props) => {
                   <CBadge color="success">Active</CBadge>
                 </td>
                 <td>
-                  <CButton onClick={() => openFromParent(item.round)} color={'success'}>
+                  <CButton onClick={() => openModalForSetUp(item.round)} color={'success'}>
                     Set Up
                   </CButton>
                   <CButton
                     className="mx-2"
                     color="success"
-                    onClick={() => openFromParentForPlayer(item.round)}
+                    onClick={() => openModalForPoint(item.round)}
                   >
                     Points
                   </CButton>
@@ -88,11 +91,13 @@ const BonusTable = (props) => {
         IsModalOpened={modalIsOpen}
         onCloseModal={handleCloseModal}
         roundNumber={roundNumber}
+        options={options}
       />
       <TeamOfTheWeekPlayer
         IsModalOpened={playerModalOpen}
         onCloseModal={handlePlayerCloseModal}
         roundNumber={roundNumber}
+        playerData={playerData}
       />
     </>
   )

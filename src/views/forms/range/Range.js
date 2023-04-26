@@ -20,12 +20,12 @@ const Range = () => {
           </CCardHeader>
           <CCardBody>
             <p className="text-medium-emphasis small">
-              Create custom <code>&lt;input type=&#34;range&#34;&gt;</code> controls with{' '}
-              <code>&lt;CFormRange&gt;</code>.
+              Create custom wsedfsdfsdf <code>&lt;input type=&#34;range&#34;&gt;</code> controls
+              with <code>&lt;CFormRange&gt;</code>.
             </p>
             <DocsExample href="forms/range">
               <CFormLabel htmlFor="customRange1">Example range</CFormLabel>
-              <CFormRange id="customRange1" />
+              <CFormRange id="customRange1" max={10} min={1} playsInline={true} step={0.5} />
             </DocsExample>
           </CCardBody>
         </CCard>

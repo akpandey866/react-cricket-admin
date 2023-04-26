@@ -230,7 +230,7 @@ const _nav = [
   {
     component: CNavGroup,
     name: 'Votes',
-    to: '/',
+    to: '/fixture-votes',
     icon: <CIcon icon={cilIndentDecrease} customClassName="nav-icon" />,
     badge: {
       color: 'danger-gradient',
@@ -245,17 +245,7 @@ const _nav = [
       {
         component: CNavItem,
         name: 'Fixture Votes',
-        to: '/',
-      },
-      {
-        component: CNavItem,
-        name: 'Team Votes',
-        to: '/',
-      },
-      {
-        component: CNavItem,
-        name: 'Total Votes',
-        to: '/',
+        to: '/fixture-voting',
       },
     ],
   },

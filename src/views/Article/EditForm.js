@@ -20,22 +20,6 @@ import { Editor } from 'react-draft-wysiwyg'
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 import draftToHtml from 'draftjs-to-html'
 const EditForm = (props) => {
-  const [articleDetail, setArticleDetail] = useState()
-  useEffect(() => {
-    if (props.selectedId === props.articleId) {
-      ArticleService.getArticleDetail(props.articleId)
-        .then((res) => {
-          if (res.status === 200) {
-            setDate(res.data.date)
-            setArticleDetail(res.data)
-          }
-        })
-        .catch((e) => {
-          ToastComponent(e.response?.data?.message, 'error')
-          setLoader(false)
-        })
-    }
-  }, [props])
   const [description, setDescription] = useState({
     htmlValue: '',
     editorState: EditorState.createWithContent(
@@ -44,17 +28,16 @@ const EditForm = (props) => {
   })
   const navigate = useNavigate()
   const [loader, setLoader] = useState(false)
-  const [date, setDate] = useState('')
-  const SUPPORTED_FORMATS = ['image/jpg', 'image/png', 'image/jpeg', 'image/gif']
+  const [date, setDate] = useState(props.date)
   const validationSchema = Yup.object().shape({
     title: Yup.string().required('Title is required'),
   })
   const formik = useFormik({
     initialValues: {
-      title: articleDetail?.title,
-      external_link: articleDetail?.link,
-      date: articleDetail?.date,
-      description: articleDetail?.description,
+      title: props.articleDetail?.title,
+      external_link: props.articleDetail?.link,
+      date: props.articleDetail?.date,
+      description: props.articleDetail?.description,
       image: null,
     },
     enableReinitialize: true,

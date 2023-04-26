@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
-import { CButton, CCard, CCardBody, CCardHeader, CCol, CCollapse, CRow } from '@coreui/react-pro'
+import { CCard, CCardBody, CCardHeader, CCol, CRow } from '@coreui/react-pro'
 import Table from './Table'
 
 import AddForm from './AddForm'
 const Article = () => {
+  const [users, setUsers] = useState([])
   return (
     <CRow>
       <CCol xs={12}>
@@ -16,12 +17,12 @@ const Article = () => {
             </CRow>
           </CCardHeader>
           <CCardBody>
-            <AddForm />
+            <AddForm setUsers={setUsers} />
           </CCardBody>
         </CCard>
         <CCard className="mb-4">
           <CCardBody>
-            <Table />
+            <Table users={users} setUsers={setUsers} />
           </CCardBody>
         </CCard>
       </CCol>

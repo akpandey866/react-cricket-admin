@@ -45,22 +45,14 @@ const MultiSelect = () => {
       <CCol xs={12}>
         <CCard className="mb-4">
           <CCardHeader>
-            <strong>CoreUI React Multi Select</strong> <small>with Checkbox (Default Style)</small>
+            <strong>CoreUI React Multi Select sfsdfsdfsd</strong>{' '}
+            <small>with Checkbox (Default Style)</small>
           </CCardHeader>
           <CCardBody>
             <DocsExample href="forms/multi-select">
               <CRow>
                 <CCol md={3}>
-                  <CMultiSelect options={options} multiple={false} />
-                </CCol>
-                <CCol md={3}>
-                  <CMultiSelect options={options} selectionType="text" />
-                </CCol>
-                <CCol md={3}>
                   <CMultiSelect options={options} selectionType="tags" />
-                </CCol>
-                <CCol md={3}>
-                  <CMultiSelect options={options} selectionType="counter" />
                 </CCol>
               </CRow>
             </DocsExample>
