@@ -15,28 +15,28 @@ import ToastComponent from 'src/components/common/TaostComponent'
 import InputRange from 'react-input-range'
 import 'react-input-range/lib/css/index.css'
 const AddRemoveInputField = (props) => {
-  const [inputFields, setInputFields] = useState({
-    price1: 9,
-    price2: 9,
-    price3: 9,
-    price4: 9,
-    price5: 9,
-    price6: 9,
-    price7: 9,
-    price8: 9,
-    price9: 9,
-    price10: 9,
-    price11: 9,
-    price12: 9,
-    price13: 9,
-    price14: 9,
-    price15: 9,
-    price16: 9,
-    price17: 9,
-    price18: 9,
-    price19: 9,
-    price20: 9,
-  })
+  // const [inputFields, setInputFields] = useState({
+  //   price1: 9,
+  //   price2: 9,
+  //   price3: 9,
+  //   price4: 9,
+  //   price5: 9,
+  //   price6: 9,
+  //   price7: 9,
+  //   price8: 9,
+  //   price9: 9,
+  //   price10: 9,
+  //   price11: 9,
+  //   price12: 9,
+  //   price13: 9,
+  //   price14: 9,
+  //   price15: 9,
+  //   price16: 9,
+  //   price17: 9,
+  //   price18: 9,
+  //   price19: 9,
+  //   price20: 9,
+  // })
 
   const [loader, setLoader] = useState(false)
   const validationSchema = Yup.object().shape({

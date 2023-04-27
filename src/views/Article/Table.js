@@ -55,8 +55,9 @@ const Table = (props) => {
     }
   }
   const [articleDetail, setArticleDetail] = useState([])
+  const [articleId, setArticleId] = useState(0)
   const [date, setDate] = useState()
-  const [description, setDescription] = useState()
+  const [description, setDescription] = useState('')
   const toggleDetails = (index) => {
     setSelectedId(index)
     const position = details.indexOf(index)
@@ -72,15 +73,14 @@ const Table = (props) => {
   }
 
   const changeEditAction = (index) => {
+    setArticleId(index)
     setVisibleHorizontal(true)
     ArticleService.getArticleDetail(index)
       .then((res) => {
         if (res.status === 200) {
-          //setArticleDetail((current) => [...current, res.data])
-
+          setDescription(res.data.description)
           setArticleDetail(res.data)
           setDate(res.data.date)
-          setDescription(res.data.description)
         }
       })
       .catch((e) => {
@@ -194,11 +194,13 @@ const Table = (props) => {
                       <CCardBody>
                         <EditForm
                           articleDetail={articleDetail}
+                          setArticleDetail={setArticleDetail}
                           articleId={item.id}
                           selectedId={selectedId}
                           visibleHorizontal={visibleHorizontal}
                           date={date}
                           description={description}
+                          setArticleId={setArticleId}
                           setDate={setDate}
                         />
                       </CCardBody>

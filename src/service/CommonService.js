@@ -112,6 +112,11 @@ const updateTotwPlayerPoint = async (data) => {
   const response = await agent.post(API_URL + 'common/update-totw-player-points', data)
   return response.data
 }
+
+const editGameStructure = async (data) => {
+  const response = await agent.post(API_URL + 'common/edit-game-structure', data)
+  return response.data
+}
 const CommonService = {
   roundListing,
   bonusCardPlayer,
@@ -137,6 +142,7 @@ const CommonService = {
   totwSelectedPlayer,
   totwPlayerList,
   updateTotwPlayerPoint,
+  editGameStructure,
 }
 
 export default CommonService

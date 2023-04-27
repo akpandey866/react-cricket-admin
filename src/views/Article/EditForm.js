@@ -21,11 +21,19 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 import draftToHtml from 'draftjs-to-html'
 const EditForm = (props) => {
   const [description, setDescription] = useState({
-    htmlValue: '',
+    htmlValue: props.userDetail?.entry_fee_info,
     editorState: EditorState.createWithContent(
-      ContentState.createFromBlockArray(convertFromHTML('<p></p>')),
+      ContentState.createFromBlockArray(convertFromHTML(props?.description)),
     ),
   })
+  const onEditorStateChange = (editorValue) => {
+    const editorStateInHtml = draftToHtml(convertToRaw(editorValue.getCurrentContent()))
+
+    setDescription({
+      htmlValue: editorStateInHtml,
+      editorState: editorValue,
+    })
+  }
   const navigate = useNavigate()
   const [loader, setLoader] = useState(false)
   const [date, setDate] = useState(props.date)
@@ -75,14 +83,6 @@ const EditForm = (props) => {
     setDate(dateFormat)
   }
 
-  const onEditorStateChange = (editorValue) => {
-    const editorStateInHtml = draftToHtml(convertToRaw(editorValue.getCurrentContent()))
-
-    setDescription({
-      htmlValue: editorStateInHtml,
-      editorState: editorValue,
-    })
-  }
   return (
     <>
       <CForm className="row g-3" onSubmit={formik.handleSubmit}>
@@ -159,7 +159,7 @@ const EditForm = (props) => {
         <CCol md={4}>
           <CFormLabel htmlFor="Date">Date *</CFormLabel>
           <CDatePicker
-            date={date}
+            date={props.date}
             locale="en-US"
             name="date"
             placeholder={'Date'}
