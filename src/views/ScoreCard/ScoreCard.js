@@ -24,7 +24,6 @@ import ScorecardService from 'src/service/ScorecardService'
 import Loader from 'src/components/Loader'
 
 const ScoreCard = () => {
-  const navigate = useNavigate()
   const [scorecardDetails, setScorecardDetails] = useState()
   const [playerList, setPlayerList] = useState([])
   const [fixtureDetails, setFixtureDetails] = useState({})

@@ -43,11 +43,6 @@ const powerControl = async () => {
   const response = await agent.get(`${API_URL}power-control`)
   return response.data
 }
-const gameSpot = async () => {
-  const response = await agent.get(`${API_URL}common/game-spot`)
-  return response.data
-}
-
 const updateGameSpot = async (data) => {
   const response = await agent.post(API_URL + 'common/update-game-spot', data)
   return response.data
@@ -117,6 +112,10 @@ const editGameStructure = async (data) => {
   const response = await agent.post(API_URL + 'common/edit-game-structure', data)
   return response.data
 }
+const gameStructureInfo = async () => {
+  const response = await agent.get(API_URL + 'common/get-game-structure-info')
+  return response.data
+}
 const CommonService = {
   roundListing,
   bonusCardPlayer,
@@ -126,7 +125,6 @@ const CommonService = {
   powerControl,
   editPowerControl,
   changePowerControlStatus,
-  gameSpot,
   updateGameSpot,
   updateTrade,
   branding,
@@ -143,6 +141,7 @@ const CommonService = {
   totwPlayerList,
   updateTotwPlayerPoint,
   editGameStructure,
+  gameStructureInfo,
 }
 
 export default CommonService

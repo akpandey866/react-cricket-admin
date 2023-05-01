@@ -22,18 +22,18 @@ const CViceCaptain = () => {
   const [userNumber, setUserNumber] = useState()
   const [capCheck, setCapCheck] = useState()
   const [vCapCheck, setVCapCheck] = useState()
-  useEffect(() => {
-    CommonService.gameSpot()
-      .then((res) => {
-        if (res.status === 200) {
-          setData(res.data)
-          setUserNumber(res.data.user_number)
-        }
-      })
-      .catch((e) => {
-        ToastComponent(e.response?.data?.message, 'error')
-      })
-  }, [])
+  // useEffect(() => {
+  //   CommonService.gameSpot()
+  //     .then((res) => {
+  //       if (res.status === 200) {
+  //         setData(res.data)
+  //         setUserNumber(res.data.user_number)
+  //       }
+  //     })
+  //     .catch((e) => {
+  //       ToastComponent(e.response?.data?.message, 'error')
+  //     })
+  // }, [])
 
   const [loader, setLoader] = useState(false)
   const validationSchema = Yup.object().shape({
@@ -41,8 +41,8 @@ const CViceCaptain = () => {
   })
   const formik = useFormik({
     initialValues: {
-      cap_point: userNumber,
-      vcap_point: userNumber,
+      cap_point: 40,
+      vcap_point: 50,
     },
     enableReinitialize: true,
     validationSchema,
@@ -114,7 +114,7 @@ const CViceCaptain = () => {
                   (formik.errors.cap_point && formik.touched.cap_point ? ' is-invalid' : '')
                 }
                 id="cap_point"
-                defaultValue={userNumber}
+                defaultValue={40}
                 onChange={formik.handleChange}
                 name="cap_point"
               />
@@ -150,7 +150,7 @@ const CViceCaptain = () => {
                   (formik.errors.vcap_point && formik.touched.vcap_point ? ' is-invalid' : '')
                 }
                 id="vcap_point"
-                defaultValue={userNumber}
+                defaultValue={50}
                 onChange={handleCapCheck}
                 name="vcap_point"
               />

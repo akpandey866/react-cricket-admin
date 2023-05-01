@@ -51,6 +51,14 @@ const saveDefaultPriceStructure = async (data) => {
   const response = await agent.post(API_URL + '/players/save-default-price-structure', data)
   return response.data
 }
+const savePlayerStructure = async (data) => {
+  const response = await agent.post(API_URL + '/players/save-player-structure', data)
+  return response.data
+}
+const getPlayerStructureInfo = async () => {
+  const response = await agent.get(API_URL + '/players/get-player-structure-info')
+  return response.data
+}
 const PlayerService = {
   getPlayers,
   savePlayer,
@@ -62,6 +70,8 @@ const PlayerService = {
   updatePlayerFantasyValue,
   savePlayerPrice,
   saveDefaultPriceStructure,
+  savePlayerStructure,
+  getPlayerStructureInfo,
 }
 
 export default PlayerService

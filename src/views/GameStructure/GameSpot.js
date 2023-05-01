@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import {
   CCard,
   CCardHeader,
   CCardBody,
   CFormLabel,
-  CFormSelect,
   CForm,
   CLoadingButton,
   CRow,
@@ -16,54 +15,30 @@ import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import CommonService from 'src/service/CommonService'
 import ToastComponent from 'src/components/common/TaostComponent'
-const GameSpot = () => {
-  const [data, setData] = useState({})
-  const [userNumber, setUserNumber] = useState()
-  useEffect(() => {
-    CommonService.gameSpot()
-      .then((res) => {
-        if (res.status === 200) {
-          setData(res.data)
-          setUserNumber(res.data.user_number)
-        }
-      })
-      .catch((e) => {
-        ToastComponent(e.response?.data?.message, 'error')
-      })
-  }, [])
-
+const GameSpot = (props) => {
   const [loader, setLoader] = useState(false)
   const validationSchema = Yup.object().shape({
     user_number: Yup.string().required('User Number is required'),
   })
   const formik = useFormik({
     initialValues: {
-      user_number: userNumber,
+      user_number: props.gameSpotData.user_number,
     },
     enableReinitialize: true,
     validationSchema,
-    onSubmit: (data, actions) => {
-      actions.resetForm({
-        values: {
-          user_number: '',
-        },
-      })
+    onSubmit: (data) => {
       setLoader(true)
       CommonService.updateGameSpot(data)
         .then((res) => {
           if (res.status === 200) {
-            setUserNumber(res.data.user_number)
             ToastComponent(res.message, 'success')
             setLoader(false)
-          } else {
-            setLoader(false)
-            ToastComponent(res.message, 'error')
           }
         })
         .catch((e) => {
-          ToastComponent(e.response?.data?.message, 'error')
+          console.log('Error=> ', e)
           setLoader(false)
-          ToastComponent(e.response?.data?.message, 'error')
+          ToastComponent('Something Went wrong.', 'error')
         })
     },
   })
@@ -86,7 +61,7 @@ const GameSpot = () => {
                   (formik.errors.user_number && formik.touched.user_number ? ' is-invalid' : '')
                 }
                 id="user_number"
-                defaultValue={userNumber}
+                defaultValue={props.gameSpotData.user_number}
                 onChange={formik.handleChange}
                 name="user_number"
               />

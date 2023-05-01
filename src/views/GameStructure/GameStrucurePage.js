@@ -4,11 +4,13 @@ import ToastComponent from 'src/components/common/TaostComponent'
 import { useFormik } from 'formik'
 import { useState } from 'react'
 import CommonService from 'src/service/CommonService'
-const GameStrucurePage = () => {
+const GameStrucurePage = (props) => {
   const [loader, setLoader] = useState(false)
+  console.log('Asdasdasd', props.game_structure)
+  const [defaultStr, setDefaultStr] = useState(props.game_structure)
   const formik = useFormik({
     initialValues: {
-      structure: '',
+      structure: props.game_structure,
     },
     enableReinitialize: true,
     // validationSchema,
@@ -43,16 +45,17 @@ const GameStrucurePage = () => {
               'form-control' +
               (formik.errors.structure && formik.touched.structure ? ' is-invalid' : '')
             }
-            defaultValue={formik.values.structure}
+            defaultValue={66}
             // onChange={handleChange}
             id="structure"
-            onChange={(event) => {
-              formik.setTouched({
-                ...formik.touched,
-                structure: true,
-              })
-              formik.setFieldValue('structure', event.target.value)
-            }}
+            onChange={formik.handleChange}
+            // onChange={(event) => {
+            //   formik.setTouched({
+            //     ...formik.touched,
+            //     structure: true,
+            //   })
+            //   formik.setFieldValue('structure', event.target.value)
+            // }}
           >
             <option value="8">6 Players (Salary Cap: $55m)</option>
             <option value="7">7 Players (Salary Cap: $64m)</option>

@@ -17,7 +17,8 @@ const BonusPoint = () => {
         }
       })
       .catch((e) => {
-        ToastComponent(e.response?.data?.message, 'error')
+        console.log('Error =>', e)
+        ToastComponent('Something went wrong. Please try again.', 'error')
       })
   }, [])
 

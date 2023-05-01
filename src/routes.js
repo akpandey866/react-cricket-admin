@@ -30,6 +30,9 @@ import PointSystem from './views/FeedbackFantasy/PointSystem/PointSystem'
 import DisplaySetting from './views/FeedbackFantasy/DisplaySetting/DisplaySetting'
 import FixtureVote from './views/Vote/FixtureVote/FixtureVote'
 import UserPlayerVote from './views/Vote/FixtureVote/UserPlayerVote'
+import PlayerStructure from './views/Player/PlayerStructure/PlayerStructure'
+import BracketBattle from './views/BracketBattle/BracketBattle'
+import BattleListing from './views/BracketBattle/BattleListing'
 
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
 const Colors = React.lazy(() => import('./views/theme/colors/Colors'))
@@ -104,6 +107,7 @@ const routes = [
   { path: '/game-structure', name: 'Game Structure & Salary Cap', element: GameStructure },
   { path: '/fantasy-values', name: 'Fantasy Values', element: Index },
   { path: '/players', name: 'Players', element: Player },
+  { path: '/players/player-structure', name: 'Players Structure', element: PlayerStructure },
   { path: '/grades', name: 'Grades', element: Grade },
   { path: '/point-system', name: 'Grades', element: GradePoint },
   { path: '/teams', name: 'Teams', element: Team },
@@ -145,6 +149,9 @@ const routes = [
     name: 'Fixture Votes - By Users',
     element: UserPlayerVote,
   },
+  // Bracket Battle Routing
+  { path: '/bracket-battle', name: 'Bracket Battle', element: BracketBattle },
+  { path: '/bracket-battle/battle-listing', name: 'Bracket Battle', element: BattleListing },
 
   { path: '/theme', name: 'Theme', element: Colors, exact: true },
   { path: '/theme/colors', name: 'Colors', element: Colors },
