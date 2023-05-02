@@ -93,18 +93,6 @@ const BracketBattle = () => {
       id: 128,
       value: 128,
     },
-    {
-      id: 256,
-      value: 256,
-    },
-    {
-      id: 512,
-      value: 512,
-    },
-    {
-      id: 1024,
-      value: 1024,
-    },
   ]
   const getBadge = (status) => {
     switch (status) {
@@ -236,14 +224,14 @@ const BracketBattle = () => {
                         <Link
                           size="sm"
                           className="btn btn-success btn-sm ms-1"
-                          to={`/bracket-battle/battle/${item.id}`}
+                          to={`/bracket-battle/battle-listing/${item.id}`}
                         >
                           Create Round Battles
                         </Link>
                         <Link
                           size="sm"
                           className="btn btn-info btn-sm ms-1"
-                          to={`/bracket-battle/battle/${item.id}`}
+                          to={`/bracket-battle/match-result/${item.id}`}
                         >
                           Results
                         </Link>

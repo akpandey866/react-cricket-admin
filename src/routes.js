@@ -33,6 +33,7 @@ import UserPlayerVote from './views/Vote/FixtureVote/UserPlayerVote'
 import PlayerStructure from './views/Player/PlayerStructure/PlayerStructure'
 import BracketBattle from './views/BracketBattle/BracketBattle'
 import BattleListing from './views/BracketBattle/BattleListing'
+import MatchResult from './views/BracketBattle/MatchResult'
 
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
 const Colors = React.lazy(() => import('./views/theme/colors/Colors'))
@@ -151,7 +152,8 @@ const routes = [
   },
   // Bracket Battle Routing
   { path: '/bracket-battle', name: 'Bracket Battle', element: BracketBattle },
-  { path: '/bracket-battle/battle-listing', name: 'Bracket Battle', element: BattleListing },
+  { path: '/bracket-battle/battle-listing/:id', name: 'Bracket Battle', element: BattleListing },
+  { path: '/bracket-battle/match-result/:id', name: 'Bracket Battle', element: MatchResult },
 
   { path: '/theme', name: 'Theme', element: Colors, exact: true },
   { path: '/theme/colors', name: 'Colors', element: Colors },

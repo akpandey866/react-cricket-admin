@@ -45,7 +45,7 @@ const GameStrucurePage = (props) => {
               'form-control' +
               (formik.errors.structure && formik.touched.structure ? ' is-invalid' : '')
             }
-            defaultValue={66}
+            defaultValue={formik.values.structure}
             // onChange={handleChange}
             id="structure"
             onChange={formik.handleChange}

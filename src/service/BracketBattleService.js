@@ -15,10 +15,21 @@ const battleListing = async (id) => {
   return response.data
 }
 
+const updateRoundBattle = async (data) => {
+  const response = await agent.post(`${API_URL}bracket-battle/update-round-battle`, data)
+  return response.data
+}
+const matchCompletion = async (data) => {
+  const response = await agent.post(`${API_URL}bracket-battle/update-match-result`, data)
+  return response.data
+}
+
 const BracketBattleService = {
   listing,
   saveOrUpdateBracketBattle,
   battleListing,
+  updateRoundBattle,
+  matchCompletion,
 }
 
 export default BracketBattleService

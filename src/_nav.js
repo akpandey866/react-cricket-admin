@@ -213,7 +213,7 @@ const _nav = [
       {
         component: CNavItem,
         name: 'Bracket Settings ',
-        to: '/',
+        to: '/bracket-battle',
       },
       {
         component: CNavItem,
