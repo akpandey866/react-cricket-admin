@@ -20,7 +20,15 @@ const updateRoundBattle = async (data) => {
   return response.data
 }
 const matchCompletion = async (data) => {
-  const response = await agent.post(`${API_URL}bracket-battle/update-match-result`, data)
+  const response = await agent.post(`${API_URL}bracket-battle/match-completion`, data)
+  return response.data
+}
+const getMatchResultData = async (roundId) => {
+  const response = await agent.get(`${API_URL}bracket-battle/get-match-result-data/${roundId}`)
+  return response.data
+}
+const declarWinner = async (data) => {
+  const response = await agent.post(`${API_URL}bracket-battle/declarWinner`, data)
   return response.data
 }
 
@@ -30,6 +38,8 @@ const BracketBattleService = {
   battleListing,
   updateRoundBattle,
   matchCompletion,
+  getMatchResultData,
+  declarWinner,
 }
 
 export default BracketBattleService

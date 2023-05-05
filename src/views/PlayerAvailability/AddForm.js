@@ -113,7 +113,7 @@ const AddForm = (props) => {
           )}
         </CCol>
         <CCol md={6}>
-          <CFormLabel htmlFor="grade">Unavailable Till*</CFormLabel>
+          <CFormLabel htmlFor="unavailabletill">Unavailable Till*</CFormLabel>
           <CDatePicker
             date={dateTill}
             locale="en-US"

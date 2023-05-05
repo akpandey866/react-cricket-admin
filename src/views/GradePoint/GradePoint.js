@@ -1,22 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import {
-  CBadge,
-  CButton,
-  CCard,
-  CCardBody,
-  CCardHeader,
-  CCol,
-  CCollapse,
-  CRow,
-  CSmartTable,
-} from '@coreui/react-pro'
+import { CButton, CCard, CCardBody, CCol, CCollapse, CRow, CSmartTable } from '@coreui/react-pro'
 import { toast } from 'react-toastify'
 
-import moment from 'moment'
 import { useNavigate } from 'react-router-dom'
 import ToastComponent from 'src/components/common/TaostComponent.js'
 import GradeService from 'src/service/GradeService'
-import EditForm from './EditForm'
 import PointSystem from './PointSystem'
 const GradePoint = () => {
   const [loading, setLoading] = useState()

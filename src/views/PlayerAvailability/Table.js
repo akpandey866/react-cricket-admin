@@ -175,6 +175,7 @@ const Table = (props) => {
                       </CCardHeader>
                       <CCardBody>
                         <EditForm
+                          multiOption={props.multiOption}
                           avId={item.id}
                           selectedId={selectedId}
                           visibleHorizontal={visibleHorizontal}

@@ -28,7 +28,7 @@ const PlayerAvailability = () => {
         </CCard>
         <CCard className="mb-4">
           <CCardBody>
-            <Table users={users} />
+            <Table users={users} multiOption={multiOption} />
           </CCardBody>
         </CCard>
       </CCol>

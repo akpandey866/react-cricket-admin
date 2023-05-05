@@ -14,6 +14,12 @@ import {
   CFormFeedback,
   CMultiSelect,
   CFormTextarea,
+  CAccordion,
+  CAccordionItem,
+  CAccordionHeader,
+  CAccordionBody,
+  CInputGroup,
+  CInputGroupText,
 } from '@coreui/react-pro'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
@@ -98,7 +104,7 @@ const ScoreCard = () => {
           <CCol xs={12}>
             <CCard className="mb-4">
               <CCardHeader>
-                <strong>Picked Players</strong>
+                <strong>Scorcards</strong>
               </CCardHeader>
               <CCardBody>
                 {loader ? (
@@ -109,11 +115,11 @@ const ScoreCard = () => {
                       <thead>
                         <tr>
                           <th width="5%">Player</th>
-                          <th width="6%">Rs</th>
-                          <th width="6%">4s</th>
-                          <th width="6%">6s</th>
-                          <th width="6%">Ovrs</th>
-                          <th width="6%">Mdns </th>
+                          <th width="6%">RS</th>
+                          <th width="6%">4S</th>
+                          <th width="6%">6S</th>
+                          <th width="6%">OVRS</th>
+                          <th width="6%">MDNS </th>
                           <th width="6%">RG</th>
                           <th width="6%">Wks</th>
                           <th width="6%">cs</th>
@@ -260,6 +266,275 @@ const ScoreCard = () => {
               </CCardBody>
             </CCard>
           </CCol>
+
+          <CCol xs={12}>
+            <CCard className="mb-4">
+              <CCardHeader>
+                <strong>Mobile View</strong>
+              </CCardHeader>
+              <CCardBody>
+                {loader ? (
+                  <Loader />
+                ) : (
+                  <CAccordion alwaysOpen activeItemKey={2}>
+                    {scorecardDetails &&
+                      scorecardDetails.map((item, key) => (
+                        <CAccordionItem itemKey={key} key={key}>
+                          <CAccordionHeader>{item.player_name}</CAccordionHeader>
+                          <CAccordionBody>
+                            <CRow className="mb-2">
+                              <div className="col-md-2 col-sm">
+                                <CInputGroup className="mb-2">
+                                  <CInputGroupText
+                                    id="inputGroup-sizing-default"
+                                    style={{ width: '135px' }}
+                                  >
+                                    Runs
+                                  </CInputGroupText>
+                                  <CFormInput
+                                    name={`data[${key}]rs`}
+                                    type={'number'}
+                                    defaultValue={item.rs}
+                                    onChange={formik.handleChange}
+                                    className="col-sm-10"
+                                    id="rs"
+                                  />
+                                </CInputGroup>
+                              </div>
+                              <div className="col-md-2 col-sm">
+                                <CInputGroup className="mb-2">
+                                  <CInputGroupText
+                                    id="inputGroup-sizing-default"
+                                    style={{ width: '135px' }}
+                                  >
+                                    Fours
+                                  </CInputGroupText>
+                                  <CFormInput
+                                    name={`data[${key}]fours`}
+                                    defaultValue={item.fours}
+                                    onChange={formik.handleChange}
+                                    id="fours"
+                                  />
+                                </CInputGroup>
+                              </div>
+                              <div className="col-md-2 col-sm">
+                                <CInputGroup className="mb-2">
+                                  <CInputGroupText
+                                    id="inputGroup-sizing-default"
+                                    style={{ width: '135px' }}
+                                  >
+                                    Sixes
+                                  </CInputGroupText>
+                                  <CFormInput
+                                    name={`data[${key}]sixes`}
+                                    defaultValue={item.sixes}
+                                    onChange={formik.handleChange}
+                                    id="sixes"
+                                  />
+                                </CInputGroup>
+                              </div>
+                              <div className="col-md-2 col-sm">
+                                <CInputGroup className="mb-2">
+                                  <CInputGroupText
+                                    id="inputGroup-sizing-default"
+                                    style={{ width: '135px' }}
+                                  >
+                                    Overs
+                                  </CInputGroupText>
+                                  <CFormInput
+                                    name={`data[${key}]overs`}
+                                    defaultValue={item.overs}
+                                    onChange={formik.handleChange}
+                                    id="OVRS"
+                                  />
+                                </CInputGroup>
+                              </div>
+                              <div className="col-md-2 col-sm">
+                                <CInputGroup className="mb-2">
+                                  <CInputGroupText
+                                    id="inputGroup-sizing-default"
+                                    style={{ width: '135px' }}
+                                  >
+                                    Maidens
+                                  </CInputGroupText>
+                                  <CFormInput
+                                    name={`data[${key}]mdns`}
+                                    defaultValue={item.mdns}
+                                    onChange={formik.handleChange}
+                                    id="mdns"
+                                  />
+                                </CInputGroup>
+                              </div>
+                              <div className="col-md-2 col-sm">
+                                <CInputGroup className="mb-2">
+                                  <CInputGroupText
+                                    id="inputGroup-sizing-default"
+                                    style={{ width: '135px' }}
+                                  >
+                                    Runs Given
+                                  </CInputGroupText>
+                                  <CFormInput
+                                    name={`data[${key}]run`}
+                                    defaultValue={item.run}
+                                    onChange={formik.handleChange}
+                                    id="run"
+                                  />
+                                </CInputGroup>
+                              </div>
+                              <div className="col-md-2 col-sm">
+                                <CInputGroup className="mb-2">
+                                  <CInputGroupText
+                                    id="inputGroup-sizing-default"
+                                    style={{ width: '135px' }}
+                                  >
+                                    Wickets
+                                  </CInputGroupText>
+                                  <CFormInput
+                                    name={`data[${key}]wks`}
+                                    defaultValue={item.wks}
+                                    onChange={formik.handleChange}
+                                    id="wks"
+                                  />
+                                </CInputGroup>
+                              </div>
+                              <div className="col-md-2 col-sm">
+                                <CInputGroup className="mb-2">
+                                  <CInputGroupText
+                                    id="inputGroup-sizing-default"
+                                    style={{ width: '135px' }}
+                                  >
+                                    Catches
+                                  </CInputGroupText>
+                                  <CFormInput
+                                    name={`data[${key}]cs`}
+                                    defaultValue={item.cs}
+                                    onChange={formik.handleChange}
+                                    id="cs"
+                                  />
+                                </CInputGroup>
+                              </div>
+                              <div className="col-md-2 col-sm">
+                                <CInputGroup className="mb-2">
+                                  <CInputGroupText
+                                    id="inputGroup-sizing-default"
+                                    style={{ width: '135px' }}
+                                  >
+                                    Catches-WK
+                                  </CInputGroupText>
+                                  <CFormInput
+                                    name={`data[${key}]cwks`}
+                                    defaultValue={item.cwks}
+                                    onChange={formik.handleChange}
+                                    id="cwks"
+                                  />
+                                </CInputGroup>
+                              </div>
+                              <div className="col-md-2 col-sm">
+                                <CInputGroup className="mb-2">
+                                  <CInputGroupText
+                                    id="inputGroup-sizing-default"
+                                    style={{ width: '135px' }}
+                                  >
+                                    Stumpings
+                                  </CInputGroupText>
+                                  <CFormInput
+                                    name={`data[${key}]sts`}
+                                    defaultValue={item.sts}
+                                    onChange={formik.handleChange}
+                                    id="sts"
+                                  />
+                                </CInputGroup>
+                              </div>
+
+                              <div className="col-md-2 col-sm">
+                                <CInputGroup className="mb-2">
+                                  <CInputGroupText
+                                    id="inputGroup-sizing-default"
+                                    style={{ width: '135px' }}
+                                  >
+                                    Run-Out Direct
+                                  </CInputGroupText>
+                                  <CFormInput
+                                    name={`data[${key}]rods`}
+                                    defaultValue={item.rods}
+                                    onChange={formik.handleChange}
+                                    id="rods"
+                                  />
+                                </CInputGroup>
+                              </div>
+                              <div className="col-md-2 col-sm">
+                                <CInputGroup className="mb-2">
+                                  <CInputGroupText
+                                    id="inputGroup-sizing-default"
+                                    style={{ width: '135px' }}
+                                  >
+                                    Run-Out Assist
+                                  </CInputGroupText>
+                                  <CFormInput
+                                    name={`data[${key}]roas`}
+                                    defaultValue={item.roas}
+                                    onChange={formik.handleChange}
+                                    id="roas"
+                                  />
+                                </CInputGroup>
+                              </div>
+                              <div className="col-md-2 col-sm">
+                                <CInputGroup className="mb-2">
+                                  <CInputGroupText
+                                    id="inputGroup-sizing-default"
+                                    style={{ width: '135px' }}
+                                  >
+                                    Duck
+                                  </CInputGroupText>
+                                  <CFormSelect id="dks" values={item.dks} name={`data[${key}]dks`}>
+                                    <option defaultValue="0">No</option>
+                                    <option defaultValue="1">Yes</option>
+                                  </CFormSelect>
+                                </CInputGroup>
+                              </div>
+                              <div className="col-md-2 col-sm">
+                                <CInputGroup className="mb-2">
+                                  <CInputGroupText
+                                    id="inputGroup-sizing-default"
+                                    style={{ width: '135px' }}
+                                  >
+                                    Hat-Trick
+                                  </CInputGroupText>
+                                  <CFormSelect
+                                    id="hattrick"
+                                    values={item.hattrick}
+                                    name={`data[${key}]hattrick`}
+                                  >
+                                    <option defaultValue="0">No</option>
+                                    <option defaultValue="1">Yes</option>
+                                  </CFormSelect>
+                                </CInputGroup>
+                              </div>
+                              <div className="col-md-2 col-sm">
+                                <CInputGroup className="mb-2">
+                                  <CInputGroupText
+                                    id="inputGroup-sizing-default"
+                                    style={{ width: '135px' }}
+                                  >
+                                    Fantasy Points
+                                  </CInputGroupText>
+                                  <CFormInput
+                                    defaultValue={item.fantasy_points}
+                                    id="fantasy_points"
+                                    disabled={true}
+                                  />
+                                </CInputGroup>
+                              </div>
+                            </CRow>
+                          </CAccordionBody>
+                        </CAccordionItem>
+                      ))}
+                  </CAccordion>
+                )}
+              </CCardBody>
+            </CCard>
+          </CCol>
+
           <CCol xs={12}>
             <CCard className="mb-4">
               <CCardHeader>
