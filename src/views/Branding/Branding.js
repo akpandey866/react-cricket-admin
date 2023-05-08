@@ -72,7 +72,7 @@ const Branding = () => {
       <CCol xs={12}>
         <CCard className="mb-4">
           <CCardHeader>
-            <strong>Game Branding</strong>
+            <strong>Manage Branding</strong>
           </CCardHeader>
           <CCardBody>
             <CForm className="row g-3" onSubmit={formik.handleSubmit}>

@@ -32,9 +32,10 @@ const Table = (props) => {
   const columns = [
     {
       key: 'name',
+      label: 'Category Name',
       _style: { width: '20%' },
     },
-    { key: 'description', _style: { width: '60%' } },
+    { key: 'description', label: 'Category Description', _style: { width: '60%' } },
     { label: 'Created On', key: 'created_at', _style: { width: '20%' } },
     {
       key: 'show_details',

@@ -65,7 +65,7 @@ const PointSystem = () => {
           <CCol xs={12}>
             <CCard className="">
               <CCardHeader>
-                <strong>Feedback Point System</strong>
+                <strong>Rating Point System</strong>
               </CCardHeader>
               <CCardBody>
                 {loader ? (

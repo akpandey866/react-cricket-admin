@@ -29,6 +29,7 @@ const _nav = [
     to: '/dashboard',
     icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
   },
+
   {
     component: CNavGroup,
     name: 'Packages',
@@ -71,8 +72,12 @@ const _nav = [
     ],
   },
   {
-    component: CNavGroup,
+    component: CNavTitle,
     name: 'Game Setup',
+  },
+  {
+    component: CNavGroup,
+    name: 'Settings',
     to: '/',
     icon: <CIcon icon={cilVideogame} customClassName="nav-icon" />,
     items: [
@@ -83,22 +88,17 @@ const _nav = [
       },
       {
         component: CNavItem,
-        name: 'Basic Settings',
-        to: '/basic-settings',
-      },
-      {
-        component: CNavItem,
         name: 'Game Structure',
         to: '/game-structure',
       },
       {
         component: CNavItem,
-        name: 'Fantasy Values',
-        to: '/fantasy-values',
+        name: 'Rounds',
+        to: '/rounds',
       },
       {
         component: CNavItem,
-        name: 'Grades',
+        name: 'Comps',
         to: '/grades',
       },
       {
@@ -113,22 +113,35 @@ const _nav = [
       },
       {
         component: CNavItem,
-        name: 'Rounds',
-        to: '/rounds',
+        name: 'Bonus Points',
+        to: '/bonus-points',
       },
       {
         component: CNavItem,
-        name: 'Notifications',
-        to: '/game-notifications',
+        name: 'Fantasy Values',
+        to: '/fantasy-values',
+      },
+    ],
+  },
+  {
+    component: CNavGroup,
+    name: 'Controls',
+    to: '/',
+    icon: <CIcon icon={cilVideogame} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: 'Spots',
+        to: '/spots',
       },
       {
         component: CNavItem,
-        name: 'Power Control',
+        name: 'Powers',
         to: '/power-control',
       },
       {
         component: CNavItem,
-        name: 'Game Branding',
+        name: 'Branding',
         to: '/branding',
       },
       {
@@ -143,25 +156,30 @@ const _nav = [
       },
       {
         component: CNavItem,
-        name: 'Bonus Points',
-        to: '/bonus-points',
+        name: 'Notifications',
+        to: '/game-notifications',
+      },
+      {
+        component: CNavItem,
+        name: 'Articles',
+        to: '/articles',
       },
     ],
   },
   {
     component: CNavGroup,
-    name: 'Player Management',
+    name: 'Players',
     to: '/',
     icon: <CIcon icon={cilGamepad} customClassName="nav-icon" />,
     items: [
       {
         component: CNavItem,
-        name: 'Players',
+        name: 'Players List',
         to: '/players',
       },
       {
         component: CNavItem,
-        name: 'Availability ',
+        name: 'Player Availability ',
         to: '/availabilities',
       },
       {
@@ -169,165 +187,48 @@ const _nav = [
         name: 'Player Stats ',
         to: '/',
       },
+      {
+        component: CNavItem,
+        name: 'Player Import ',
+        to: '/',
+      },
     ],
   },
   {
-    component: CNavItem,
-    name: 'Fixture Management',
-    to: '/fixtures',
-    icon: <CIcon icon={cilBell} customClassName="nav-icon" />,
+    component: CNavGroup,
+    name: 'Fixtures',
+    to: '/',
+    icon: <CIcon icon={cilGamepad} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: 'Fixtures List',
+        to: '/fixtures',
+      },
+      {
+        component: CNavItem,
+        name: 'Completed Fixtures',
+        to: '/fixtures',
+      },
+    ],
   },
   {
     component: CNavGroup,
-    name: 'User Management',
+    name: 'Members',
     to: '/',
     icon: <CIcon icon={cilUser} customClassName="nav-icon" />,
     items: [
       {
         component: CNavItem,
-        name: 'Users',
+        name: 'Members List',
         to: '/users',
       },
       {
         component: CNavItem,
-        name: 'Verify Users ',
+        name: 'Verify Members ',
         to: '/verify-users',
       },
     ],
-  },
-  {
-    component: CNavGroup,
-    name: 'Bracket Battle',
-    to: '/',
-    icon: <CIcon icon={cilMugTea} customClassName="nav-icon" />,
-    badge: {
-      color: 'danger-gradient',
-      text: 'PRO',
-    },
-    items: [
-      {
-        component: CNavItem,
-        name: 'Activate Feature',
-        to: '/',
-      },
-      {
-        component: CNavItem,
-        name: 'Bracket Settings ',
-        to: '/bracket-battle',
-      },
-      {
-        component: CNavItem,
-        name: 'Bracket Round ',
-        to: '/',
-      },
-      {
-        component: CNavItem,
-        name: 'Round Points',
-        to: '/',
-      },
-    ],
-  },
-  {
-    component: CNavGroup,
-    name: 'Votes',
-    to: '/fixture-votes',
-    icon: <CIcon icon={cilIndentDecrease} customClassName="nav-icon" />,
-    badge: {
-      color: 'danger-gradient',
-      text: 'PRO',
-    },
-    items: [
-      {
-        component: CNavItem,
-        name: 'Activate Feature',
-        to: '/',
-      },
-      {
-        component: CNavItem,
-        name: 'Fixture Votes',
-        to: '/fixture-voting',
-      },
-    ],
-  },
-  {
-    component: CNavGroup,
-    name: 'Feedback Fantasy',
-    to: '/',
-    icon: <CIcon icon={cilElevator} customClassName="nav-icon" />,
-    badge: {
-      color: 'danger-gradient',
-      text: 'PRO',
-    },
-    items: [
-      {
-        component: CNavItem,
-        name: 'Activate Feature',
-        to: '/',
-      },
-      {
-        component: CNavItem,
-        name: 'Feedback Category Manager',
-        to: '/feedback-fantasy/category',
-      },
-      {
-        component: CNavItem,
-        name: 'Feedback Point System',
-        to: '/feedback-fantasy/point-system',
-      },
-      {
-        component: CNavItem,
-        name: 'Feedback Managers',
-        to: '/feedback-fantasy/managers',
-      },
-      {
-        component: CNavGroup,
-        name: 'Manager Access',
-        to: '/',
-        items: [
-          {
-            component: CNavItem,
-            name: 'By Team',
-            to: '/feedback-fantasy/manage-access-by-team',
-          },
-          {
-            component: CNavItem,
-            name: 'By Fixture',
-            to: '/feedback-fantasy/manage-access-by-fixture',
-          },
-        ],
-      },
-      {
-        component: CNavItem,
-        name: 'Display Settings',
-        to: '/feedback-fantasy/display-setting',
-      },
-    ],
-  },
-  {
-    component: CNavItem,
-    name: 'Bonus Cards',
-    to: '/bonus-cards',
-    icon: <CIcon icon={cilCalculator} customClassName="nav-icon" />,
-    badge: {
-      color: 'danger-gradient',
-      text: 'PRO',
-    },
-  },
-  {
-    component: CNavItem,
-    name: 'Team of the Round',
-    to: '/team-of-the-round',
-    icon: <CIcon icon={cilChartPie} customClassName="nav-icon" />,
-    badge: {
-      color: 'danger-gradient',
-      text: 'PRO',
-    },
-  },
-  {
-    component: CNavItem,
-    name: 'Articles',
-    to: '/articles',
-    icon: <CIcon icon={cilNotes} customClassName="nav-icon" />,
   },
   {
     component: CNavGroup,
@@ -357,10 +258,130 @@ const _nav = [
     ],
   },
   {
+    component: CNavTitle,
+    name: 'Pro Add-Ons',
+  },
+  {
+    component: CNavItem,
+    name: 'Bonus Cards',
+    to: '/bonus-cards',
+    icon: <CIcon icon={cilCalculator} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavGroup,
+    name: 'Bracket Battle',
+    to: '/',
+    icon: <CIcon icon={cilMugTea} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: 'Activate Feature',
+        to: '/',
+      },
+      {
+        component: CNavItem,
+        name: 'Bracket Settings ',
+        to: '/bracket-battle',
+      },
+      {
+        component: CNavItem,
+        name: 'Bracket Rounds',
+        to: '/',
+      },
+      {
+        component: CNavItem,
+        name: 'Round Points',
+        to: '/',
+      },
+    ],
+  },
+  {
+    component: CNavGroup,
+    name: 'Feedback Fantasy',
+    to: '/',
+    icon: <CIcon icon={cilElevator} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: 'Activate Feature',
+        to: '/',
+      },
+      {
+        component: CNavItem,
+        name: 'Categories',
+        to: '/feedback-fantasy/category',
+      },
+      {
+        component: CNavItem,
+        name: 'Ratings',
+        to: '/feedback-fantasy/point-system',
+      },
+      {
+        component: CNavItem,
+        name: 'Managers',
+        to: '/feedback-fantasy/managers',
+      },
+      {
+        component: CNavGroup,
+        name: 'Manager Access',
+        to: '/',
+        items: [
+          {
+            component: CNavItem,
+            name: 'By Team',
+            to: '/feedback-fantasy/manage-access-by-team',
+          },
+          {
+            component: CNavItem,
+            name: 'By Fixture',
+            to: '/feedback-fantasy/manage-access-by-fixture',
+          },
+        ],
+      },
+      {
+        component: CNavItem,
+        name: 'Display Setting',
+        to: '/feedback-fantasy/display-setting',
+      },
+    ],
+  },
+  {
+    component: CNavItem,
+    name: 'Team of the Round',
+    to: '/team-of-the-round',
+    icon: <CIcon icon={cilChartPie} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavGroup,
+    name: 'Votes',
+    to: '/fixture-votes',
+    icon: <CIcon icon={cilIndentDecrease} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: 'Activate Feature',
+        to: '/',
+      },
+      {
+        component: CNavItem,
+        name: 'Fixture Votes',
+        to: '/fixture-voting',
+      },
+    ],
+  },
+  {
+    component: CNavTitle,
+    name: 'Billings',
+  },
+  {
     component: CNavItem,
     name: 'Invoices',
     to: '/',
     icon: <CIcon icon={cilDrop} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavTitle,
+    name: 'Links',
   },
   {
     component: CNavItem,

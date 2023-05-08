@@ -57,7 +57,7 @@ const AddForm = (props) => {
       <CForm className="row g-3" onSubmit={formik.handleSubmit}>
         <CCol md={6}>
           <CFormSelect
-            aria-label="Select User"
+            aria-label="Select Member"
             name="user_id"
             className={
               'form-control' +

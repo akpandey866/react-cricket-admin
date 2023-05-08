@@ -54,7 +54,7 @@ const GameIntro = (props) => {
   return (
     <CCard className="mb-4">
       <CCardHeader>
-        <strong>Game Intro</strong>
+        <strong>Game Videos & Photos</strong>
       </CCardHeader>
       <CCardBody>
         <CForm className="row g-3" onSubmit={formik.handleSubmit}>

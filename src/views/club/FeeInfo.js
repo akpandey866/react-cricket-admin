@@ -82,7 +82,7 @@ const FeeInfo = (props) => {
   return (
     <CCard className="mb-4">
       <CCardHeader>
-        <strong>Fees Information</strong>
+        <strong>Entry Fees & Welcome Message</strong>
       </CCardHeader>
       <CCardBody>
         <CForm className="row g-3" onSubmit={formik.handleSubmit}>
@@ -100,7 +100,7 @@ const FeeInfo = (props) => {
               id="entry_price"
             />
           </CCol>
-          <CCol md={6}>
+          <CCol md={12}>
             <CFormLabel htmlFor="Entry Fee Info">Entry Fee Info</CFormLabel>
             <Editor
               toolbarHidden={false}
@@ -109,8 +109,8 @@ const FeeInfo = (props) => {
               editorStyle={{ border: '1px solid', height: '150px' }}
             />
           </CCol>
-          <CCol md={6}>
-            <CFormLabel htmlFor="About Game">About Game</CFormLabel>
+          <CCol md={12}>
+            <CFormLabel htmlFor="About Game">Welcome Message</CFormLabel>
             <Editor
               toolbarHidden={false}
               editorState={message.editorMessageState}

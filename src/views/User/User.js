@@ -11,7 +11,7 @@ const User = () => {
           <CCardHeader>
             <CRow>
               <CCol xs={10}>
-                <strong>Add</strong> <small> User</small>
+                <strong>Create Member</strong>
               </CCol>
             </CRow>
           </CCardHeader>
@@ -20,6 +20,13 @@ const User = () => {
           </CCardBody>
         </CCard>
         <CCard className="mb-4">
+          <CCardHeader>
+            <CRow>
+              <CCol xs={10}>
+                <strong>Manage Members</strong>
+              </CCol>
+            </CRow>
+          </CCardHeader>
           <CCardBody>
             <Table users={users} />
           </CCardBody>

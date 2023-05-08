@@ -11,7 +11,7 @@ const Grade = () => {
           <CCardHeader>
             <CRow>
               <CCol xs={10}>
-                <strong>Add</strong> <small> Grade</small>
+                <strong>Create Grades</strong>
               </CCol>
             </CRow>
           </CCardHeader>
@@ -20,6 +20,13 @@ const Grade = () => {
           </CCardBody>
         </CCard>
         <CCard className="mb-4">
+          <CCardHeader>
+            <CRow>
+              <CCol xs={10}>
+                <strong>Manage Grades</strong>
+              </CCol>
+            </CRow>
+          </CCardHeader>
           <CCardBody>
             <Table users={users} />
           </CCardBody>

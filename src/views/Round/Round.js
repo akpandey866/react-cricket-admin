@@ -12,7 +12,7 @@ const Round = () => {
           <CCardHeader>
             <CRow>
               <CCol xs={10}>
-                <strong>Add</strong> <small> Round</small>
+                <strong>Create Rounds</strong>
               </CCol>
             </CRow>
           </CCardHeader>
@@ -21,6 +21,13 @@ const Round = () => {
           </CCardBody>
         </CCard>
         <CCard className="mb-4">
+          <CCardHeader>
+            <CRow>
+              <CCol xs={10}>
+                <strong>Manage Rounds</strong>
+              </CCol>
+            </CRow>
+          </CCardHeader>
           <CCardBody>
             <Table users={users} />
           </CCardBody>

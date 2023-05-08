@@ -19,14 +19,11 @@ const Table = (props) => {
   const [loading, setLoading] = useState()
   const [visibleHorizontal, setVisibleHorizontal] = useState(false)
   const [selectedPlayerId, setSelectedPlayerId] = useState(0)
-  const showEditForm = (formVal, playerId) => {
-    setVisibleHorizontal(formVal)
-  }
   const [activePage, setActivePage] = useState(1)
   const [columnFilter, setColumnFilter] = useState([])
   const [columnSorter, setColumnSorter] = useState(null)
   const [itemsPerPage, setItemsPerPage] = useState(20)
-  const [users, setUsers] = useState({})
+  const [users, setUsers] = useState(props.users)
   const navigate = useNavigate()
 
   const [details, setDetails] = useState([])
@@ -176,7 +173,11 @@ const Table = (props) => {
                         <strong>Edit Player</strong>
                       </CCardHeader>
                       <CCardBody>
-                        <EditForm playerId={item.id} selectedPlayerId={selectedPlayerId} />
+                        <EditForm
+                          playerId={item.id}
+                          selectedPlayerId={selectedPlayerId}
+                          setUsers={setUsers}
+                        />
                       </CCardBody>
                     </CCard>
                   </CCollapse>

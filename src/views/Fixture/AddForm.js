@@ -126,9 +126,9 @@ const AddForm = (props) => {
     <>
       <CForm className="row g-3" onSubmit={formik.handleSubmit}>
         <CCol md={3}>
-          <CFormLabel htmlFor="grade">Grade *</CFormLabel>
+          <CFormLabel htmlFor="grade">Comp *</CFormLabel>
           <CFormSelect
-            aria-label="Select Grade"
+            aria-label="Select Comp"
             name="grade"
             className={
               'form-control' + (formik.errors.grade && formik.touched.grade ? ' is-invalid' : '')
@@ -270,7 +270,7 @@ const AddForm = (props) => {
           )}
         </CCol>
         <CCol md={3}>
-          <CFormLabel htmlFor="alast_name">Vanue</CFormLabel>
+          <CFormLabel htmlFor="alast_name">Venue</CFormLabel>
           <input
             type="text"
             name="vanue"
@@ -278,7 +278,7 @@ const AddForm = (props) => {
               'form-control' + (formik.errors.vanue && formik.touched.vanue ? ' is-invalid' : '')
             }
             id="vanue"
-            placeholder="Vanue"
+            placeholder="Venue"
             defaultValue={formik.values.vanue}
             onChange={formik.handleChange}
           />
@@ -287,7 +287,7 @@ const AddForm = (props) => {
           )}
         </CCol>
         <CCol md={3}>
-          <CFormLabel htmlFor="alast_name">Oppostion Club</CFormLabel>
+          <CFormLabel htmlFor="alast_name">Oppostion</CFormLabel>
           <input
             type="text"
             name="opposition_club"
@@ -296,7 +296,7 @@ const AddForm = (props) => {
               (formik.errors.opposition_club && formik.touched.opposition_club ? ' is-invalid' : '')
             }
             id="opposition_club"
-            placeholder="Oppostion Club"
+            placeholder="Oppostion"
             defaultValue={formik.values.opposition_club}
             onChange={formik.handleChange}
           />

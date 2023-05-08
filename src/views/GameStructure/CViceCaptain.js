@@ -96,7 +96,7 @@ const CViceCaptain = () => {
     // })
   }
   return (
-    <CCard className="mt-4">
+    <CCard className="mt-3 mb-10">
       <CCardHeader>
         <strong>Captain / Vice-Captain</strong>
       </CCardHeader>

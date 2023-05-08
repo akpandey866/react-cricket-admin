@@ -66,10 +66,10 @@ const AddForm = (props) => {
   return (
     <>
       <CForm className="row g-3" onSubmit={formik.handleSubmit}>
-        <CCol md={6}>
-          <CFormLabel htmlFor="title">Name</CFormLabel>
+        <CCol md={12}>
+          <CFormLabel htmlFor="title">Category Name</CFormLabel>
           <CFormInput
-            placeholder="Name"
+            placeholder="Category Name"
             className={
               'form-control' + (formik.errors.title && formik.touched.title ? ' is-invalid' : '')
             }
@@ -82,8 +82,8 @@ const AddForm = (props) => {
             <CFormFeedback invalid>{formik.errors.title}</CFormFeedback>
           )}
         </CCol>
-        <CCol md={6}>
-          <CFormLabel htmlFor="message">Description</CFormLabel>
+        <CCol md={12}>
+          <CFormLabel htmlFor="message">Category Description</CFormLabel>
           <Editor
             toolbarHidden={false}
             editorState={description.editorState}

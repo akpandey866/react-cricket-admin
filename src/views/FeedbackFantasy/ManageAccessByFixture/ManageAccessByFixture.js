@@ -31,7 +31,7 @@ const ManageAccessByFixture = () => {
           <CCardHeader>
             <CRow>
               <CCol xs={10}>
-                <strong>Manage Access</strong> <small>By Fixtures</small>
+                <strong>Assign Access By Fixtures</strong>
               </CCol>
             </CRow>
           </CCardHeader>
@@ -49,7 +49,7 @@ const ManageAccessByFixture = () => {
           <CCardHeader>
             <CRow>
               <CCol xs={10}>
-                <strong>Manager List</strong>
+                <strong>Manage Access By Fixtures</strong>
               </CCol>
             </CRow>
           </CCardHeader>

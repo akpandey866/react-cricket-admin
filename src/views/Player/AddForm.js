@@ -13,7 +13,8 @@ import * as Yup from 'yup'
 import PlayerService from 'src/service/PlayerService'
 import { useNavigate } from 'react-router-dom'
 import ToastComponent from 'src/components/common/TaostComponent'
-const AddForm = () => {
+import PreviewImage from '../PreviewImage'
+const AddForm = (props) => {
   const navigate = useNavigate()
   const [loader, setLoader] = useState(false)
 
@@ -45,31 +46,34 @@ const AddForm = () => {
       position: '',
       value: '',
       team: '',
+      bowl_style: '',
+      bat_style: '',
+      image: null,
     },
     enableReinitialize: true,
     validationSchema,
     onSubmit: (data, actions) => {
-      actions.resetForm({
-        values: {
-          grade: '',
-        },
-      })
+      var formData = new FormData()
+      formData.append('bat_style', data.bat_style)
+      formData.append('bowl_style', data.bowl_style)
+      formData.append('first_name', data.first_name)
+      formData.append('last_name', data.last_name)
+      formData.append('position', data.position)
+      formData.append('team', data.team)
+      formData.append('value', data.value)
+      formData.append('image', data.image)
       setLoader(true)
-      PlayerService.savePlayer(data)
+      PlayerService.savePlayer(formData)
         .then((res) => {
           if (res.status === 200) {
+            props.setUsers(res.data)
             ToastComponent(res.message, 'success')
             setLoader(false)
-            navigate('/players')
-          } else {
-            setLoader(false)
-            ToastComponent(res.message, 'error')
           }
         })
         .catch((e) => {
-          ToastComponent(e.response?.data?.message, 'error')
+          ToastComponent('Something went wrong', 'error')
           setLoader(false)
-          ToastComponent(e.response?.data?.message, 'error')
         })
     },
   })
@@ -236,10 +240,37 @@ const AddForm = () => {
         </CCol>
         <CCol md={3}>
           <CFormLabel htmlFor="image">Image</CFormLabel>
-          <CFormInput type="file" id="playerImage" />
-          {formik.errors.position && formik.touched.position && (
-            <CFormFeedback invalid>{formik.errors.position}</CFormFeedback>
-          )}
+          <CFormInput
+            type="file"
+            id="formFile"
+            name="image"
+            className={
+              formik.touched.image
+                ? formik.errors.image
+                  ? 'form-control input_user is-invalid'
+                  : 'form-control input_user is-valid'
+                : 'form-control'
+            }
+            onChange={(event) => {
+              formik.setTouched({
+                ...formik.touched,
+                image: true,
+              })
+              formik.setFieldValue('image', event.target.files[0])
+            }}
+          />
+          <br></br>
+          {formik.values.image ? (
+            <PreviewImage
+              className={{ margin: 'auto' }}
+              width={100}
+              height={100}
+              file={formik.values.image}
+            />
+          ) : null}
+          {formik.touched.image && formik.errors.image ? (
+            <CFormFeedback invalid>{formik.errors.image}</CFormFeedback>
+          ) : null}
         </CCol>
 
         <CCol md={6}>

@@ -3,7 +3,6 @@ import { CButton, CCard, CCardBody, CCardHeader, CCol, CCollapse, CRow } from '@
 import AddForm from './AddForm'
 import Table from './Table'
 const Team = () => {
-  const [visibleHorizontal, setVisibleHorizontal] = useState(false)
   return (
     <CRow>
       <CCol xs={12}>
@@ -11,27 +10,22 @@ const Team = () => {
           <CCardHeader>
             <CRow>
               <CCol xs={10}>
-                <strong>Add</strong> <small> Team</small>
-              </CCol>
-              <CCol xs={2}>
-                <CButton
-                  className="mb-3"
-                  onClick={() => setVisibleHorizontal(!visibleHorizontal)}
-                  aria-expanded={visibleHorizontal}
-                  aria-controls="collapseWidthExample"
-                >
-                  Add
-                </CButton>
+                <strong>Add Teams</strong>
               </CCol>
             </CRow>
           </CCardHeader>
           <CCardBody>
-            <CCollapse id="collapseWidthExample" horizontal visible={visibleHorizontal}>
-              <AddForm />
-            </CCollapse>
+            <AddForm />
           </CCardBody>
         </CCard>
         <CCard className="mb-4">
+          <CCardHeader>
+            <CRow>
+              <CCol xs={10}>
+                <strong>Manage Teams</strong>
+              </CCol>
+            </CRow>
+          </CCardHeader>
           <CCardBody>
             <Table />
           </CCardBody>

@@ -35,7 +35,7 @@ const Potm = (props) => {
         <thead>
           <tr>
             <th>Team</th>
-            <th>Bonus Fantasy Point</th>
+            <th>Bonus Points</th>
           </tr>
         </thead>
         <tbody>

@@ -83,7 +83,7 @@ const GameSpot = () => {
     })
   }
   return (
-    <CCard className="mt-4 h-100">
+    <CCard className="mt-3 mb-10">
       <CCardHeader>
         <strong>Trade</strong>
       </CCardHeader>

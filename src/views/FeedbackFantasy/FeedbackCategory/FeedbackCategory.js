@@ -11,7 +11,7 @@ const FeedbackCategory = () => {
           <CCardHeader>
             <CRow>
               <CCol xs={10}>
-                <strong>Add</strong> <small> Category</small>
+                <strong>Create Category</strong>
               </CCol>
             </CRow>
           </CCardHeader>
@@ -20,6 +20,13 @@ const FeedbackCategory = () => {
           </CCardBody>
         </CCard>
         <CCard className="mb-4">
+          <CCardHeader>
+            <CRow>
+              <CCol xs={10}>
+                <strong>Manage Categories</strong>
+              </CCol>
+            </CRow>
+          </CCardHeader>
           <CCardBody>
             <Table users={users} />
           </CCardBody>

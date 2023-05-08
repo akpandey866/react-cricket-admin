@@ -11,7 +11,7 @@ const GameNotification = () => {
           <CCardHeader>
             <CRow>
               <CCol xs={10}>
-                <strong>Add</strong> <small> Notification</small>
+                <strong>Add Notification</strong>
               </CCol>
             </CRow>
           </CCardHeader>
@@ -20,6 +20,13 @@ const GameNotification = () => {
           </CCardBody>
         </CCard>
         <CCard className="mb-4">
+          <CCardHeader>
+            <CRow>
+              <CCol xs={10}>
+                <strong>Manage Notifications</strong>
+              </CCol>
+            </CRow>
+          </CCardHeader>
           <CCardBody>
             <Table users={users} />
           </CCardBody>

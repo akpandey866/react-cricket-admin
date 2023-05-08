@@ -18,7 +18,7 @@ const PlayerAvailability = () => {
           <CCardHeader>
             <CRow>
               <CCol xs={10}>
-                <strong>Add</strong> <small> Availability</small>
+                <strong>Create Availability</strong>
               </CCol>
             </CRow>
           </CCardHeader>
@@ -27,6 +27,13 @@ const PlayerAvailability = () => {
           </CCardBody>
         </CCard>
         <CCard className="mb-4">
+          <CCardHeader>
+            <CRow>
+              <CCol xs={10}>
+                <strong>Manage Availability</strong>
+              </CCol>
+            </CRow>
+          </CCardHeader>
           <CCardBody>
             <Table users={users} multiOption={multiOption} />
           </CCardBody>

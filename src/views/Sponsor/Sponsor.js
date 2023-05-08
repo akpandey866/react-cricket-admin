@@ -11,7 +11,7 @@ const Sponsor = () => {
           <CCardHeader>
             <CRow>
               <CCol xs={10}>
-                <strong>Add</strong> <small> Sponsor</small>
+                <strong>Create Sponsors</strong>
               </CCol>
             </CRow>
           </CCardHeader>
@@ -20,6 +20,13 @@ const Sponsor = () => {
           </CCardBody>
         </CCard>
         <CCard className="mb-4">
+          <CCardHeader>
+            <CRow>
+              <CCol xs={10}>
+                <strong>Manage Sponsors</strong>
+              </CCol>
+            </CRow>
+          </CCardHeader>
           <CCardBody>
             <Table users={users} />
           </CCardBody>

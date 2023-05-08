@@ -1,5 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { CButton, CCard, CCardBody, CCol, CCollapse, CRow, CSmartTable } from '@coreui/react-pro'
+import {
+  CButton,
+  CCard,
+  CCardBody,
+  CCardHeader,
+  CCol,
+  CCollapse,
+  CRow,
+  CSmartTable,
+} from '@coreui/react-pro'
 import { toast } from 'react-toastify'
 
 import { useNavigate } from 'react-router-dom'
@@ -20,9 +29,8 @@ const GradePoint = () => {
   const [details, setDetails] = useState([])
   const columns = [
     {
-      label: 'Grade',
+      label: 'Grade Name',
       key: 'grade',
-
       filter: false,
     },
     {
@@ -92,6 +100,13 @@ const GradePoint = () => {
     <CRow>
       <CCol xs={12}>
         <CCard className="mb-4">
+          <CCardHeader>
+            <CRow>
+              <CCol xs={10}>
+                <strong>Manage Point System</strong>
+              </CCol>
+            </CRow>
+          </CCardHeader>
           <CCardBody>
             <CSmartTable
               columns={columns}
@@ -115,7 +130,7 @@ const GradePoint = () => {
                             toggleDetails(item.id)
                           }}
                         >
-                          {'Edit'}
+                          {'Edit Point System'}
                         </CButton>
                       </td>
                     </>

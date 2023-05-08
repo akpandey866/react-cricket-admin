@@ -16,7 +16,7 @@ const Fixture = () => {
           <CCardHeader>
             <CRow>
               <CCol xs={10}>
-                <strong>Add</strong> <small> Fixture</small>
+                <strong>Create Fixture</strong>
               </CCol>
             </CRow>
           </CCardHeader>
@@ -25,6 +25,13 @@ const Fixture = () => {
           </CCardBody>
         </CCard>
         <CCard className="mb-4">
+          <CCardHeader>
+            <CRow>
+              <CCol xs={10}>
+                <strong>Manage Fixtures List</strong>
+              </CCol>
+            </CRow>
+          </CCardHeader>
           <CCardBody>
             <Table />
           </CCardBody>

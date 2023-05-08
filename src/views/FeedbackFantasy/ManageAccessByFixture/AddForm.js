@@ -109,7 +109,9 @@ const AddForm = (props) => {
           </table>
         </CCol>
         <CCol md={6}>
-          <CFormLabel htmlFor="manager">Manager</CFormLabel>
+          <CFormLabel htmlFor="manager">
+            <strong>Manager</strong>{' '}
+          </CFormLabel>
           <CFormSelect
             aria-label="manager"
             name="user"
@@ -126,7 +128,7 @@ const AddForm = (props) => {
             }}
             id="user"
           >
-            <option value={0}>Select User</option>
+            <option value={0}>Select Member</option>
             {props.userList &&
               props.userList.map((item, key) => (
                 <option value={item?.user_id} key={key}>

@@ -254,7 +254,7 @@ const AddForm = (props) => {
         </CCol>
 
         <CCol md={4}></CCol>
-        <CCol md={8}>
+        <CCol md={12}>
           <CFormLabel htmlFor="Entry Fee Info">Description</CFormLabel>
           <Editor
             toolbarHidden={false}

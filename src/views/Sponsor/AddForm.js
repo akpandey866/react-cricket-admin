@@ -111,7 +111,7 @@ const AddForm = (props) => {
           )}
         </CCol>
         <CCol md={4}>
-          <CFormLabel htmlFor="website">website</CFormLabel>
+          <CFormLabel htmlFor="website">Website</CFormLabel>
           <CFormInput
             placeholder="Website"
             classwebsite={

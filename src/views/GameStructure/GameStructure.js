@@ -1,16 +1,4 @@
-import {
-  CCard,
-  CCardHeader,
-  CCardBody,
-  CCol,
-  CRow,
-  CFormLabel,
-  CFormSelect,
-  CForm,
-  CFormInput,
-  CLoadingButton,
-  CFormCheck,
-} from '@coreui/react-pro'
+import { CCard, CCardHeader, CCardBody, CCol, CRow } from '@coreui/react-pro'
 import Tab from 'react-bootstrap/Tab'
 import Tabs from 'react-bootstrap/Tabs'
 import React, { useEffect, useState } from 'react'
@@ -45,35 +33,33 @@ const GameStructure = () => {
   }, [])
   return (
     <CRow>
-      <CCol xs={6}>
-        <CCard className="mb-10 h-100">
+      <CCol xs={12}>
+        <CCard className="mb-4">
           <CCardHeader>
-            <strong>Game Structure & Salary Cap</strong>
+            <strong>Game Structure</strong>
           </CCardHeader>
           <CCardBody>
-            <Tabs
-              id="controlled-tab-example"
-              activeKey={key}
-              onSelect={(k) => setKey(k)}
-              className="mb-3"
-            >
-              <Tab eventKey="home" title="Game Structure">
-                <GameStrucurePage game_structure={gameStuctureData} />
-              </Tab>
-              <Tab eventKey="profile" title="Salary Cap">
-                <SalaryCapPage />
-              </Tab>
-            </Tabs>
+            <GameStrucurePage game_structure={gameStuctureData} />
           </CCardBody>
         </CCard>
       </CCol>
-      <CCol xs={6}>
+      <CCol xs={12}>
+        <CCard className="mb-4">
+          <CCardHeader>
+            <strong>Salary Cap</strong>
+          </CCardHeader>
+          <CCardBody>
+            <SalaryCapPage />
+          </CCardBody>
+        </CCard>
+      </CCol>
+      <CCol xs={12}>
         <GameSpot gameSpotData={gameSpotData} />
       </CCol>
-      <CCol xs={6}>
+      <CCol xs={12} className="mb-4">
         <Trade />
       </CCol>
-      <CCol xs={6}>
+      <CCol xs={12} className="mb-4">
         <CViceCaptain />
       </CCol>
     </CRow>

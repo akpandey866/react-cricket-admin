@@ -22,7 +22,7 @@ const Table = (props) => {
         <thead>
           <tr>
             <th>SN</th>
-            <th>User Name</th>
+            <th>Member</th>
             <th>Email</th>
             <th>Created On</th>
             <th>Action</th>

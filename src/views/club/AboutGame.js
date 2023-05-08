@@ -66,19 +66,10 @@ const AboutGame = (props) => {
   return (
     <CCard className="mb-4">
       <CCardHeader>
-        <strong>About Game</strong>
+        <strong>Location & Timezone</strong>
       </CCardHeader>
       <CCardBody>
         <CForm className="row g-3" onSubmit={formik.handleSubmit}>
-          <CCol md={6}>
-            <CFormLabel htmlFor="Sport ">Sport </CFormLabel>
-            <CFormInput
-              placeholder="Cricket"
-              aria-label="youtube"
-              defaultValue={'cricket'}
-              disabled
-            />
-          </CCol>
           <CCol md={6}>
             <CFormLabel htmlFor="Country">Country</CFormLabel>
             <CFormSelect
@@ -149,6 +140,7 @@ const AboutGame = (props) => {
               name="timezone"
             />
           </CCol>
+          <CCol md={6}></CCol>
           <CCol md={6}>
             <CLoadingButton type="submit" color="success" variant="outline" loading={loading}>
               Submit

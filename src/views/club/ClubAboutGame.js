@@ -6,13 +6,10 @@ import {
   CCol,
   CFormInput,
   CFormLabel,
-  CFormTextarea,
-  CFormSelect,
   CInputGroup,
   CLoadingButton,
   CInputGroupText,
   CFormCheck,
-  CForm,
   CRow,
   CFormFeedback,
   CDatePicker,
@@ -28,6 +25,7 @@ import GameSocial from './GameSocial'
 import GameIntro from './GameIntro'
 import AboutGame from './AboutGame'
 import FeeInfo from './FeeInfo'
+import BasicSetting from './BasicSetting'
 
 const ClubAboutGame = () => {
   const [isLoading, setLoading] = useState(true)
@@ -154,6 +152,22 @@ const ClubAboutGame = () => {
     <Loader />
   ) : (
     <CRow>
+      <CCol xs={12}>
+        <BasicSetting />
+      </CCol>
+      <CCol xs={12}>
+        <AboutGame
+          userDetail={userDetail}
+          countryList={countryList}
+          stateList={stateList}
+          setStateList={setStateList}
+        />
+      </CCol>
+      {/* About Fee Information start here */}
+      <CCol xs={12}>
+        <FeeInfo userDetail={userDetail} />
+      </CCol>
+      {/* Game admin section  */}
       <CCol xs={12}>
         <CCard className="mb-4">
           <CCardHeader>
@@ -343,7 +357,6 @@ const ClubAboutGame = () => {
           </CCardBody>
         </CCard>
       </CCol>
-
       {/* Game Social Sectin start here */}
       <CCol xs={12}>
         <GameSocial userDetail={userDetail} />
@@ -353,18 +366,6 @@ const ClubAboutGame = () => {
         <GameIntro userFile={userFile} />
       </CCol>
       {/* About Game Sectin start here */}
-      <CCol xs={12}>
-        <AboutGame
-          userDetail={userDetail}
-          countryList={countryList}
-          stateList={stateList}
-          setStateList={setStateList}
-        />
-      </CCol>
-      {/* About Fee Information start here */}
-      <CCol xs={12}>
-        <FeeInfo userDetail={userDetail} />
-      </CCol>
     </CRow>
   )
 }

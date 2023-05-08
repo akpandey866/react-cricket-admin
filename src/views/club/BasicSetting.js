@@ -71,7 +71,7 @@ const BasicSetting = (props) => {
   return (
     <CCard className="mb-4">
       <CCardHeader>
-        <strong>Basic Setting</strong>
+        <strong>Game Details</strong>
       </CCardHeader>
       <CCardBody>
         <CForm className="row g-3" onSubmit={formik.handleSubmit}>

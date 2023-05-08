@@ -46,7 +46,7 @@ const GameSocial = (props) => {
   return (
     <CCard className="mb-4">
       <CCardHeader>
-        <strong>Game Social</strong>
+        <strong>Game Social Links</strong>
       </CCardHeader>
       <CCardBody>
         <CForm className="row g-3" onSubmit={formik.handleSubmit}>

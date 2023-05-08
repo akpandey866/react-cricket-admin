@@ -15,14 +15,28 @@ import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import CommonService from 'src/service/CommonService'
 import ToastComponent from 'src/components/common/TaostComponent'
+import { useEffect } from 'react'
 const GameSpot = (props) => {
+  const [gameSpotData, setGameSpotData] = useState({})
+  useEffect(() => {
+    CommonService.gameStructureInfo()
+      .then((res) => {
+        if (res.status === 200) {
+          setGameSpotData(res.game_spot)
+        }
+      })
+      .catch((e) => {
+        console.log('E=> ', e)
+        ToastComponent(e.response?.data?.message, 'error')
+      })
+  }, [])
   const [loader, setLoader] = useState(false)
   const validationSchema = Yup.object().shape({
     user_number: Yup.string().required('User Number is required'),
   })
   const formik = useFormik({
     initialValues: {
-      user_number: props.gameSpotData.user_number,
+      user_number: gameSpotData.user_number,
     },
     enableReinitialize: true,
     validationSchema,
@@ -43,17 +57,17 @@ const GameSpot = (props) => {
     },
   })
   return (
-    <CCard className="mb-10 h-100">
+    <CCard className="mb-3 h-100">
       <CCardHeader>
         <strong>Game Spots Allowed</strong>
       </CCardHeader>
       <CCardBody>
         <CForm className="row g-3" onSubmit={formik.handleSubmit}>
           <CRow className="">
-            <CFormLabel htmlFor="staticEmail" className="col-sm-2 col-form-label">
+            <CFormLabel htmlFor="staticEmail" className="col-sm-4 col-form-label">
               Use Limit
             </CFormLabel>
-            <div className="col-sm-10 mb-3 pt-2">
+            <div className="col-sm-4 mb-8 pt-2">
               <CFormInput
                 type="number"
                 className={
@@ -61,7 +75,7 @@ const GameSpot = (props) => {
                   (formik.errors.user_number && formik.touched.user_number ? ' is-invalid' : '')
                 }
                 id="user_number"
-                defaultValue={props.gameSpotData.user_number}
+                defaultValue={gameSpotData.user_number}
                 onChange={formik.handleChange}
                 name="user_number"
               />

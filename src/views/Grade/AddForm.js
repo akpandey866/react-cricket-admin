@@ -35,10 +35,8 @@ const AddForm = (props) => {
         .then((res) => {
           if (res.status === 200) {
             props.setUsers(res.data)
-
             ToastComponent(res.message, 'success')
             setLoader(false)
-            navigate('/grades')
           } else {
             setLoader(false)
             ToastComponent(res.message, 'error')

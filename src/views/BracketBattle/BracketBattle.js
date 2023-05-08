@@ -111,7 +111,7 @@ const BracketBattle = () => {
           <CCardHeader>
             <CRow>
               <CCol xs={10}>
-                <strong>Add</strong> <small> Bracket Setting</small>
+                <strong>Create Bracket Battle</strong>
               </CCol>
             </CRow>
           </CCardHeader>
@@ -193,7 +193,7 @@ const BracketBattle = () => {
       <CCol xs={12}>
         <CCard className="mb-4">
           <CCardHeader>
-            <strong>Bracket Rounds</strong>
+            <strong>Manage Bracket Rounds</strong>
           </CCardHeader>
           <CCardBody>
             <table className="main-table table innertable">

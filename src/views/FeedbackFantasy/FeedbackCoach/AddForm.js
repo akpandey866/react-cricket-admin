@@ -70,7 +70,7 @@ const AddForm = (props) => {
             }}
             id="user"
           >
-            <option value={0}>Select User</option>
+            <option value={0}>Select Member</option>
             {props.managerDropdown &&
               props.managerDropdown.map((item, key) => (
                 <option value={item?.user_id} key={key}>

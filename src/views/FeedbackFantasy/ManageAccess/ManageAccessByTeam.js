@@ -33,7 +33,7 @@ const ManageAccessByTeam = () => {
           <CCardHeader>
             <CRow>
               <CCol xs={10}>
-                <strong>Manage Access</strong> <small>By Teams</small>
+                <strong>Assign Access By Teams</strong>
               </CCol>
             </CRow>
           </CCardHeader>
@@ -49,6 +49,13 @@ const ManageAccessByTeam = () => {
           </CCardBody>
         </CCard>
         <CCard className="mb-4">
+          <CCardHeader>
+            <CRow>
+              <CCol xs={10}>
+                <strong>Manage Access By Teams</strong>
+              </CCol>
+            </CRow>
+          </CCardHeader>
           <CCardBody>
             <Table users={users} setUsers={setUsers} setLoader={setLoader} />
           </CCardBody>

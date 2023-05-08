@@ -34,6 +34,7 @@ import PlayerStructure from './views/Player/PlayerStructure/PlayerStructure'
 import BracketBattle from './views/BracketBattle/BracketBattle'
 import BattleListing from './views/BracketBattle/BattleListing'
 import MatchResult from './views/BracketBattle/MatchResult'
+import GameSpot from './views/GameStructure/GameSpot'
 
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
 const Colors = React.lazy(() => import('./views/theme/colors/Colors'))
@@ -106,6 +107,7 @@ const routes = [
   { path: '/basic-settings', name: 'BasicSetting', element: BasicSetting },
   { path: '/club-about-game', name: 'BasicSetting', element: ClubAboutGame },
   { path: '/game-structure', name: 'Game Structure & Salary Cap', element: GameStructure },
+  { path: '/spots', name: 'Game Spot', element: GameSpot },
   { path: '/fantasy-values', name: 'Fantasy Values', element: Index },
   { path: '/players', name: 'Players', element: Player },
   { path: '/players/player-structure', name: 'Players Structure', element: PlayerStructure },

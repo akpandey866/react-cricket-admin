@@ -29,7 +29,7 @@ const FeedbackCoach = () => {
           <CCardHeader>
             <CRow>
               <CCol xs={10}>
-                <strong>Add</strong> <small> Feedback Manager</small>
+                <strong>Create Feedback Manager</strong>
               </CCol>
             </CRow>
           </CCardHeader>
@@ -42,6 +42,13 @@ const FeedbackCoach = () => {
           </CCardBody>
         </CCard>
         <CCard className="mb-4">
+          <CCardHeader>
+            <CRow>
+              <CCol xs={10}>
+                <strong>Manage Feedback Managers</strong>
+              </CCol>
+            </CRow>
+          </CCardHeader>
           <CCardBody>
             <Table users={users} setUsers={setUsers} setLoader={setLoader} />
           </CCardBody>

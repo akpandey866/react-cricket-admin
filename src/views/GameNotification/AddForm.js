@@ -66,7 +66,7 @@ const AddForm = (props) => {
   return (
     <>
       <CForm className="row g-3" onSubmit={formik.handleSubmit}>
-        <CCol md={6}>
+        <CCol md={12}>
           <CFormLabel htmlFor="title">Title</CFormLabel>
           <CFormInput
             placeholder="Title"
@@ -82,7 +82,7 @@ const AddForm = (props) => {
             <CFormFeedback invalid>{formik.errors.title}</CFormFeedback>
           )}
         </CCol>
-        <CCol md={6}>
+        <CCol md={12}>
           <CFormLabel htmlFor="message">Message</CFormLabel>
           <Editor
             toolbarHidden={false}

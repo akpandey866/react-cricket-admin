@@ -26,7 +26,7 @@ const VerifyUser = () => {
           <CCardHeader>
             <CRow>
               <CCol xs={10}>
-                <strong>Add</strong> <small> Verify User</small>
+                <strong>Verify Member</strong>
               </CCol>
             </CRow>
           </CCardHeader>
@@ -35,6 +35,13 @@ const VerifyUser = () => {
           </CCardBody>
         </CCard>
         <CCard className="mb-4">
+          <CCardHeader>
+            <CRow>
+              <CCol xs={10}>
+                <strong>Manage Verified Members</strong>
+              </CCol>
+            </CRow>
+          </CCardHeader>
           <CCardBody>
             <Table users={users} />
           </CCardBody>

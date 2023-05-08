@@ -4,10 +4,13 @@ import { useFormik } from 'formik'
 import CommonService from 'src/service/CommonService'
 import { useState } from 'react'
 import ToastComponent from 'src/components/common/TaostComponent'
+import InputRange from 'react-input-range'
+import 'react-input-range/lib/css/index.css'
 const SalaryCapPage = () => {
   const [loader, setLoader] = useState(false)
   const [salaryType, setSalaryType] = useState('1')
-  const [hideClass, setHideClass] = useState('d-none')
+  const [hideClass, setHideClass] = useState('')
+  const [rangeValue, setRangValue] = useState(200)
   const formik = useFormik({
     initialValues: {
       salary_type: '',
@@ -16,6 +19,7 @@ const SalaryCapPage = () => {
     enableReinitialize: true,
     // validationSchema,
     onSubmit: (data) => {
+      data.salary = rangeValue
       data.type = 2
       setLoader(true)
       CommonService.editGameStructure(data)
@@ -31,20 +35,13 @@ const SalaryCapPage = () => {
         })
     },
   })
-  const handleValue = (event) => {
-    setHideClass('d-none')
-    console.log('change value', event.target.value)
-    setSalaryType(event.target.value)
-  }
-  const handleCustomChange = (event) => {
-    setHideClass('')
-    console.log('change value', event.target.value)
-    setSalaryType(event.target.value)
+  const handleChange = (value) => {
+    setRangValue(value)
   }
   return (
     <>
       <CForm className="row g-3" onSubmit={formik.handleSubmit}>
-        <CCol md={6}>
+        {/* <CCol md={6}>
           <CFormCheck
             inline
             type="radio"
@@ -63,8 +60,8 @@ const SalaryCapPage = () => {
             checked={salaryType === '1'}
             // onChange={handleMaleChange}
           />
-        </CCol>
-        <CCol md={6}>
+        </CCol> */}
+        {/* <CCol md={6}>
           <CFormCheck
             inline
             type="radio"
@@ -82,11 +79,23 @@ const SalaryCapPage = () => {
               handleCustomChange(event)
             }}
           />
-        </CCol>
-
-        <div className={`mb-3 ${hideClass}`}>
+        </CCol> */}
+        <CCol md={12}>
           <CFormLabel htmlFor="exampleFormControlTextarea1">Salary</CFormLabel>
-          <CFormInput
+          <CCol md={12} className="mb-4 mt-4">
+            <InputRange
+              name={`salary`}
+              id="price"
+              className={'form-control'}
+              maxValue={200}
+              minValue={50}
+              step={0.5}
+              formatLabel={(value) => value.toFixed(2)}
+              value={rangeValue}
+              onChange={(value) => handleChange(value)}
+            />
+          </CCol>
+          {/* <CFormInput
             className={
               'form-control' + (formik.errors.salary && formik.touched.salary ? ' is-invalid' : '')
             }
@@ -94,8 +103,8 @@ const SalaryCapPage = () => {
             placeholder="Select Salary Cap"
             onChange={formik.handleChange}
             value={formik.values.salary}
-          />
-        </div>
+          /> */}
+        </CCol>
 
         <div className="mb-3">
           <CLoadingButton type="submit" color="success" variant="outline" loading={loader}>
