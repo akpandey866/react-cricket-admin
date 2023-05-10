@@ -271,7 +271,7 @@ const ClubAboutGame = () => {
                 )}
               </CCol>
 
-              <CCol md={6}>
+              {/* <CCol md={6}>
                 <CFormLabel htmlFor="new_password">New Password</CFormLabel>
                 <CFormInput
                   type="password"
@@ -288,7 +288,7 @@ const ClubAboutGame = () => {
                   placeholder="Confirm password"
                   aria-label="Confirm password"
                 />
-              </CCol>
+              </CCol> */}
 
               <CCol md={6}>
                 <CFormLabel htmlFor="Date of Birth">Date of Birth *</CFormLabel>
@@ -303,7 +303,7 @@ const ClubAboutGame = () => {
                   <CFormFeedback invalid>{formik.errors.dob}</CFormFeedback>
                 )}
               </CCol>
-              <CCol md={6}>
+              <CCol md={6} xs={12}>
                 <CFormLabel htmlFor="Date of Birth">Gender *</CFormLabel> <br />
                 <CFormCheck
                   inline
@@ -331,12 +331,12 @@ const ClubAboutGame = () => {
                   name="inlineRadioOptions"
                   id="inlineCheckbox3"
                   defaultValue="Do not wish to "
-                  label="Do not wish to specify"
+                  label="Not Specified"
                   checked={showOtherGender === 'Do not wish to '}
                   onChange={handleOtherChange}
                 />
               </CCol>
-
+              {/*
               <CCol md={6}>
                 <div className="mb-3">
                   <CFormLabel htmlFor="formFile">Profile Image</CFormLabel>
@@ -345,8 +345,7 @@ const ClubAboutGame = () => {
                     <CFormFeedback invalid>{formik.errors.image}</CFormFeedback>
                   )}
                 </div>
-              </CCol>
-              <CCol md={6}></CCol>
+              </CCol> */}
 
               <CCol md={6}>
                 <CLoadingButton type="submit" color="success" variant="outline" loading={loader}>

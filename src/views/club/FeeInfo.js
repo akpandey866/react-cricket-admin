@@ -101,7 +101,7 @@ const FeeInfo = (props) => {
             />
           </CCol>
           <CCol md={12}>
-            <CFormLabel htmlFor="Entry Fee Info">Entry Fee Info</CFormLabel>
+            <CFormLabel htmlFor="Entry Fee Info">Entry Fee Information</CFormLabel>
             <Editor
               toolbarHidden={false}
               editorState={description.editorState}
@@ -110,7 +110,7 @@ const FeeInfo = (props) => {
             />
           </CCol>
           <CCol md={12}>
-            <CFormLabel htmlFor="About Game">Welcome Message</CFormLabel>
+            <CFormLabel htmlFor="About Game">Welcome Message For Members</CFormLabel>
             <Editor
               toolbarHidden={false}
               editorState={message.editorMessageState}

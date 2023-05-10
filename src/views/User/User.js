@@ -23,7 +23,7 @@ const User = () => {
           <CCardHeader>
             <CRow>
               <CCol xs={10}>
-                <strong>Manage Members</strong>
+                <strong>Members List</strong>
               </CCol>
             </CRow>
           </CCardHeader>

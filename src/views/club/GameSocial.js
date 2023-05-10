@@ -51,7 +51,7 @@ const GameSocial = (props) => {
       <CCardBody>
         <CForm className="row g-3" onSubmit={formik.handleSubmit}>
           <CCol md={6}>
-            <CFormLabel htmlFor="Facebook">Facebook</CFormLabel>
+            <CFormLabel htmlFor="Facebook">Facebook URL</CFormLabel>
             <CFormInput
               id="facebook"
               defaultValue={formik.values.facebook}
@@ -60,7 +60,7 @@ const GameSocial = (props) => {
             />
           </CCol>
           <CCol md={6}>
-            <CFormLabel htmlFor="Twitter">Twitter</CFormLabel>
+            <CFormLabel htmlFor="Twitter">Twitter URL</CFormLabel>
             <CFormInput
               id="twitter"
               defaultValue={formik.values.twitter}
@@ -70,7 +70,7 @@ const GameSocial = (props) => {
           </CCol>
 
           <CCol md={6}>
-            <CFormLabel htmlFor="Instagram">Instagram</CFormLabel>
+            <CFormLabel htmlFor="Instagram">Instagram URL</CFormLabel>
             <CFormInput
               id="instagram"
               defaultValue={formik.values.instagram}
@@ -79,7 +79,7 @@ const GameSocial = (props) => {
             />
           </CCol>
           <CCol md={6}>
-            <CFormLabel htmlFor="Website">Website</CFormLabel>
+            <CFormLabel htmlFor="Website">Website URL</CFormLabel>
             <CFormInput
               id="website"
               defaultValue={formik.values.website}

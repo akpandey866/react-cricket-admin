@@ -4,12 +4,10 @@ import {
   CCardHeader,
   CCardBody,
   CFormLabel,
-  CFormSelect,
   CForm,
   CLoadingButton,
   CRow,
   CFormInput,
-  CFormFeedback,
   CCol,
   CFormSwitch,
 } from '@coreui/react-pro'
@@ -17,9 +15,13 @@ import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import CommonService from 'src/service/CommonService'
 import ToastComponent from 'src/components/common/TaostComponent'
+import InputRange from 'react-input-range'
+import 'react-input-range/lib/css/index.css'
 const GameSpot = () => {
   const [data, setData] = useState({})
+  const [tradeCheck, setTradeCheck] = useState(false)
   const [userNumber, setUserNumber] = useState()
+  const [rangeValue, setRangValue] = useState(20)
   useEffect(() => {
     CommonService.powerControl()
       .then((res) => {
@@ -34,22 +36,18 @@ const GameSpot = () => {
   }, [])
 
   const [loader, setLoader] = useState(false)
-  const validationSchema = Yup.object().shape({
-    trades: Yup.string().required('Trades is required'),
-  })
+  // const validationSchema = Yup.object().shape({
+  //   trades: Yup.string().required('Trades is required'),
+  // })
   const formik = useFormik({
     initialValues: {
       trades: userNumber,
     },
     enableReinitialize: true,
-    validationSchema,
+    // validationSchema,
     onSubmit: (data, actions) => {
       data.type = 'trades_status'
-      actions.resetForm({
-        values: {
-          trades: '',
-        },
-      })
+      data.trades = rangeValue
       setLoader(true)
       CommonService.editPowerControl(data)
         .then((res) => {
@@ -69,7 +67,7 @@ const GameSpot = () => {
         })
     },
   })
-  const [tradeCheck, setTradeCheck] = useState(false)
+
   const handleTradeCheck = () => {
     setTradeCheck((current) => !current)
     const data = {}
@@ -82,14 +80,18 @@ const GameSpot = () => {
       }
     })
   }
+
+  const handleChange = (value) => {
+    setRangValue(value)
+  }
   return (
     <CCard className="mt-3 mb-10">
       <CCardHeader>
-        <strong>Trade</strong>
+        <strong>Trade Allowed</strong>
       </CCardHeader>
       <CCardBody>
         <CForm className="row g-3" onSubmit={formik.handleSubmit}>
-          <CRow className="">
+          {/* <CRow className="">
             <CFormLabel htmlFor="staticEmail" className="col-sm-2 col-form-label">
               Status
             </CFormLabel>
@@ -102,28 +104,37 @@ const GameSpot = () => {
                 onChange={handleTradeCheck}
               />
             </div>
-          </CRow>
-          <CRow className="">
-            <CFormLabel htmlFor="staticEmail" className="col-sm-2 col-form-label">
-              Use Limit
-            </CFormLabel>
-            <div className="col-sm-10 mb-3 pt-2">
-              <CFormInput
+          </CRow> */}
+
+          <CCol md={12}>
+            <CCol md={12} className="mb-4 mt-3">
+              <InputRange
+                name={`trades`}
+                id="price"
+                className={'form-control'}
+                maxValue={100}
+                minValue={0}
+                step={1}
+                formatLabel={(value) => value.toFixed(2)}
+                value={rangeValue}
+                onChange={(value) => handleChange(value)}
+                // classNames={'valueLabel:fw-bold'}
+              />
+              {/* <CFormInput
                 type="number"
                 id="trades"
                 defaultValue={data?.trades}
                 name="trades"
                 onChange={formik.handleChange}
-              />
-            </div>
-          </CRow>
-          <CRow>
-            <CCol md={6}>
-              <CLoadingButton type="submit" color="success" variant="outline" loading={loader}>
-                Submit
-              </CLoadingButton>
+              /> */}
             </CCol>
-          </CRow>
+          </CCol>
+
+          <CCol md={6}>
+            <CLoadingButton type="submit" color="success" variant="outline" loading={loader}>
+              Submit
+            </CLoadingButton>
+          </CCol>
         </CForm>
       </CCardBody>
     </CCard>

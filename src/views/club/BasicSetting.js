@@ -9,11 +9,9 @@ import {
   CLoadingButton,
   CForm,
   CFormFeedback,
-  CInputGroup,
-  CInputGroupText,
-  CButton,
 } from '@coreui/react-pro'
 import { useFormik } from 'formik'
+import * as Yup from 'yup'
 import ToastComponent from 'src/components/common/TaostComponent'
 import ClubService from 'src/service/ClubService'
 import { useEffect } from 'react'
@@ -34,6 +32,9 @@ const BasicSetting = (props) => {
         setLoader(false)
       })
   }, [])
+  const validationSchema = Yup.object().shape({
+    game_name: Yup.string().required('Game Name is required'),
+  })
   const formik = useFormik({
     initialValues: {
       club_name: userDetail?.club_name,
@@ -42,7 +43,7 @@ const BasicSetting = (props) => {
       image: null,
     },
     enableReinitialize: true,
-    // validationSchema,
+    validationSchema,
     onSubmit: (data) => {
       setLoader(true)
       ClubService.updateBasicSetting(data)
@@ -69,13 +70,13 @@ const BasicSetting = (props) => {
     )
   }
   return (
-    <CCard className="mb-4">
+    <CCard className="mb-3">
       <CCardHeader>
         <strong>Game Details</strong>
       </CCardHeader>
       <CCardBody>
         <CForm className="row g-3" onSubmit={formik.handleSubmit}>
-          <CCol md={6}>
+          {/* <CCol md={6}>
             <CFormLabel htmlFor="Facebook">Game Mode</CFormLabel>
             <CFormInput id="game_mode" defaultValue={'Club Mode'} name="game_mode" disabled />
           </CCol>
@@ -87,7 +88,7 @@ const BasicSetting = (props) => {
               name="username"
               onChange={formik.handleChange}
             />
-          </CCol>
+          </CCol> */}
 
           <CCol md={6}>
             <CFormLabel htmlFor="club_name">Club/League Name*</CFormLabel>
@@ -99,7 +100,7 @@ const BasicSetting = (props) => {
             />
           </CCol>
           <CCol md={6}>
-            <CFormLabel htmlFor="game_name">Game Name</CFormLabel>
+            <CFormLabel htmlFor="game_name">Game Name*</CFormLabel>
             <CFormInput
               id="game_name"
               defaultValue={formik.values.game_name}
@@ -108,7 +109,7 @@ const BasicSetting = (props) => {
             />
           </CCol>
 
-          <CCol md={12}>
+          {/* <CCol md={12}>
             <CFormLabel htmlFor="game_name">Game Share Link</CFormLabel>
             <CInputGroup className="mb-3">
               <CInputGroupText id="shareUrl">
@@ -118,10 +119,10 @@ const BasicSetting = (props) => {
                 <CButton color={'success'}>Copy</CButton>
               </CInputGroupText>
             </CInputGroup>
-          </CCol>
+          </CCol> */}
           <CCol md={6}>
-            <div className="mb-3">
-              <CFormLabel htmlFor="formFile">Club Logo</CFormLabel>
+            <div>
+              <CFormLabel htmlFor="formFile">Logo</CFormLabel>
               <CFormInput
                 type="file"
                 id="formFile"

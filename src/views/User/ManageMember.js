@@ -15,7 +15,7 @@ import { useNavigate } from 'react-router-dom'
 import ToastComponent from 'src/components/common/TaostComponent.js'
 import UserService from 'src/service/UserService'
 import EditForm from './EditForm'
-const Table = (props) => {
+const ManageMember = (props) => {
   const [loading, setLoading] = useState()
   const [visibleHorizontal, setVisibleHorizontal] = useState(false)
 
@@ -32,19 +32,27 @@ const Table = (props) => {
     {
       label: 'Full Name',
       key: 'full_name',
+      filter: false,
+      sorter: false,
     },
-    { key: 'email' },
-    { label: 'team_name', key: 'my_team_name' },
-    { label: 'Phone', key: 'phone' },
-    { label: 'Status', filter: false, key: 'is_active' },
-    { label: 'Created On', key: 'created_at' },
-    // {
-    //   key: 'show_details',
-    //   label: '',
-    //   _style: { width: '1%' },
-    //   filter: false,
-    //   sorter: false,
-    // },
+    {
+      key: 'user_referer',
+      label: '',
+      filter: false,
+      sorter: false,
+    },
+    {
+      key: 'send_credentials',
+      label: '',
+      filter: false,
+      sorter: false,
+    },
+    {
+      key: 'click_to_paid',
+      label: '',
+      filter: false,
+      sorter: false,
+    },
   ]
   const getBadge = (status) => {
     switch (status) {
@@ -132,7 +140,7 @@ const Table = (props) => {
             </td>
           ),
           my_team_name: (item) => <td>{item.my_team_name && <>{item.my_team_name}</>}</td>,
-          show_details: (item) => {
+          user_referer: (item) => {
             return (
               <>
                 <td className="py-2">
@@ -223,4 +231,4 @@ const Table = (props) => {
   )
 }
 
-export default Table
+export default ManageMember

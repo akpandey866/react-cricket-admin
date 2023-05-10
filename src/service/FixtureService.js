@@ -6,6 +6,12 @@ const getFixture = async (offset, itemsPerPage, activePage, params) => {
   )
   return response.data
 }
+const getCompletedFixture = async (offset, itemsPerPage, activePage, params) => {
+  const response = await agent.get(
+    `${API_URL}fixtures/get-completed-fixture?offset=${offset}&limit=${itemsPerPage}&page=${activePage}&${params}`,
+  )
+  return response.data
+}
 const saveFixture = async (data) => {
   const response = await agent.post(API_URL + 'fixtures/save-fixture', data)
   return response.data
@@ -26,6 +32,7 @@ const deleteFixture = async (data) => {
 
 const FixtureService = {
   getFixture,
+  getCompletedFixture,
   saveFixture,
   editFixture,
   getFixtureDetail,

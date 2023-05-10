@@ -31,6 +31,10 @@ const declarWinner = async (data) => {
   const response = await agent.post(`${API_URL}bracket-battle/declarWinner`, data)
   return response.data
 }
+const saveBracketRound = async (data) => {
+  const response = await agent.post(`${API_URL}bracket-battle/save-bracket-round`, data)
+  return response.data
+}
 
 const BracketBattleService = {
   listing,
@@ -40,6 +44,7 @@ const BracketBattleService = {
   matchCompletion,
   getMatchResultData,
   declarWinner,
+  saveBracketRound,
 }
 
 export default BracketBattleService

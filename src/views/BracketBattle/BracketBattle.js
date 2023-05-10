@@ -23,18 +23,17 @@ import ToastComponent from 'src/components/common/TaostComponent'
 import { Link } from 'react-router-dom'
 const BracketBattle = () => {
   const [loading, setLoading] = useState(false)
-  const [users, setUsers] = useState([])
   const [bracketDetails, setBracketDetails] = useState([])
-  const [structureValue, setStructureValue] = useState()
+  const [structureValue, setStructureValue] = useState(0)
   useEffect(() => {
     setLoading(true)
     BracketBattleService.listing().then((result) => {
-      setUsers(result.data)
       setBracketDetails(result.bracket_details)
-      setStructureValue(result.bracket_details.structure)
+      setStructureValue(result.bracket_details?.structure)
       setLoading(false)
     })
   }, [])
+  console.log('sasdasd', structureValue)
   const [loader, setLoader] = useState(false)
 
   const validationSchema = Yup.object().shape({
@@ -51,7 +50,7 @@ const BracketBattle = () => {
     enableReinitialize: true,
     validationSchema,
     onSubmit: (data, actions) => {
-      data.structure = structureValue
+      // data.structure = structureValue
       setLoader(true)
       BracketBattleService.saveOrUpdateBracketBattle(data)
         .then((res) => {
@@ -94,16 +93,6 @@ const BracketBattle = () => {
       value: 128,
     },
   ]
-  const getBadge = (status) => {
-    switch (status) {
-      case 1:
-        return 'success'
-      case 2:
-        return 'warning'
-      default:
-        return 'danger'
-    }
-  }
   return (
     <CRow>
       <CCol xs={12}>
@@ -126,11 +115,13 @@ const BracketBattle = () => {
                     'form-control' +
                     (formik.errors.structure && formik.touched.structure ? ' is-invalid' : '')
                   }
-                  value={structureValue}
-                  onChange={handleChange}
+                  // value={structureValue}
+                  // onChange={handleChange}
+                  value={formik.values.structure}
+                  onChange={formik.handleChange}
                   id="structure"
                 >
-                  <option value="0">Select Your Bracket Battle Structure</option>
+                  <option value="">Select Your Bracket Battle Structure</option>
                   {structures.map((index, key) => (
                     <option value={index.value} key={key}>
                       {index.value}
@@ -187,71 +178,6 @@ const BracketBattle = () => {
                 </CLoadingButton>
               </CCol>
             </CForm>
-          </CCardBody>
-        </CCard>
-      </CCol>
-      <CCol xs={12}>
-        <CCard className="mb-4">
-          <CCardHeader>
-            <strong>Manage Bracket Rounds</strong>
-          </CCardHeader>
-          <CCardBody>
-            <table className="main-table table innertable">
-              <thead>
-                <tr>
-                  <th>Rounds </th>
-                  <th>Fantasy Rounds</th>
-                  <th>Status</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {users &&
-                  users.map((item, key) => (
-                    <tr key={key}>
-                      <th>{item.round}</th>
-                      <td>{item?.gameweeks}</td>
-                      <td>
-                        <CBadge color={getBadge(item.status)}>
-                          {item.status === 1
-                            ? 'In-Process'
-                            : item.status === 2
-                            ? 'Completed'
-                            : 'Not started Yet'}
-                        </CBadge>
-                      </td>
-                      <td>
-                        <Link
-                          size="sm"
-                          className="btn btn-success btn-sm ms-1"
-                          to={`/bracket-battle/battle-listing/${item.id}`}
-                        >
-                          Create Round Battles
-                        </Link>
-                        <Link
-                          size="sm"
-                          className="btn btn-info btn-sm ms-1"
-                          to={`/bracket-battle/match-result/${item.id}`}
-                        >
-                          Results
-                        </Link>
-                        {/* <CButton
-                          className="mx-2"
-                          color="success"
-                          onClick={() => openFromParentForPlayer(item.team_power_id, item.round)}
-                        >
-                          Points
-                        </CButton> */}
-                      </td>
-                    </tr>
-                  ))}
-                {users.length === 0 && (
-                  <tr>
-                    <td colSpan={4}>No record yet available.</td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
           </CCardBody>
         </CCard>
       </CCol>

@@ -1,7 +1,6 @@
 import React from 'react'
 import CIcon from '@coreui/icons-react'
 import {
-  cilBell,
   cilCalculator,
   cilChartPie,
   cilCursor,
@@ -19,6 +18,11 @@ import {
   cilUser,
   cilGamepad,
   cilVideogame,
+  cilShieldAlt,
+  cilUserPlus,
+  cilControl,
+  cilAppsSettings,
+  cilSettings,
 } from '@coreui/icons'
 import { CNavGroup, CNavItem, CNavTitle } from '@coreui/react-pro'
 
@@ -30,7 +34,7 @@ const _nav = [
     icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
   },
 
-  {
+  /*  {
     component: CNavGroup,
     name: 'Packages',
     to: '/',
@@ -42,35 +46,35 @@ const _nav = [
         to: '/base/accordion',
       },
     ],
-  },
-  {
-    component: CNavGroup,
-    name: 'Setup',
-    to: '/',
-    icon: <CIcon icon={cilCursor} customClassName="nav-icon" />,
-    items: [
-      {
-        component: CNavItem,
-        name: 'Checklist',
-        to: '/',
-      },
-      {
-        component: CNavItem,
-        name: 'Info Pack',
-        to: '/',
-      },
-      {
-        component: CNavItem,
-        name: 'Info Video',
-        to: '/',
-      },
-      {
-        component: CNavItem,
-        name: 'Features ',
-        to: '/',
-      },
-    ],
-  },
+  }, */
+  // {
+  //   component: CNavGroup,
+  //   name: 'Setup',
+  //   to: '/',
+  //   icon: <CIcon icon={cilCursor} customClassName="nav-icon" />,
+  //   items: [
+  //     {
+  //       component: CNavItem,
+  //       name: 'Checklist',
+  //       to: '/',
+  //     },
+  //     {
+  //       component: CNavItem,
+  //       name: 'Info Pack',
+  //       to: '/',
+  //     },
+  //     {
+  //       component: CNavItem,
+  //       name: 'Info Video',
+  //       to: '/',
+  //     },
+  //     {
+  //       component: CNavItem,
+  //       name: 'Features ',
+  //       to: '/',
+  //     },
+  //   ],
+  // },
   {
     component: CNavTitle,
     name: 'Game Setup',
@@ -79,7 +83,7 @@ const _nav = [
     component: CNavGroup,
     name: 'Settings',
     to: '/',
-    icon: <CIcon icon={cilVideogame} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilSettings} customClassName="nav-icon" />,
     items: [
       {
         component: CNavItem,
@@ -127,7 +131,7 @@ const _nav = [
     component: CNavGroup,
     name: 'Controls',
     to: '/',
-    icon: <CIcon icon={cilVideogame} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilControl} customClassName="nav-icon" />,
     items: [
       {
         component: CNavItem,
@@ -170,7 +174,7 @@ const _nav = [
     component: CNavGroup,
     name: 'Players',
     to: '/',
-    icon: <CIcon icon={cilGamepad} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilUserPlus} customClassName="nav-icon" />,
     items: [
       {
         component: CNavItem,
@@ -208,7 +212,7 @@ const _nav = [
       {
         component: CNavItem,
         name: 'Completed Fixtures',
-        to: '/fixtures',
+        to: '/completed-fixtures',
       },
     ],
   },
@@ -221,61 +225,78 @@ const _nav = [
       {
         component: CNavItem,
         name: 'Members List',
-        to: '/users',
+        to: '/members',
+      },
+      {
+        component: CNavItem,
+        name: 'Manage Members',
+        to: '/manage-members',
       },
       {
         component: CNavItem,
         name: 'Verify Members ',
-        to: '/verify-users',
+        to: '/verify-members',
       },
     ],
   },
-  {
-    component: CNavGroup,
-    name: 'Analytics',
-    to: '/',
-    icon: <CIcon icon={cilElevator} customClassName="nav-icon" />,
-    badge: {
-      color: 'danger-gradient',
-      text: 'PRO',
-    },
-    items: [
-      {
-        component: CNavItem,
-        name: 'Users',
-        to: '/',
-      },
-      {
-        component: CNavItem,
-        name: 'Overall',
-        to: '/',
-      },
-      {
-        component: CNavItem,
-        name: 'Players',
-        to: '/',
-      },
-    ],
-  },
+  // {
+  //   component: CNavGroup,
+  //   name: 'Analytics',
+  //   to: '/',
+  //   icon: <CIcon icon={cilElevator} customClassName="nav-icon" />,
+  //   badge: {
+  //     color: 'danger-gradient',
+  //     text: 'PRO',
+  //   },
+  //   items: [
+  //     {
+  //       component: CNavItem,
+  //       name: 'Members',
+  //       to: '/',
+  //     },
+  //     {
+  //       component: CNavItem,
+  //       name: 'Overall',
+  //       to: '/',
+  //     },
+  //     {
+  //       component: CNavItem,
+  //       name: 'Players',
+  //       to: '/',
+  //     },
+  //   ],
+  // },
   {
     component: CNavTitle,
     name: 'Pro Add-Ons',
   },
   {
-    component: CNavItem,
+    component: CNavGroup,
     name: 'Bonus Cards',
-    to: '/bonus-cards',
-    icon: <CIcon icon={cilCalculator} customClassName="nav-icon" />,
+    to: '/',
+    icon: <CIcon icon={cilShieldAlt} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: 'Activate',
+        to: '/',
+      },
+      {
+        component: CNavItem,
+        name: 'Bonus Cards',
+        to: '/bonus-cards',
+      },
+    ],
   },
   {
     component: CNavGroup,
     name: 'Bracket Battle',
     to: '/',
-    icon: <CIcon icon={cilMugTea} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilShieldAlt} customClassName="nav-icon" />,
     items: [
       {
         component: CNavItem,
-        name: 'Activate Feature',
+        name: 'Activate',
         to: '/',
       },
       {
@@ -286,7 +307,7 @@ const _nav = [
       {
         component: CNavItem,
         name: 'Bracket Rounds',
-        to: '/',
+        to: '/bracket-round',
       },
       {
         component: CNavItem,
@@ -299,11 +320,11 @@ const _nav = [
     component: CNavGroup,
     name: 'Feedback Fantasy',
     to: '/',
-    icon: <CIcon icon={cilElevator} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilShieldAlt} customClassName="nav-icon" />,
     items: [
       {
         component: CNavItem,
-        name: 'Activate Feature',
+        name: 'Activate',
         to: '/',
       },
       {
@@ -346,16 +367,28 @@ const _nav = [
     ],
   },
   {
-    component: CNavItem,
+    component: CNavGroup,
     name: 'Team of the Round',
-    to: '/team-of-the-round',
-    icon: <CIcon icon={cilChartPie} customClassName="nav-icon" />,
+    to: '/',
+    icon: <CIcon icon={cilShieldAlt} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: 'Activate',
+        to: '/',
+      },
+      {
+        component: CNavItem,
+        name: 'Team of the Round',
+        to: '/team-of-the-round',
+      },
+    ],
   },
   {
     component: CNavGroup,
     name: 'Votes',
     to: '/fixture-votes',
-    icon: <CIcon icon={cilIndentDecrease} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilShieldAlt} customClassName="nav-icon" />,
     items: [
       {
         component: CNavItem,

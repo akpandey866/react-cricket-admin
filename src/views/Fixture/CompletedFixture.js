@@ -11,51 +11,41 @@ import {
 import { toast } from 'react-toastify'
 
 import moment from 'moment'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import ToastComponent from 'src/components/common/TaostComponent.js'
-import UserService from 'src/service/UserService'
+import FixtureService from 'src/service/FixtureService'
 import EditForm from './EditForm'
-const Table = (props) => {
+const CompletedFixture = (props) => {
   const [loading, setLoading] = useState()
   const [visibleHorizontal, setVisibleHorizontal] = useState(false)
+  const [selectedId, setSelectedId] = useState(0)
 
   const [activePage, setActivePage] = useState(1)
   const [columnFilter, setColumnFilter] = useState([])
   const [columnSorter, setColumnSorter] = useState(null)
   const [itemsPerPage, setItemsPerPage] = useState(10)
-  const [selectedId, setSelectedId] = useState(0)
-  const [users, setUsers] = useState(props.users)
+  const [users, setUsers] = useState({})
   const navigate = useNavigate()
 
   const [details, setDetails] = useState([])
   const columns = [
     {
-      label: 'Full Name',
-      key: 'full_name',
+      label: 'Team Name',
+      key: 'team_name',
     },
-    { key: 'email' },
-    { label: 'team_name', key: 'my_team_name' },
-    { label: 'Phone', key: 'phone' },
-    { label: 'Status', filter: false, key: 'is_active' },
-    { label: 'Created On', key: 'created_at' },
-    // {
-    //   key: 'show_details',
-    //   label: '',
-    //   _style: { width: '1%' },
-    //   filter: false,
-    //   sorter: false,
-    // },
+    { label: 'Grade Name', key: 'grade' },
+    { label: 'Match Type', key: 'match_type' },
+    { label: 'Start Date', filter: false, key: 'start_date' },
+    { label: 'End Date', filter: false, key: 'end_date' },
+    { label: 'Status', filter: false, key: 'status' },
+    {
+      key: 'show_details',
+      label: '',
+      filter: false,
+      sorter: false,
+    },
   ]
-  const getBadge = (status) => {
-    switch (status) {
-      case 1:
-        return 'success'
-      case 0:
-        return 'warning'
-      default:
-        return 'primary'
-    }
-  }
+
   const toggleDetails = (index) => {
     setSelectedId(index)
     const position = details.indexOf(index)
@@ -68,7 +58,7 @@ const Table = (props) => {
     setDetails(newDetails)
   }
 
-  const deleteUser = (id) => {
+  const deleteFixture = (id) => {
     setLoading(true)
     const data = {}
     data.id = id
@@ -76,13 +66,14 @@ const Table = (props) => {
     let newDetails = details.slice()
     newDetails.splice(position, 1)
     setDetails(newDetails)
-    UserService.deleteUser(data).then((res) => {
+    // setUsers((previousEmployeeData) => previousEmployeeData.data.filter((data) => data.id !== id))
+    FixtureService.deleteFixture(data).then((res) => {
       if (res.status === 200) {
         toast.dismiss()
         setUsers(res.data)
         ToastComponent(res.message, 'success')
         setLoading(false)
-        navigate('/grades')
+        navigate('/fixtures')
       }
     })
   }
@@ -92,14 +83,13 @@ const Table = (props) => {
     const offset = itemsPerPage * activePage - itemsPerPage
     let params = new URLSearchParams()
     Object.keys(columnFilter).forEach((key) => {
-      setLoading(true)
       params.append(key, columnFilter[key])
     })
     columnSorter &&
       columnSorter.column !== undefined &&
       params.append('sort', `${columnSorter.column}%${columnSorter.state}`)
 
-    UserService.getUser(offset, itemsPerPage, activePage, params)
+    FixtureService.getCompletedFixture(offset, itemsPerPage, activePage, params)
       // .then((response) => response.json())
       .then((result) => {
         setUsers(result.data)
@@ -107,9 +97,8 @@ const Table = (props) => {
       })
   }, [activePage, columnFilter, columnSorter, itemsPerPage, props])
 
-  const changeSearchField = (e) => {
-    console.log(e)
-    return false
+  const hideEditDiv = () => {
+    setVisibleHorizontal(false)
   }
   return (
     <>
@@ -122,16 +111,14 @@ const Table = (props) => {
           external: true,
         }}
         scopedColumns={{
-          created_at: (item) => <td>{moment(item.created_at).format('D.MM.YYYY')}</td>,
-          is_active: (item) => (
+          status: (item) => (
             <td>
-              <CBadge color={getBadge(item.is_active)}>
-                {' '}
-                {item.is_active === 1 ? 'Activated' : 'Deactivated'}
-              </CBadge>
+              <CBadge color={'success'}>{'Completed'}</CBadge>
             </td>
           ),
-          my_team_name: (item) => <td>{item.my_team_name && <>{item.my_team_name}</>}</td>,
+          grade: (item) => <td>{item.grade ?? ''}</td>,
+          start_date: (item) => <td>{moment(item.start_date).format('D.MM.YYYY')}</td>,
+          end_date: (item) => <td>{moment(item.end_date).format('D.MM.YYYY')}</td>,
           show_details: (item) => {
             return (
               <>
@@ -155,39 +142,30 @@ const Table = (props) => {
             return (
               <CCollapse visible={details.includes(item.id)}>
                 <CCardBody>
-                  <CButton
+                  <Link
                     size="sm"
                     color="success"
-                    className="ml-1"
-                    onClick={() => setVisibleHorizontal(!visibleHorizontal)}
-                    aria-expanded={visibleHorizontal}
-                    aria-controls="collapseEdit"
+                    className="ms-1 btn btn-success"
+                    to={`/show-scorcards/${item.id}`}
                   >
-                    Edit
-                  </CButton>
-                  <CButton
+                    Scorcard
+                  </Link>
+                  <Link
                     size="sm"
-                    color="danger"
-                    className="ml-3"
-                    onClick={() => deleteUser(item.id)}
+                    color="info"
+                    className="ms-1 btn btn-info"
+                    to={`/show-squad/${item.id}`}
                   >
-                    Delete
-                  </CButton>
-                  <CCollapse id="collapseEdit" horizontal visible={visibleHorizontal}>
-                    <CCard className="mb-4">
-                      <CCardHeader>
-                        <strong>Edit User</strong>
-                      </CCardHeader>
-                      <CCardBody>
-                        <EditForm
-                          userId={item.id}
-                          selectedId={selectedId}
-                          visibleHorizontal={visibleHorizontal}
-                          setUsers={setUsers}
-                        />
-                      </CCardBody>
-                    </CCard>
-                  </CCollapse>
+                    Squad
+                  </Link>
+                  <Link
+                    size="sm"
+                    color="info"
+                    className="ms-1 btn btn-dark"
+                    to={`/manage-scorcards/${item.id}`}
+                  >
+                    Manage Scorcard
+                  </Link>
                 </CCardBody>
               </CCollapse>
             )
@@ -223,4 +201,4 @@ const Table = (props) => {
   )
 }
 
-export default Table
+export default CompletedFixture

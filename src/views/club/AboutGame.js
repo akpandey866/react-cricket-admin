@@ -9,6 +9,7 @@ import {
   CLoadingButton,
   CFormSelect,
   CForm,
+  CFormFeedback,
 } from '@coreui/react-pro'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
@@ -27,6 +28,9 @@ const AboutGame = (props) => {
   // }, [props.userDetail])
   const [loading, setLoading] = useState(false)
   const [country, setCountry] = useState(props.userDetail.country)
+  const validationSchema = Yup.object().shape({
+    country: Yup.string().required('Country is required'),
+  })
   const formik = useFormik({
     initialValues: {
       country: country,
@@ -36,7 +40,7 @@ const AboutGame = (props) => {
       timezone: props.userDetail.timezone,
     },
     enableReinitialize: true,
-    // validationSchema,
+    validationSchema,
     onSubmit: (data) => {
       data.timezone = selectedTimezone.value
       setLoading(true)
@@ -66,12 +70,20 @@ const AboutGame = (props) => {
   return (
     <CCard className="mb-4">
       <CCardHeader>
-        <strong>Location & Timezone</strong>
+        <strong>Timezone & Location</strong>
       </CCardHeader>
       <CCardBody>
         <CForm className="row g-3" onSubmit={formik.handleSubmit}>
           <CCol md={6}>
-            <CFormLabel htmlFor="Country">Country</CFormLabel>
+            <CFormLabel htmlFor="Timezone">Timezone *</CFormLabel>
+            <TimezoneSelect
+              value={selectedTimezone}
+              onChange={setSelectedTimezone}
+              name="timezone"
+            />
+          </CCol>
+          <CCol md={6}>
+            <CFormLabel htmlFor="Country">Country*</CFormLabel>
             <CFormSelect
               aria-label="select country"
               name="country"
@@ -91,6 +103,9 @@ const AboutGame = (props) => {
                   </option>
                 ))}
             </CFormSelect>
+            {formik.errors.country && formik.touched.country && (
+              <CFormFeedback invalid>{formik.errors.country}</CFormFeedback>
+            )}
           </CCol>
 
           <CCol md={6}>
@@ -132,14 +147,7 @@ const AboutGame = (props) => {
               onChange={formik.handleChange}
             />
           </CCol>
-          <CCol md={6}>
-            <CFormLabel htmlFor="Timezone">Timezone *</CFormLabel>
-            <TimezoneSelect
-              value={selectedTimezone}
-              onChange={setSelectedTimezone}
-              name="timezone"
-            />
-          </CCol>
+
           <CCol md={6}></CCol>
           <CCol md={6}>
             <CLoadingButton type="submit" color="success" variant="outline" loading={loading}>

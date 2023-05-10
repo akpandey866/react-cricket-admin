@@ -16,6 +16,7 @@ import * as Yup from 'yup'
 import CommonService from 'src/service/CommonService'
 import ToastComponent from 'src/components/common/TaostComponent'
 import { useEffect } from 'react'
+import { Col } from 'react-bootstrap'
 const GameSpot = (props) => {
   const [gameSpotData, setGameSpotData] = useState({})
   useEffect(() => {
@@ -64,14 +65,11 @@ const GameSpot = (props) => {
       <CCardBody>
         <CForm className="row g-3" onSubmit={formik.handleSubmit}>
           <CRow className="">
-            <CFormLabel htmlFor="staticEmail" className="col-sm-4 col-form-label">
-              Use Limit
-            </CFormLabel>
-            <div className="col-sm-4 mb-8 pt-2">
+            <CCol md={12}>
               <CFormInput
                 type="number"
                 className={
-                  'form-control' +
+                  'mt-3 form-control' +
                   (formik.errors.user_number && formik.touched.user_number ? ' is-invalid' : '')
                 }
                 id="user_number"
@@ -82,10 +80,8 @@ const GameSpot = (props) => {
               {formik.errors.user_number && formik.touched.user_number && (
                 <CFormFeedback invalid>{formik.errors.user_number}</CFormFeedback>
               )}
-            </div>
-          </CRow>
-          <CRow>
-            <CCol md={6}>
+            </CCol>
+            <CCol md={6} className="mt-3">
               <CLoadingButton type="submit" color="success" variant="outline" loading={loader}>
                 Submit
               </CLoadingButton>

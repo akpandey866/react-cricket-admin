@@ -36,7 +36,7 @@ const GameStructure = () => {
       <CCol xs={12}>
         <CCard className="mb-4">
           <CCardHeader>
-            <strong>Game Structure</strong>
+            <strong>Team Structure</strong>
           </CCardHeader>
           <CCardBody>
             <GameStrucurePage game_structure={gameStuctureData} />
@@ -46,7 +46,7 @@ const GameStructure = () => {
       <CCol xs={12}>
         <CCard className="mb-4">
           <CCardHeader>
-            <strong>Salary Cap</strong>
+            <strong>Salary Cap ($m) </strong>
           </CCardHeader>
           <CCardBody>
             <SalaryCapPage />

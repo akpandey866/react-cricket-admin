@@ -10,7 +10,7 @@ const SalaryCapPage = () => {
   const [loader, setLoader] = useState(false)
   const [salaryType, setSalaryType] = useState('1')
   const [hideClass, setHideClass] = useState('')
-  const [rangeValue, setRangValue] = useState(200)
+  const [rangeValue, setRangValue] = useState(100)
   const formik = useFormik({
     initialValues: {
       salary_type: '',
@@ -30,7 +30,7 @@ const SalaryCapPage = () => {
           }
         })
         .catch((e) => {
-          ToastComponent('Something went wrong.Please try again.', 'error')
+          ToastComponent('Something went wrong. Please try again.', 'error')
           setLoader(false)
         })
     },
@@ -81,18 +81,18 @@ const SalaryCapPage = () => {
           />
         </CCol> */}
         <CCol md={12}>
-          <CFormLabel htmlFor="exampleFormControlTextarea1">Salary</CFormLabel>
-          <CCol md={12} className="mb-4 mt-4">
+          <CCol md={12} className="mb-4 mt-3">
             <InputRange
               name={`salary`}
               id="price"
               className={'form-control'}
-              maxValue={200}
+              maxValue={150}
               minValue={50}
-              step={0.5}
+              step={1}
               formatLabel={(value) => value.toFixed(2)}
               value={rangeValue}
               onChange={(value) => handleChange(value)}
+              // classNames={'valueLabel:fw-bold'}
             />
           </CCol>
           {/* <CFormInput
