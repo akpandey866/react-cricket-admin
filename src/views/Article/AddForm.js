@@ -263,9 +263,8 @@ const AddForm = (props) => {
             editorStyle={{ border: '1px solid', height: '150px' }}
           />
         </CCol>
-
-        <CCol md={4}></CCol>
-        <CCol md={4}>
+        <CCol md={6}></CCol>
+        <CCol md={6}>
           <CLoadingButton type="submit" color="success" variant="outline" loading={loader}>
             Submit
           </CLoadingButton>

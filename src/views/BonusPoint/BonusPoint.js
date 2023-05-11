@@ -24,7 +24,7 @@ const BonusPoint = () => {
 
   return (
     <CRow>
-      <CCol xs={6}>
+      <CCol xs={12} md={6}>
         <CCard className="mb-4">
           <CCardHeader>
             <strong>Bonus for Player of the Match</strong>
@@ -39,7 +39,7 @@ const BonusPoint = () => {
           </CCardBody>
         </CCard>
       </CCol>
-      <CCol xs={6}>
+      <CCol xs={12} md={6}>
         <CCard className="mb-4">
           <CCardHeader>
             <strong>Bonus for Match Winners</strong>

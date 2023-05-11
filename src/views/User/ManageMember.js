@@ -36,20 +36,8 @@ const ManageMember = (props) => {
       sorter: false,
     },
     {
-      key: 'user_referer',
-      label: '',
-      filter: false,
-      sorter: false,
-    },
-    {
-      key: 'send_credentials',
-      label: '',
-      filter: false,
-      sorter: false,
-    },
-    {
-      key: 'click_to_paid',
-      label: '',
+      key: 'action',
+      label: 'Action',
       filter: false,
       sorter: false,
     },
@@ -130,17 +118,7 @@ const ManageMember = (props) => {
           external: true,
         }}
         scopedColumns={{
-          created_at: (item) => <td>{moment(item.created_at).format('D.MM.YYYY')}</td>,
-          is_active: (item) => (
-            <td>
-              <CBadge color={getBadge(item.is_active)}>
-                {' '}
-                {item.is_active === 1 ? 'Activated' : 'Deactivated'}
-              </CBadge>
-            </td>
-          ),
-          my_team_name: (item) => <td>{item.my_team_name && <>{item.my_team_name}</>}</td>,
-          user_referer: (item) => {
+          action: (item) => {
             return (
               <>
                 <td className="py-2">
@@ -153,51 +131,45 @@ const ManageMember = (props) => {
                       toggleDetails(item.id)
                     }}
                   >
-                    {details.includes(item.id) ? 'Hide' : 'Show'}
+                    View Details
+                  </CButton>{' '}
+                  <CButton
+                    color="primary"
+                    variant="outline"
+                    shape="square"
+                    size="sm"
+                    onClick={() => {
+                      toggleDetails(item.id)
+                    }}
+                  >
+                    Send Login Credentials
+                  </CButton>{' '}
+                  &nbsp;&nbsp;
+                  <CButton
+                    color="primary"
+                    variant="outline"
+                    shape="square"
+                    size="sm"
+                    onClick={() => {
+                      toggleDetails(item.id)
+                    }}
+                  >
+                    Mark As Paid
+                  </CButton>
+                  &nbsp;&nbsp;
+                  <CButton
+                    color="primary"
+                    variant="outline"
+                    shape="square"
+                    size="sm"
+                    onClick={() => {
+                      toggleDetails(item.id)
+                    }}
+                  >
+                    Suspend Member
                   </CButton>
                 </td>
               </>
-            )
-          },
-          details: (item) => {
-            return (
-              <CCollapse visible={details.includes(item.id)}>
-                <CCardBody>
-                  <CButton
-                    size="sm"
-                    color="success"
-                    className="ml-1"
-                    onClick={() => setVisibleHorizontal(!visibleHorizontal)}
-                    aria-expanded={visibleHorizontal}
-                    aria-controls="collapseEdit"
-                  >
-                    Edit
-                  </CButton>
-                  <CButton
-                    size="sm"
-                    color="danger"
-                    className="ml-3"
-                    onClick={() => deleteUser(item.id)}
-                  >
-                    Delete
-                  </CButton>
-                  <CCollapse id="collapseEdit" horizontal visible={visibleHorizontal}>
-                    <CCard className="mb-4">
-                      <CCardHeader>
-                        <strong>Edit User</strong>
-                      </CCardHeader>
-                      <CCardBody>
-                        <EditForm
-                          userId={item.id}
-                          selectedId={selectedId}
-                          visibleHorizontal={visibleHorizontal}
-                          setUsers={setUsers}
-                        />
-                      </CCardBody>
-                    </CCard>
-                  </CCollapse>
-                </CCardBody>
-              </CCollapse>
             )
           },
         }}

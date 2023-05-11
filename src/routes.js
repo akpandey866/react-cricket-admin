@@ -38,6 +38,10 @@ import GameSpot from './views/GameStructure/GameSpot'
 import BracketRound from './views/BracketBattle/BracketRound'
 import CompletedFixture from './views/Fixture/CompletedFixture'
 import ManageMember from './views/User/ManageMember'
+import ManageFixture from './views/Fixture/ManageFixture'
+import ShowScorecard from './views/Fixture/ShowScorcard'
+import ShowSquaD from './views/Fixture/ShowSquad'
+import ManageScorcard from './views/Fixture/ManageScorcard'
 
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
 const Colors = React.lazy(() => import('./views/theme/colors/Colors'))
@@ -120,9 +124,21 @@ const routes = [
   { path: '/team-of-the-round', name: 'Team of the Round', element: TeamOfTheWeek },
   { path: '/add-more-demo', name: 'TeamOfTheRound', element: AddMoreDemo },
   { path: '/fixtures', name: 'Fixtures List', element: Fixture },
+  { path: '/manage-fixtures', name: 'Manage Fixtures', element: ManageFixture },
   { path: '/completed-fixtures', name: 'Completed Fixture', element: CompletedFixture },
-  { path: '/team-players/:fixtureId', name: 'Team Players', element: TeamPlayer },
+  { path: '/manage-fixtures/team-players/:fixtureId', name: 'Team Players', element: TeamPlayer },
+  {
+    path: '/completed-fixtures/manage-scorecard/:fixtureId',
+    name: 'Manage Scorecard',
+    element: ManageScorcard,
+  },
   { path: '/scorecard/:fixtureId', name: 'Scorecard', element: ScoreCard },
+  {
+    path: '/completed-fixtures/show-scorecard/:fixtureId',
+    name: 'CompletedFixture',
+    element: ShowScorecard,
+  },
+  { path: '/completed-fixtures/show-squads/:fixtureId', name: 'ShowSquaD', element: ShowSquaD },
   { path: '/power-control', name: 'Powers', element: PowerControl },
   { path: '/articles', name: 'Articles', element: Article },
   { path: '/rounds', name: 'Rounds', element: Round },

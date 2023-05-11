@@ -104,7 +104,7 @@ const Table = (props) => {
   return (
     <>
       <CRow>
-        <CCol xs={6}>
+        <CCol xs={12} md={6}>
           <CCard className="mb-4">
             <CCardHeader>
               <strong>Players</strong>
@@ -164,7 +164,7 @@ const Table = (props) => {
             </CCardBody>
           </CCard>
         </CCol>
-        <CCol xs={6}>
+        <CCol xs={12} md={6}>
           <CCard className="mb-4">
             <CCardHeader>
               <strong>Picked Players</strong>

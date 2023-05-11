@@ -29,18 +29,24 @@ const Table = (props) => {
 
   const [details, setDetails] = useState([])
   const columns = [
+    { label: 'Comp Name', key: 'grade' },
     {
       label: 'Team Name',
       key: 'team_name',
     },
-    { label: 'Grade Name', key: 'grade' },
-    { label: 'Match Type', key: 'match_type' },
+    { label: 'Type', key: 'match_type' },
     { label: 'Start Date', filter: false, key: 'start_date' },
     { label: 'End Date', filter: false, key: 'end_date' },
     { label: 'Status', filter: false, key: 'status' },
     {
+      key: 'display',
+      label: 'Display',
+      filter: false,
+      sorter: false,
+    },
+    {
       key: 'show_details',
-      label: '',
+      label: 'Action',
       filter: false,
       sorter: false,
     },
@@ -156,6 +162,13 @@ const Table = (props) => {
               </>
             )
           },
+          display: (item) => {
+            return (
+              <>
+                <td className="py-2">Display switch come here</td>
+              </>
+            )
+          },
           details: (item) => {
             return (
               <CCollapse visible={details.includes(item.id)}>
@@ -178,22 +191,6 @@ const Table = (props) => {
                   >
                     Delete
                   </CButton>
-                  <Link
-                    size="sm"
-                    color="danger"
-                    className="btn btn-success btn-sm ms-1"
-                    to={`/team-players/${item.id}`}
-                  >
-                    1. Create Squad
-                  </Link>
-                  <Link
-                    size="sm"
-                    color="danger"
-                    className="btn btn-success btn-sm ms-1"
-                    to={`/scorecard/${item.id}`}
-                  >
-                    2. Manage Scores
-                  </Link>
                   <CCollapse id="collapseEdit" horizontal visible={visibleHorizontal}>
                     <CCard className="mb-4">
                       <CCardHeader>

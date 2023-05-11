@@ -211,6 +211,11 @@ const _nav = [
       },
       {
         component: CNavItem,
+        name: 'Manage Fixtures',
+        to: '/manage-fixtures',
+      },
+      {
+        component: CNavItem,
         name: 'Completed Fixtures',
         to: '/completed-fixtures',
       },
@@ -236,6 +241,23 @@ const _nav = [
         component: CNavItem,
         name: 'Verify Members ',
         to: '/verify-members',
+      },
+      {
+        component: CNavGroup,
+        name: 'Verifications',
+        to: '/',
+        items: [
+          {
+            component: CNavItem,
+            name: 'Mark as Paid',
+            to: '/feedback-fantasy/manage-access-by-team',
+          },
+          {
+            component: CNavItem,
+            name: 'Verify as Player',
+            to: '/feedback-fantasy/manage-access-by-fixture',
+          },
+        ],
       },
     ],
   },

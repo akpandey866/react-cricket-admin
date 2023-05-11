@@ -19,7 +19,6 @@ const AddForm = (props) => {
   const [selectedValue, setSelectedValue] = useState([])
   const handleChange = (e) => {
     setSelectedValue(Array.isArray(e) ? e.map((x) => x.value) : [])
-    console.log('selected value', selectedValue)
   }
   const validationSchema = Yup.object().shape({
     player: Yup.array().required('Player is required'),

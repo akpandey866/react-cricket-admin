@@ -48,7 +48,7 @@ const PowerControl = () => {
 
   return (
     <CRow>
-      <CCol xs={6}>
+      <CCol xs={12} md={6}>
         <CCard className="mb-4">
           <CCardHeader>
             <strong>Triple Captain</strong>
@@ -65,7 +65,7 @@ const PowerControl = () => {
           </CCardBody>
         </CCard>
       </CCol>
-      <CCol xs={6}>
+      <CCol xs={12} md={6}>
         <CCard className="mb-4">
           <CCardHeader>
             <strong>12th Man</strong>
@@ -82,7 +82,7 @@ const PowerControl = () => {
           </CCardBody>
         </CCard>
       </CCol>
-      <CCol xs={6}>
+      <CCol xs={12} md={6}>
         <CCard className="mb-4">
           <CCardHeader>
             <strong>Dealer</strong>
@@ -99,7 +99,7 @@ const PowerControl = () => {
           </CCardBody>
         </CCard>
       </CCol>
-      <CCol xs={6}>
+      <CCol xs={12} md={6}>
         <CCard className="mb-4">
           <CCardHeader>
             <strong>Flipper</strong>

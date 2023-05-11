@@ -5,7 +5,9 @@ import {
   CCard,
   CCardBody,
   CCardHeader,
+  CCol,
   CCollapse,
+  CRow,
   CSmartTable,
 } from '@coreui/react-pro'
 import { toast } from 'react-toastify'
@@ -102,101 +104,112 @@ const CompletedFixture = (props) => {
   }
   return (
     <>
-      <CSmartTable
-        columns={columns}
-        columnFilter={{
-          external: true,
-        }}
-        columnSorter={{
-          external: true,
-        }}
-        scopedColumns={{
-          status: (item) => (
-            <td>
-              <CBadge color={'success'}>{'Completed'}</CBadge>
-            </td>
-          ),
-          grade: (item) => <td>{item.grade ?? ''}</td>,
-          start_date: (item) => <td>{moment(item.start_date).format('D.MM.YYYY')}</td>,
-          end_date: (item) => <td>{moment(item.end_date).format('D.MM.YYYY')}</td>,
-          show_details: (item) => {
-            return (
-              <>
-                <td className="py-2">
-                  <CButton
-                    color="primary"
-                    variant="outline"
-                    shape="square"
-                    size="sm"
-                    onClick={() => {
-                      toggleDetails(item.id)
-                    }}
-                  >
-                    {details.includes(item.id) ? 'Hide' : 'Show'}
-                  </CButton>
+      <CCard className="mb-4">
+        <CCardHeader>
+          <CRow>
+            <CCol xs={10}>
+              <strong>Completed Fixtures</strong>
+            </CCol>
+          </CRow>
+        </CCardHeader>
+        <CCardBody>
+          <CSmartTable
+            columns={columns}
+            columnFilter={{
+              external: true,
+            }}
+            columnSorter={{
+              external: true,
+            }}
+            scopedColumns={{
+              status: (item) => (
+                <td>
+                  <CBadge color={'success'}>{'Completed'}</CBadge>
                 </td>
-              </>
-            )
-          },
-          details: (item) => {
-            return (
-              <CCollapse visible={details.includes(item.id)}>
-                <CCardBody>
-                  <Link
-                    size="sm"
-                    color="success"
-                    className="ms-1 btn btn-success"
-                    to={`/show-scorcards/${item.id}`}
-                  >
-                    Scorcard
-                  </Link>
-                  <Link
-                    size="sm"
-                    color="info"
-                    className="ms-1 btn btn-info"
-                    to={`/show-squad/${item.id}`}
-                  >
-                    Squad
-                  </Link>
-                  <Link
-                    size="sm"
-                    color="info"
-                    className="ms-1 btn btn-dark"
-                    to={`/manage-scorcards/${item.id}`}
-                  >
-                    Manage Scorcard
-                  </Link>
-                </CCardBody>
-              </CCollapse>
-            )
-          },
-        }}
-        items={users?.data}
-        itemsPerPage={itemsPerPage}
-        itemsPerPageSelect
-        loading={loading}
-        pagination={{
-          external: true,
-        }}
-        paginationProps={{
-          activePage: activePage,
-          pages: Math.ceil(users?.total / itemsPerPage) || 1,
-        }}
-        tableProps={{
-          hover: true,
-          responsive: true,
-        }}
-        onActivePageChange={(activePage) => setActivePage(activePage)}
-        onColumnFilterChange={(filter) => {
-          setActivePage(1)
-          setColumnFilter(filter)
-        }}
-        onItemsPerPageChange={(itemsPerPage) => {
-          setActivePage(1)
-          setItemsPerPage(itemsPerPage)
-        }}
-        onSorterChange={(sorter) => setColumnSorter(sorter)}
-      />
+              ),
+              grade: (item) => <td>{item.grade ?? ''}</td>,
+              start_date: (item) => <td>{moment(item.start_date).format('D.MM.YYYY')}</td>,
+              end_date: (item) => <td>{moment(item.end_date).format('D.MM.YYYY')}</td>,
+              show_details: (item) => {
+                return (
+                  <>
+                    <td className="py-2">
+                      <CButton
+                        color="primary"
+                        variant="outline"
+                        shape="square"
+                        size="sm"
+                        onClick={() => {
+                          toggleDetails(item.id)
+                        }}
+                      >
+                        {details.includes(item.id) ? 'Hide' : 'Show'}
+                      </CButton>
+                    </td>
+                  </>
+                )
+              },
+              details: (item) => {
+                return (
+                  <CCollapse visible={details.includes(item.id)}>
+                    <CCardBody>
+                      <Link
+                        size="sm"
+                        color="success"
+                        className="ms-1 btn btn-success"
+                        to={`/completed-fixtures/show-scorecard/${item.id}`}
+                      >
+                        View Scorecard
+                      </Link>
+                      <Link
+                        size="sm"
+                        color="info"
+                        className="ms-1 btn btn-info"
+                        to={`/completed-fixtures/show-squads/${item.id}`}
+                      >
+                        View Squad
+                      </Link>
+                      <Link
+                        size="sm"
+                        color="info"
+                        className="ms-1 btn btn-dark"
+                        to={`/completed-fixtures/manage-scorecard/${item.id}`}
+                      >
+                        Manage Details
+                      </Link>
+                    </CCardBody>
+                  </CCollapse>
+                )
+              },
+            }}
+            items={users?.data}
+            itemsPerPage={itemsPerPage}
+            itemsPerPageSelect
+            loading={loading}
+            pagination={{
+              external: true,
+            }}
+            paginationProps={{
+              activePage: activePage,
+              pages: Math.ceil(users?.total / itemsPerPage) || 1,
+            }}
+            tableProps={{
+              hover: true,
+              responsive: true,
+            }}
+            onActivePageChange={(activePage) => setActivePage(activePage)}
+            onColumnFilterChange={(filter) => {
+              setActivePage(1)
+              setColumnFilter(filter)
+            }}
+            onItemsPerPageChange={(itemsPerPage) => {
+              setActivePage(1)
+              setItemsPerPage(itemsPerPage)
+            }}
+            onSorterChange={(sorter) => setColumnSorter(sorter)}
+          />
+        </CCardBody>
+      </CCard>
     </>
   )
 }
