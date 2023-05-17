@@ -11,15 +11,10 @@ import {
   CTableRow,
   CFormSelect,
   CFormLabel,
-  CFormFeedback,
   CMultiSelect,
   CFormTextarea,
-  CAccordion,
-  CAccordionItem,
-  CAccordionHeader,
-  CAccordionBody,
-  CInputGroup,
-  CInputGroupText,
+  CPopover,
+  CButton,
 } from '@coreui/react-pro'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
@@ -28,12 +23,20 @@ import { useNavigate, useParams } from 'react-router-dom'
 import ToastComponent from 'src/components/common/TaostComponent'
 import ScorecardService from 'src/service/ScorecardService'
 import Loader from 'src/components/Loader'
+import { cilInfo } from '@coreui/icons'
+import CIcon from '@coreui/icons-react'
+import CompleteMarkModal from './CompleteMarkModal'
+import MarkAsCompleteModal from './MarkAsCompleteModal'
 
 const ScoreCard = () => {
+  const navigate = useNavigate()
+  const [visible, setVisible] = useState(false)
+  const [completMarkModalVisible, setCompletMarkModalVisible] = useState(false)
   const [scorecardDetails, setScorecardDetails] = useState()
   const [playerList, setPlayerList] = useState([])
   const [fixtureDetails, setFixtureDetails] = useState({})
   const [loader, setLoader] = useState(false)
+  const [statusValue, setStatusValue] = useState()
   const param = useParams()
   useEffect(() => {
     setLoader(true)
@@ -42,16 +45,20 @@ const ScoreCard = () => {
         if (res.status === 200) {
           setLoader(false)
           setScorecardDetails(res.data)
+          if (res.player_list.length <= 0) {
+            ToastComponent('Please add a minimum of 5 players to the Squad!', 'error')
+            navigate('/manage-fixtures')
+          }
           setPlayerList(res.player_list)
           setFixtureDetails(res.fixtureDetails)
+          setStatusValue(res.fixtureDetails.status)
         }
       })
       .catch((e) => {
         ToastComponent(e.response?.data?.message, 'error')
         setLoader(false)
       })
-  }, [param.fixtureId])
-  console.log('fall of wickets', fixtureDetails)
+  }, [param.fixtureId, navigate])
   const formik = useFormik({
     initialValues: {
       data: scorecardDetails,
@@ -90,12 +97,25 @@ const ScoreCard = () => {
     },
   })
   const [selectedValue, setSelectedValue] = useState([])
-  const [matchResult, setMatchResult] = useState()
   const handleChange = (e) => {
     setSelectedValue(Array.isArray(e) ? e.map((x) => x.value) : [])
   }
-  const handleMatchResult = (e) => {
-    setMatchResult(e.target.value)
+  const [completeMarkModalData, setCompleteMarkModalData] = useState([])
+  const handleMatchStatus = (e) => {
+    setStatusValue(e.target.value)
+    const data = {}
+    data.fixtureId = param.fixtureId
+    data.status = e.target.value
+    if (e.target.value === '3') {
+      ScorecardService.getSavedScorecardData(data).then((res) => {
+        if (res.status === 200) {
+          setCompleteMarkModalData(res.data)
+          setCompletMarkModalVisible(true)
+        }
+      })
+    } else {
+      console.log('statu is 2')
+    }
   }
   return (
     <>
@@ -267,7 +287,7 @@ const ScoreCard = () => {
             </CCard>
           </CCol>
 
-          <CCol xs={12}>
+          {/* <CCol xs={12}>
             <CCard className="mb-4">
               <CCardHeader>
                 <strong>Mobile View</strong>
@@ -533,7 +553,7 @@ const ScoreCard = () => {
                 )}
               </CCardBody>
             </CCard>
-          </CCol>
+          </CCol> */}
 
           <CCol xs={12}>
             <CCard className="mb-4">
@@ -612,18 +632,55 @@ const ScoreCard = () => {
                       onChange={formik.handleChange}
                     ></CFormTextarea>
                   </CCol>
+                  <CCol md={6}></CCol>
+                  <CCol md={4}>
+                    <CLoadingButton
+                      type="submit"
+                      color="success"
+                      variant="outline"
+                      loading={loader}
+                      className="mt-3"
+                    >
+                      Submit
+                    </CLoadingButton>
+                  </CCol>
+                  <CCol md={6}></CCol>
+                  <CCol md={4}>
+                    {' '}
+                    <CFormLabel htmlFor="Add Match Report" className="mr-1 mt-3">
+                      Match Status
+                    </CFormLabel>
+                    <CButton color="danger" size="sm" onClick={() => setVisible(!visible)}>
+                      <CIcon icon={cilInfo} className="" fontSize={12} />
+                    </CButton>
+                    <CFormSelect
+                      aria-label="Select Structure"
+                      name="match_status"
+                      className={
+                        'mt-3 form-control' +
+                        (formik.errors.match_status && formik.touched.match_status
+                          ? ' is-invalid'
+                          : '')
+                      }
+                      value={statusValue}
+                      id="match_status"
+                      onChange={handleMatchStatus}
+                    >
+                      <option value={0}>Select Match Status </option>
+                      <option value={2}>In-Progress</option>
+                      <option value={3}>Completed</option>
+                    </CFormSelect>
+                  </CCol>
                 </CRow>
-                <CLoadingButton
-                  type="submit"
-                  color="success"
-                  variant="outline"
-                  loading={loader}
-                  className="mt-3"
-                >
-                  Submit
-                </CLoadingButton>
               </CCardBody>
             </CCard>
+            <CompleteMarkModal visible={visible} setVisible={setVisible} />
+
+            <MarkAsCompleteModal
+              completMarkModalVisible={completMarkModalVisible}
+              setCompletMarkModalVisible={setCompletMarkModalVisible}
+              data={completeMarkModalData}
+            />
           </CCol>
         </CRow>
       </CForm>

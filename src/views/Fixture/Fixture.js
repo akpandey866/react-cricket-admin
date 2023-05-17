@@ -2,13 +2,22 @@ import React, { useState } from 'react'
 import { CButton, CCard, CCardBody, CCardHeader, CCol, CCollapse, CRow } from '@coreui/react-pro'
 import Table from './Table'
 import AddForm from './AddForm'
+import { useEffect } from 'react'
+import FixtureService from 'src/service/FixtureService'
+import ToastComponent from 'src/components/common/TaostComponent'
 const Fixture = () => {
-  const [visibleHorizontal, setVisibleHorizontal] = useState(false)
-  // const [gradeList, setGradeList] = useState()
-  // const chooseMessage = (data) => {
-  //   setGradeList(data)
-  // }
-  // console.log('gradeas', gradeList)
+  const [displayDetails, setDisplayDetails] = useState([])
+  useEffect(() => {
+    FixtureService.getActivatedDisplay()
+      .then((res) => {
+        if (res.status === 200) {
+          setDisplayDetails(res.data)
+        }
+      })
+      .catch((e) => {
+        ToastComponent('Something went wrong. Please try again', 'error')
+      })
+  }, [])
   return (
     <CRow>
       <CCol xs={12}>
@@ -33,7 +42,8 @@ const Fixture = () => {
             </CRow>
           </CCardHeader>
           <CCardBody>
-            <Table />
+            {' '}
+            <Table displayDetails={displayDetails} setDisplayDetails={setDisplayDetails} />
           </CCardBody>
         </CCard>
       </CCol>

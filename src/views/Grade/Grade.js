@@ -11,7 +11,7 @@ const Grade = () => {
           <CCardHeader>
             <CRow>
               <CCol xs={10}>
-                <strong>Create Grades</strong>
+                <strong>Create Comp (Grade)</strong>
               </CCol>
             </CRow>
           </CCardHeader>
@@ -23,7 +23,7 @@ const Grade = () => {
           <CCardHeader>
             <CRow>
               <CCol xs={10}>
-                <strong>Manage Grades</strong>
+                <strong>Manage Comps</strong>
               </CCol>
             </CRow>
           </CCardHeader>

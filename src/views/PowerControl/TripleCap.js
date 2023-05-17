@@ -54,10 +54,10 @@ const TripleCap = (props) => {
   return (
     <CForm className="row g-3" onSubmit={formik.handleSubmit}>
       <CRow className="">
-        <CFormLabel htmlFor="staticEmail" className="col-sm-2 col-form-label">
+        <CFormLabel htmlFor="staticEmail" className="col-sm-3 col-form-label">
           Status
         </CFormLabel>
-        <div className="col-sm-10 mb-3 pt-2">
+        <div className="col-sm-9 mb-3 pt-2">
           <CFormSwitch
             label=""
             id="triple_captain"
@@ -68,10 +68,10 @@ const TripleCap = (props) => {
         </div>
       </CRow>
       <CRow className="">
-        <CFormLabel htmlFor="staticEmail" className="col-sm-2 col-form-label">
+        <CFormLabel htmlFor="staticEmail" className="col-sm-3 col-form-label">
           Use Limit
         </CFormLabel>
-        <div className="col-sm-10 mb-3 pt-2">
+        <div className="col-sm-9 mb-3 pt-2">
           <CFormInput
             type="number"
             id="captain_cards"

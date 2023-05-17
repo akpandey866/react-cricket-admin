@@ -29,16 +29,15 @@ const Table = (props) => {
   const [details, setDetails] = useState([])
   const columns = [
     {
-      label: 'Full Name',
+      label: 'Player',
       key: 'full_name',
     },
     { label: 'Value', key: 'svalue' },
     { label: 'Position', filter: false, key: 'position_name' },
     { label: 'Status', filter: false, key: 'is_active' },
-    { label: 'Created On', key: 'created_at' },
     {
       key: 'show_details',
-      label: '',
+      label: 'Actions',
       filter: false,
       sorter: false,
     },
@@ -125,7 +124,6 @@ const Table = (props) => {
               </CBadge>
             </td>
           ),
-          created_at: (item) => <td>{moment(item.created_at).format('D.MM.YYYY')}</td>,
           show_details: (item) => {
             return (
               <>
@@ -162,7 +160,7 @@ const Table = (props) => {
                   <CButton
                     size="sm"
                     color="danger"
-                    className="ml-3"
+                    className="ml-1"
                     onClick={() => deletePlayer(item.id)}
                   >
                     Delete

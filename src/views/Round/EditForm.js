@@ -65,9 +65,8 @@ const EditForm = (props) => {
           }
         })
         .catch((e) => {
-          ToastComponent(e.response?.data?.message, 'error')
+          ToastComponent('Something Went Wrong. Please try again', 'error')
           setLoader(false)
-          ToastComponent(e.response?.data?.message, 'error')
         })
     },
   })

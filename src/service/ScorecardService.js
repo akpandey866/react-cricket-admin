@@ -25,6 +25,10 @@ const manageUpdateScorecard = async (data) => {
   const response = await agent.post(`${API_URL}scorecard/manage-scorecards`, data)
   return response.data
 }
+const getSavedScorecardData = async (data) => {
+  const response = await agent.post(`${API_URL}scorecard/get-saved-scorecard-data`, data)
+  return response.data
+}
 
 const ScorecardService = {
   scorecardDetail,
@@ -33,6 +37,7 @@ const ScorecardService = {
   showSquad,
   manageScorecard,
   manageUpdateScorecard,
+  getSavedScorecardData,
 }
 
 export default ScorecardService

@@ -97,7 +97,6 @@ const EditForm = (props) => {
         .catch((e) => {
           ToastComponent(e.response?.data?.message, 'error')
           setLoader(false)
-          ToastComponent(e.response?.data?.message, 'error')
         })
     },
   })
@@ -120,9 +119,9 @@ const EditForm = (props) => {
     <>
       <CForm className="row g-3" onSubmit={formik.handleSubmit}>
         <CCol md={3}>
-          <CFormLabel htmlFor="grade">Grade *</CFormLabel>
+          <CFormLabel htmlFor="grade">Comp *</CFormLabel>
           <CFormSelect
-            aria-label="Select Grade"
+            aria-label="Select Comp"
             name="grade"
             className={
               'form-control' + (formik.errors.grade && formik.touched.grade ? ' is-invalid' : '')
@@ -135,7 +134,7 @@ const EditForm = (props) => {
             id="grade"
             value={formik.values.grade}
           >
-            <option value="0">Select Grade</option>
+            <option value="0">Select Comp</option>
             {gradeList &&
               gradeList.map((item, key) => (
                 <option value={item?.id} key={key}>
@@ -263,7 +262,7 @@ const EditForm = (props) => {
           )}
         </CCol>
         <CCol md={3}>
-          <CFormLabel htmlFor="alast_name">Vanue</CFormLabel>
+          <CFormLabel htmlFor="alast_name">Venue</CFormLabel>
           <input
             type="text"
             name="vanue"
@@ -280,7 +279,7 @@ const EditForm = (props) => {
           )}
         </CCol>
         <CCol md={3}>
-          <CFormLabel htmlFor="alast_name">Oppostion Club</CFormLabel>
+          <CFormLabel htmlFor="alast_name">Opponent</CFormLabel>
           <input
             type="text"
             name="opposition_club"
@@ -289,7 +288,7 @@ const EditForm = (props) => {
               (formik.errors.opposition_club && formik.touched.opposition_club ? ' is-invalid' : '')
             }
             id="opposition_club"
-            placeholder="Oppostion Club"
+            placeholder="Opponent"
             defaultValue={formik.values.opposition_club}
             onChange={formik.handleChange}
           />

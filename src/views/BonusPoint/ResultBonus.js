@@ -34,7 +34,7 @@ const Potm = (props) => {
       <table className="main-table table innertable">
         <thead>
           <tr>
-            <th>Team</th>
+            <th>Team Name</th>
             <th>Bonus Points</th>
           </tr>
         </thead>

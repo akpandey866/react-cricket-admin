@@ -15,6 +15,8 @@ import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import ToastComponent from 'src/components/common/TaostComponent'
 import CommonService from 'src/service/CommonService'
+import PreviewImage from '../PreviewImage'
+import Helper from '../Helper'
 
 const Branding = () => {
   const [loading, setLoading] = useState()
@@ -40,7 +42,7 @@ const Branding = () => {
     initialValues: {
       name: brandingDetail?.name,
       url: brandingDetail?.url,
-      logo: null,
+      image: null,
     },
     enableReinitialize: true,
     validationSchema,
@@ -48,9 +50,9 @@ const Branding = () => {
       var formData = new FormData()
       formData.append('name', data.name)
       formData.append('url', data.url)
-      formData.append('logo', data.logo)
+      formData.append('image', data.image)
       setLoading(true)
-      CommonService.editBranding(data)
+      CommonService.editBranding(formData)
         .then((res) => {
           if (res.status === 200) {
             ToastComponent(res.message, 'success')
@@ -61,9 +63,8 @@ const Branding = () => {
           }
         })
         .catch((e) => {
-          ToastComponent(e.response?.data?.message, 'error')
+          ToastComponent('Something went wrong. Please try again.', 'error')
           setLoading(false)
-          ToastComponent(e.response?.data?.message, 'error')
         })
     },
   })
@@ -108,31 +109,47 @@ const Branding = () => {
                 )}
               </CCol>
               <CCol md={6}>
-                <div className="mb-3">
-                  <CFormLabel htmlFor="image">Brand Logo (Dimesion: 90 px x 90 px)</CFormLabel>
-                  <CFormInput
-                    type="file"
-                    id="image"
-                    name="logo"
-                    className={
-                      formik.touched.image
-                        ? formik.errors.image
-                          ? 'form-control input_user is-invalid'
-                          : 'form-control input_user is-valid'
-                        : 'form-control'
-                    }
-                    onChange={(event) => {
-                      formik.setTouched({
-                        ...formik.touched,
-                        logo: true,
-                      })
-                      formik.setFieldValue('logo', event.target.files[0])
-                    }}
-                  />
-                  {formik.touched.logo && formik.errors.logo ? (
-                    <CFormFeedback invalid>{formik.errors.logo}</CFormFeedback>
-                  ) : null}
-                </div>
+                <CFormLabel htmlFor="image">Brand Logo (Dimesion: 90 px x 90 px)</CFormLabel>
+                <CFormInput
+                  type="file"
+                  id="formFile"
+                  name="image"
+                  className={
+                    formik.touched.image
+                      ? formik.errors.image
+                        ? 'form-control input_user is-invalid'
+                        : 'form-control input_user is-valid'
+                      : 'form-control'
+                  }
+                  onChange={(event) => {
+                    formik.setTouched({
+                      ...formik.touched,
+                      image: true,
+                    })
+                    formik.setFieldValue('image', event.target.files[0])
+                  }}
+                />
+                {formik.touched.image && formik.errors.image ? (
+                  <CFormFeedback invalid>{formik.errors.image}</CFormFeedback>
+                ) : null}
+                <CRow>
+                  <CCol md={4}>
+                    <CCol md={4}>
+                      {brandingDetail.logo &&
+                        Helper.checkIfImageExists(
+                          `${process.env.REACT_APP_API_URL}uploads/branding/${brandingDetail?.logo}`,
+                        )}
+                      {formik.values.image ? (
+                        <PreviewImage
+                          className={{ margin: 'auto' }}
+                          width={300}
+                          height={450}
+                          file={formik.values.image}
+                        />
+                      ) : null}
+                    </CCol>
+                  </CCol>
+                </CRow>
               </CCol>
               <CCol md={6}></CCol>
               <CCol md={6}>

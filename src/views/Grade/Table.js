@@ -25,20 +25,19 @@ const Table = (props) => {
   const [itemsPerPage, setItemsPerPage] = useState(10)
   const [selectedId, setSelectedId] = useState(0)
   const [users, setUsers] = useState(props.users)
-  const navigate = useNavigate()
   const [details, setDetails] = useState([])
   const columns = [
     {
-      label: 'Grade Code',
+      label: 'Comp Code',
       key: 'sn',
-      _style: { width: '40%' },
+      _style: { width: '20%' },
     },
-    { label: 'Grade Name', key: 'grade', _style: { width: '20%' } },
+    { label: 'Comp Name', key: 'grade', _style: { width: '20%' } },
     { label: 'Created On', key: 'created_at', _style: { width: '20%' } },
     { label: 'Status', filter: false, key: 'is_active', _style: { width: '20%' } },
     {
       key: 'show_details',
-      label: '',
+      label: 'Actions',
       _style: { width: '1%' },
       filter: false,
       sorter: false,
@@ -80,7 +79,6 @@ const Table = (props) => {
         setUsers(res.data)
         ToastComponent(res.message, 'success')
         setLoading(false)
-        navigate('/grades')
       }
     })
   }

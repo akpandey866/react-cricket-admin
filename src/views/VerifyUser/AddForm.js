@@ -67,7 +67,7 @@ const AddForm = (props) => {
             onChange={formik.handleChange}
             id="user_id"
           >
-            <option value={0}>Select User</option>
+            <option value={0}>Select Member</option>
             {props.userList &&
               props.userList.map((item, key) => (
                 <option value={item?.user_id} key={key}>

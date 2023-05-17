@@ -30,14 +30,14 @@ const Table = (props) => {
   const [details, setDetails] = useState([])
   const columns = [
     {
-      label: 'User Account',
+      label: 'Member',
       key: 'username',
     },
-    { label: 'Player Account', key: 'player_name' },
+    { label: 'Player', key: 'player_name' },
     { label: 'Created On', key: 'created_at' },
     {
       key: 'show_details',
-      label: '',
+      label: 'Action',
       _style: { width: '1%' },
       filter: false,
       sorter: false,
@@ -67,11 +67,9 @@ const Table = (props) => {
     // setUsers((previousEmployeeData) => previousEmployeeData.data.filter((data) => data.id !== id))
     CommonService.deleteVerifyUser(data).then((res) => {
       if (res.status === 200) {
-        toast.dismiss()
-        setUsers(res.data)
+        // .setUsers((current) => current.filter((fruit) => fruit.id !== id))
         ToastComponent(res.message, 'success')
         setLoading(false)
-        navigate('/grades')
       }
     })
   }
@@ -130,7 +128,7 @@ const Table = (props) => {
             return (
               <CCollapse visible={details.includes(item.id)}>
                 <CCardBody>
-                  <CButton
+                  {/* <CButton
                     size="sm"
                     color="success"
                     className="ml-1"
@@ -139,14 +137,9 @@ const Table = (props) => {
                     aria-controls="collapseEdit"
                   >
                     Edit
-                  </CButton>
-                  <CButton
-                    size="sm"
-                    color="danger"
-                    className="ml-3"
-                    onClick={() => deleteVerifyUser(item.id)}
-                  >
-                    Delete
+                  </CButton> */}
+                  <CButton size="sm" color="danger" onClick={() => deleteVerifyUser(item.id)}>
+                    Remove Verification
                   </CButton>
                   <CCollapse id="collapseEdit" horizontal visible={visibleHorizontal}>
                     <CCard className="mb-4">

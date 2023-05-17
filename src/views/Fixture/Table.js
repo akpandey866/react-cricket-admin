@@ -6,6 +6,7 @@ import {
   CCardBody,
   CCardHeader,
   CCollapse,
+  CFormSwitch,
   CSmartTable,
 } from '@coreui/react-pro'
 import { toast } from 'react-toastify'
@@ -19,15 +20,16 @@ const Table = (props) => {
   const [loading, setLoading] = useState()
   const [visibleHorizontal, setVisibleHorizontal] = useState(false)
   const [selectedId, setSelectedId] = useState(0)
-
   const [activePage, setActivePage] = useState(1)
   const [columnFilter, setColumnFilter] = useState([])
   const [columnSorter, setColumnSorter] = useState(null)
   const [itemsPerPage, setItemsPerPage] = useState(10)
   const [users, setUsers] = useState({})
+
   const navigate = useNavigate()
 
   const [details, setDetails] = useState([])
+
   const columns = [
     { label: 'Comp Name', key: 'grade' },
     {
@@ -46,7 +48,7 @@ const Table = (props) => {
     },
     {
       key: 'show_details',
-      label: 'Action',
+      label: 'Actions',
       filter: false,
       sorter: false,
     },
@@ -108,7 +110,6 @@ const Table = (props) => {
       // .then((response) => response.json())
       .then((result) => {
         setUsers(result.data)
-
         setLoading(false)
       })
   }, [activePage, columnFilter, columnSorter, itemsPerPage, props])
@@ -116,6 +117,29 @@ const Table = (props) => {
   const hideEditDiv = () => {
     setVisibleHorizontal(false)
   }
+  const handleChangeStatus = (itemId) => {
+    const position = props.displayDetails.indexOf(itemId)
+    let newDetails = props.displayDetails.slice()
+    if (position !== -1) {
+      newDetails.splice(position, 1)
+    } else {
+      console.log('new data wukk add here')
+      newDetails = [...props.displayDetails, itemId]
+    }
+
+    props.setDisplayDetails(newDetails)
+    //setIsRadio(+itemId)
+
+    const data = {}
+    data.fixtureId = itemId
+    FixtureService.changeDisplayStatus(data).then((res) => {
+      if (res.status === 200) {
+        props.setData(res.data)
+        ToastComponent(res.message, 'success')
+      }
+    })
+  }
+  console.log(props.displayDetails)
   return (
     <>
       <CSmartTable
@@ -162,10 +186,28 @@ const Table = (props) => {
               </>
             )
           },
-          display: (item) => {
+          display: (item, key) => {
             return (
               <>
-                <td className="py-2">Display switch come here</td>
+                <td className="py-2">
+                  {' '}
+                  <CFormSwitch
+                    label=""
+                    id={`display_id${item.id}`}
+                    name={`display_name${item.id}`}
+                    value={item.id}
+                    // checked={isRadio === item.id}
+                    checked={props.displayDetails.includes(item.id) ? false : true}
+                    onChange={(e) => handleChangeStatus(item.id)}
+                  />
+                  {/* <input
+                    type="radio"
+                    id={`radio${item.id}`}
+                    value={key}
+                    onChange={handleChangeStatus}
+                    checked={isRadio === key}
+                  /> */}
+                </td>
               </>
             )
           },

@@ -16,9 +16,10 @@ import { cilApplicationsSettings, cilMenu, cilMoon, cilSun } from '@coreui/icons
 
 import { AppBreadcrumb } from './index'
 
-import { AppHeaderDropdown, AppHeaderDropdownNotif } from './header/index'
+import { AppHeaderDropdown, AppHeaderDropdownNotif, AppHeaderDropdownTasks } from './header/index'
 
 import { logo } from 'src/assets/brand/logo'
+import GameLinkBar from './header/GameLinkBar'
 
 const AppHeader = () => {
   const navigate = useNavigate()
@@ -77,7 +78,7 @@ const AppHeader = () => {
         </CHeaderNav>
         <CHeaderNav>
           <AppHeaderDropdownNotif />
-          {/* <AppHeaderDropdownTasks /> */}
+          <GameLinkBar />
           {/* <AppHeaderDropdownMssg /> */}
         </CHeaderNav>
         <CHeaderNav className="ms-3 me-4">

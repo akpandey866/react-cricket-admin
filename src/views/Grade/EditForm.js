@@ -1,16 +1,8 @@
-import {
-  CCol,
-  CForm,
-  CFormFeedback,
-  CFormInput,
-  CFormLabel,
-  CLoadingButton,
-} from '@coreui/react-pro'
+import { CCol, CForm, CFormFeedback, CFormLabel, CLoadingButton } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import GradeService from 'src/service/GradeService'
-import { useNavigate } from 'react-router-dom'
 import ToastComponent from 'src/components/common/TaostComponent'
 const EditForm = (props) => {
   const [gradeDetail, setGradeDetail] = useState()

@@ -64,9 +64,7 @@ const AddForm = (props) => {
   return (
     <>
       <CForm className="row g-3" onSubmit={formik.handleSubmit}>
-        <CCol md={6}>
-          <CFormLabel htmlFor="description">Players</CFormLabel>
-
+        <CCol md={12}>
           <CMultiSelect
             id="inputGroupSelect01"
             options={options}
@@ -80,7 +78,6 @@ const AddForm = (props) => {
             <CFormFeedback invalid>{formik.errors.title}</CFormFeedback>
           )}
         </CCol>
-        <CCol md={6}></CCol>
         <CCol md={6}>
           <CLoadingButton type="submit" color="success" variant="outline" loading={loader}>
             Submit

@@ -74,7 +74,7 @@ const EditForm = (props) => {
   return (
     <>
       <CForm className="row g-3" onSubmit={formik.handleSubmit}>
-        <CCol md={6}>
+        <CCol md={12}>
           <CFormLabel htmlFor="title">Title</CFormLabel>
           <input
             type="text"
@@ -91,8 +91,8 @@ const EditForm = (props) => {
             <CFormFeedback invalid>{formik.errors.title}</CFormFeedback>
           )}
         </CCol>
-        <CCol md={6}>
-          <CFormLabel htmlFor="Entry Fee Info">Entry Fee Info</CFormLabel>
+        <CCol md={12}>
+          <CFormLabel htmlFor="Entry Fee Info">Message</CFormLabel>
           <Editor
             toolbarHidden={false}
             editorState={description.editorState}

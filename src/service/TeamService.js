@@ -27,6 +27,10 @@ const deleteTeam = async (data) => {
   const response = await agent.post(API_URL + 'teams/delete-team', data)
   return response.data
 }
+const getAddTeamData = async () => {
+  const response = await agent.get(API_URL + 'teams/get-add-team-data')
+  return response.data
+}
 
 const TeamService = {
   getTeam,
@@ -35,6 +39,7 @@ const TeamService = {
   getTeamDetail,
   editTeam,
   getTeamListByGrade,
+  getAddTeamData,
 }
 
 export default TeamService

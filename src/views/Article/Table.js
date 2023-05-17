@@ -32,13 +32,12 @@ const Table = (props) => {
     {
       key: 'title',
     },
-    { key: 'link' },
     { key: 'date' },
     { label: 'Status', filter: false, key: 'is_active', _style: { width: '20%' } },
     { label: 'Created On', key: 'created_at', _style: { width: '20%' } },
     {
       key: 'show_details',
-      label: '',
+      label: 'Actions',
       _style: { width: '1%' },
       filter: false,
       sorter: false,
@@ -181,7 +180,7 @@ const Table = (props) => {
                   <CButton
                     size="sm"
                     color="danger"
-                    className="ml-3"
+                    className="ml-1"
                     onClick={() => deleteArticle(item.id)}
                   >
                     Delete

@@ -42,7 +42,7 @@ const ManageFixture = (props) => {
     { label: 'Status', filter: false, key: 'status' },
     {
       key: 'show_details',
-      label: '',
+      label: 'Actions',
       filter: false,
       sorter: false,
     },
@@ -84,7 +84,6 @@ const ManageFixture = (props) => {
         setUsers(res.data)
         ToastComponent(res.message, 'success')
         setLoading(false)
-        navigate('/fixtures')
       }
     })
   }
@@ -120,7 +119,7 @@ const ManageFixture = (props) => {
             <CCardHeader>
               <CRow>
                 <CCol xs={10}>
-                  <strong>Manage Fixture</strong>
+                  <strong>Manage Fixtures</strong>
                 </CCol>
               </CRow>
             </CCardHeader>
@@ -193,18 +192,18 @@ const ManageFixture = (props) => {
                             size="sm"
                             color="danger"
                             className="btn btn-success btn-sm ms-1"
-                            to={`/scorecard/${item.id}`}
+                            to={`/assign-feedback-mnager/${item.id}`}
                           >
                             3. Assign Feedback Manager
                           </Link>
-                          <Link
+                          {/* <Link
                             size="sm"
                             color="danger"
                             className="btn btn-success btn-sm ms-1"
                             to={`/scorecard/${item.id}`}
                           >
                             4. Feedback Page
-                          </Link>
+                          </Link> */}
                           <CCollapse id="collapseEdit" horizontal visible={visibleHorizontal}>
                             <CCard className="mb-4">
                               <CCardHeader>

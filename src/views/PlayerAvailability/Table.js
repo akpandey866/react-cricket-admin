@@ -38,7 +38,7 @@ const Table = (props) => {
     { label: 'Created On', key: 'created_at' },
     {
       key: 'show_details',
-      label: '',
+      label: 'Actions',
       _style: { width: '1%' },
       filter: false,
       sorter: false,
@@ -163,7 +163,7 @@ const Table = (props) => {
                   <CButton
                     size="sm"
                     color="danger"
-                    className="ml-3"
+                    className="ml-1"
                     onClick={() => deleteGrade(item.id)}
                   >
                     Delete
@@ -171,7 +171,7 @@ const Table = (props) => {
                   <CCollapse id="collapseEdit" horizontal visible={visibleHorizontal}>
                     <CCard className="mb-4">
                       <CCardHeader>
-                        <strong>Edit Grade</strong>
+                        <strong>Edit Availability</strong>
                       </CCardHeader>
                       <CCardBody>
                         <EditForm

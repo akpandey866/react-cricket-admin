@@ -17,8 +17,8 @@ import { EditorState, convertToRaw, ContentState, convertFromHTML } from 'draft-
 import draftToHtml from 'draftjs-to-html'
 import { Editor } from 'react-draft-wysiwyg'
 const EditForm = (props) => {
+  console.log('calling', props.sponsorId)
   const aboutText = props.sponsorDetail.about ?? '<p>asdasad</p>'
-  console.log('asdasd', aboutText)
   const [description, setDescription] = useState({
     htmlValue: aboutText,
     editorState: EditorState.createWithContent(

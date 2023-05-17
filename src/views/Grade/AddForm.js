@@ -16,7 +16,7 @@ const AddForm = (props) => {
   const navigate = useNavigate()
   const [loader, setLoader] = useState(false)
   const validationSchema = Yup.object().shape({
-    grade: Yup.string().required('Grade is required'),
+    grade: Yup.string().required('Comp is required'),
   })
   const formik = useFormik({
     initialValues: {
@@ -52,9 +52,8 @@ const AddForm = (props) => {
     <>
       <CForm className="row g-3" onSubmit={formik.handleSubmit}>
         <CCol md={6}>
-          <CFormLabel htmlFor="grade">Grade</CFormLabel>
           <CFormInput
-            placeholder="Grade"
+            placeholder="Comp (Grade) Name"
             className={
               'form-control' + (formik.errors.grade && formik.touched.grade ? ' is-invalid' : '')
             }

@@ -7,15 +7,13 @@ import { useState } from 'react'
 import CommonService from 'src/service/CommonService'
 const GameStrucurePage = (props) => {
   const [loader, setLoader] = useState(false)
-  console.log('Asdasdasd', props.game_structure)
-  const [defaultStr, setDefaultStr] = useState(props.game_structure)
   const validationSchema = Yup.object().shape({
     structure: Yup.string().required('Team Structure is required'),
   })
   const formik = useFormik({
     initialValues: {
       //structure: props.game_structure,
-      structure: '',
+      structure: props.gameStuctureData,
     },
     enableReinitialize: true,
     validationSchema,
@@ -49,7 +47,7 @@ const GameStrucurePage = (props) => {
               'mt-3 form-control' +
               (formik.errors.structure && formik.touched.structure ? ' is-invalid' : '')
             }
-            defaultValue={formik.values.structure}
+            value={props.game_structure}
             // onChange={handleChange}
             id="structure"
             onChange={formik.handleChange}

@@ -11,7 +11,7 @@ const TeamPlayer = () => {
           <CCardHeader>
             <CRow>
               <CCol xs={10}>
-                <strong>Add</strong> <small> Players</small>
+                <strong>Add Multiple Players</strong>
               </CCol>
             </CRow>
           </CCardHeader>
@@ -19,11 +19,10 @@ const TeamPlayer = () => {
             <AddForm setPickedPlayer={setPickedPlayer} />
           </CCardBody>
         </CCard>
-        <CCard className="mb-4">
-          <CCardBody>
-            <Table pickedPlayer={pickedPlayer} />
-          </CCardBody>
-        </CCard>
+      </CCol>
+      <CCol xs={12}>
+        {' '}
+        <Table pickedPlayer={pickedPlayer} />
       </CCol>
     </CRow>
   )

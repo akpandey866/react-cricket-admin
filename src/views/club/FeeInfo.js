@@ -41,9 +41,8 @@ const FeeInfo = (props) => {
           }
         })
         .catch((e) => {
-          ToastComponent(e.response?.data?.message, 'error')
+          ToastComponent('Something went wrong.', 'error')
           setLoading(false)
-          ToastComponent(e.response?.data?.message, 'error')
         })
     },
   })

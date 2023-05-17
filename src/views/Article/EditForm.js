@@ -60,7 +60,7 @@ const EditForm = (props) => {
       formData.append('image', data.image)
       formData.append('thumb_image', data.thumb_image)
       setLoader(true)
-      ArticleService.editArticle(data)
+      ArticleService.editArticle(formData)
         .then((res) => {
           if (res.status === 200) {
             ToastComponent(res.message, 'success')
@@ -157,7 +157,7 @@ const EditForm = (props) => {
           </div>
         </CCol>
         <CCol md={4}>
-          <CFormLabel htmlFor="Date">Date *</CFormLabel>
+          <CFormLabel htmlFor="Date">Publish Date *</CFormLabel>
           <CDatePicker
             date={props.date}
             locale="en-US"
@@ -188,8 +188,8 @@ const EditForm = (props) => {
           )}
         </CCol>
         <CCol md={4}></CCol>
-        <CCol md={6}>
-          <CFormLabel htmlFor="Entry Fee Info">Description</CFormLabel>
+        <CCol md={12}>
+          <CFormLabel htmlFor="description">Description</CFormLabel>
           <Editor
             toolbarHidden={false}
             editorState={description.editorState}

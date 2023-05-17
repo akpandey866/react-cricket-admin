@@ -29,6 +29,27 @@ const deleteFixture = async (data) => {
   const response = await agent.post(API_URL + 'fixtures/delete-fixture', data)
   return response.data
 }
+const getActivatedDisplay = async () => {
+  const response = await agent.get(API_URL + 'fixtures/get-activated-display')
+  return response.data
+}
+
+const changeDisplayStatus = async (data) => {
+  const response = await agent.post(API_URL + 'fixtures/changeDisplayStatus', data)
+  return response.data
+}
+const getFeedbackManagerList = async (fixtureId) => {
+  const response = await agent.get(API_URL + 'fixtures/get-feedback-manager-list/' + fixtureId)
+  return response.data
+}
+const saveAssignedFeedbackManager = async (data) => {
+  const response = await agent.post(API_URL + 'fixtures/save-assigned-feedback-manager', data)
+  return response.data
+}
+const deleteAssignedFeedbackManager = async (data) => {
+  const response = await agent.post(API_URL + 'fixtures/delete-assigned-feedback-manager', data)
+  return response.data
+}
 
 const FixtureService = {
   getFixture,
@@ -37,6 +58,11 @@ const FixtureService = {
   editFixture,
   getFixtureDetail,
   deleteFixture,
+  getActivatedDisplay,
+  changeDisplayStatus,
+  getFeedbackManagerList,
+  saveAssignedFeedbackManager,
+  deleteAssignedFeedbackManager,
 }
 
 export default FixtureService

@@ -40,7 +40,7 @@ const Table = (props) => {
     { label: 'Created On', key: 'created_at', _style: { width: '20%' } },
     {
       key: 'show_details',
-      label: '',
+      label: 'Actions',
       _style: { width: '1%' },
       filter: false,
       sorter: false,
@@ -162,7 +162,7 @@ const Table = (props) => {
                   <CButton
                     size="sm"
                     color="danger"
-                    className="ml-3"
+                    className="ml-1"
                     onClick={() => deleteNotification(item.id)}
                   >
                     Delete

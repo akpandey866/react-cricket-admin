@@ -84,7 +84,7 @@ const EditForm = (props) => {
     <>
       <CForm className="row g-3" onSubmit={formik.handleSubmit}>
         <CCol md={6}>
-          <CFormLabel htmlFor="grade">Player*</CFormLabel>
+          <CFormLabel htmlFor="grade">Player *</CFormLabel>
           <CFormSelect
             aria-label="Select Player"
             name="player"
@@ -104,6 +104,22 @@ const EditForm = (props) => {
           </CFormSelect>
           {formik.errors.player && formik.touched.player && (
             <CFormFeedback invalid>{formik.errors.player}</CFormFeedback>
+          )}
+        </CCol>
+        <CCol md={6}>
+          <CFormLabel htmlFor="Reason">Reason *</CFormLabel>
+          <CFormInput
+            placeholder="Reason"
+            className={
+              'form-control' + (formik.errors.reason && formik.touched.reason ? ' is-invalid' : '')
+            }
+            defaultValue={formik.values.reason}
+            onChange={formik.handleChange}
+            aria-label="reason"
+            id="reason"
+          />
+          {formik.errors.reason && formik.touched.reason && (
+            <CFormFeedback invalid>{formik.errors.reason}</CFormFeedback>
           )}
         </CCol>
         <CCol md={6}>
@@ -154,22 +170,6 @@ const EditForm = (props) => {
           />
           {formik.errors.date_till && formik.touched.date_till && (
             <CFormFeedback invalid>{formik.errors.date_till}</CFormFeedback>
-          )}
-        </CCol>
-        <CCol md={6}>
-          <CFormLabel htmlFor="Reason">Reason</CFormLabel>
-          <CFormInput
-            placeholder="Reason"
-            className={
-              'form-control' + (formik.errors.reason && formik.touched.reason ? ' is-invalid' : '')
-            }
-            defaultValue={formik.values.reason}
-            onChange={formik.handleChange}
-            aria-label="reason"
-            id="reason"
-          />
-          {formik.errors.reason && formik.touched.reason && (
-            <CFormFeedback invalid>{formik.errors.reason}</CFormFeedback>
           )}
         </CCol>
         <CCol md={6}>

@@ -27,6 +27,14 @@ const deleteSponsor = async (data) => {
   const response = await agent.post(API_URL + 'sponsors/delete-sponsor', data)
   return response.data
 }
+const updateFeatured = async (id, status) => {
+  const response = await agent.get(`${API_URL}sponsor/update-featured/${id}/${status}`)
+  return response.data
+}
+const updateStatus = async (id, status) => {
+  const response = await agent.get(`${API_URL}sponsor/update-status/${id}/${status}`)
+  return response.data
+}
 
 const SponsorService = {
   getSponsor,
@@ -34,6 +42,8 @@ const SponsorService = {
   deleteSponsor,
   getSponsorDetail,
   editSponsor,
+  updateFeatured,
+  updateStatus,
 }
 
 export default SponsorService

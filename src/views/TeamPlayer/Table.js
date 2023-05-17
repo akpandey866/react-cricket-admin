@@ -29,11 +29,6 @@ const Table = (props) => {
   const urlParams = useParams()
   const [details, setDetails] = useState([])
   const columns = [
-    {
-      label: 'SN',
-      key: 'sn',
-      filter: false,
-    },
     { label: 'Player Name', filter: false, key: 'full_name' },
     { key: 'team_name', filter: false, sorting: false },
     {
@@ -104,10 +99,10 @@ const Table = (props) => {
   return (
     <>
       <CRow>
-        <CCol xs={12} md={6}>
+        <CCol xs={12} md={12}>
           <CCard className="mb-4">
             <CCardHeader>
-              <strong>Players</strong>
+              <strong>Add Individual Player</strong>
             </CCardHeader>
             <CCardBody>
               <CSmartTable
@@ -119,7 +114,6 @@ const Table = (props) => {
                   external: true,
                 }}
                 scopedColumns={{
-                  sn: (item, number) => <td>{++number}</td>,
                   show_details: (item, number) => {
                     return (
                       <>
@@ -164,12 +158,12 @@ const Table = (props) => {
             </CCardBody>
           </CCard>
         </CCol>
-        <CCol xs={12} md={6}>
-          <CCard className="mb-4">
+        <CCol xs={12} md={12}>
+          <CCard className="mb-4 mt-3">
             <CCardHeader>
-              <strong>Picked Players</strong>
+              <strong>Squad (Picked Players)</strong>
             </CCardHeader>
-            <CCardBody>
+            <CCardBody style={{ maxHeight: '500px !important', overflowY: 'auto !important' }}>
               <CTable striped responsive={true}>
                 <CTableHead>
                   <CTableRow>
@@ -187,6 +181,8 @@ const Table = (props) => {
               </CTable>
             </CCardBody>
           </CCard>
+          <br></br>
+          asdl;j;a;siodlaisdhkajsdhkjahdj
         </CCol>
       </CRow>
     </>

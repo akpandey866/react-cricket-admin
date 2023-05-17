@@ -29,13 +29,13 @@ const GradePoint = () => {
   const [details, setDetails] = useState([])
   const columns = [
     {
-      label: 'Grade Name',
+      label: 'Comp Name',
       key: 'grade',
       filter: false,
     },
     {
       key: 'show_details',
-      label: '',
+      label: 'Point System',
       filter: false,
       sorter: false,
     },

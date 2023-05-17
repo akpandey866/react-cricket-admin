@@ -30,11 +30,11 @@ const Table = (props) => {
   const [details, setDetails] = useState([])
   const columns = [
     {
-      label: 'Full Name',
+      label: 'Member',
       key: 'full_name',
     },
     { key: 'email' },
-    { label: 'team_name', key: 'my_team_name' },
+    { label: 'Team Name', key: 'my_team_name' },
     { label: 'Phone', key: 'phone' },
     { label: 'Status', filter: false, key: 'is_active' },
     { label: 'Created On', key: 'created_at' },

@@ -112,6 +112,10 @@ const editGameStructure = async (data) => {
   const response = await agent.post(API_URL + 'common/edit-game-structure', data)
   return response.data
 }
+const deleteVerifyUser = async (data) => {
+  const response = await agent.post(API_URL + 'common/delete-verify-user', data)
+  return response.data
+}
 const gameStructureInfo = async () => {
   const response = await agent.get(API_URL + 'common/get-game-structure-info')
   return response.data
@@ -142,6 +146,7 @@ const CommonService = {
   updateTotwPlayerPoint,
   editGameStructure,
   gameStructureInfo,
+  deleteVerifyUser,
 }
 
 export default CommonService

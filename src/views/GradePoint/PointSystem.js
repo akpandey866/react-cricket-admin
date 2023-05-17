@@ -151,7 +151,17 @@ const PointSystem = (props) => {
           <CCol xs={12}>
             <CButton
               type="button"
-              className="mb-3 "
+              className="mb-3 mx-1"
+              color={'light'}
+              onClick={() => {
+                props.toggleDetails(props.gradeId)
+              }}
+            >
+              {'Cancel'}
+            </CButton>
+            <CButton
+              type="button"
+              className="mb-3 mx-1"
               color={'danger'}
               onClick={() => setShowConfirm(true)}
             >
@@ -159,7 +169,7 @@ const PointSystem = (props) => {
             </CButton>
             <CButton
               type="button"
-              className="mb-3 mx-2"
+              className="mb-3 mx-1"
               color={'warning'}
               onClick={handleReset.bind(null, formik.resetForm)}
             >
@@ -167,25 +177,21 @@ const PointSystem = (props) => {
             </CButton>
             <CButton
               type="button"
-              className="mb-3 mx-2"
+              className="mb-3 mx-1"
               color={'info'}
               onClick={() => setVisible(!visible)}
             >
               {'Multiplier'}
             </CButton>
-            <CButton
-              type="button"
-              className="mb-3 mx-2"
-              color={'light'}
-              onClick={handleCopyVisible}
-            >
+            <CButton type="button" className="mb-3 mx-1" color={'dark'} onClick={handleCopyVisible}>
               {'Copy'}
             </CButton>
+
             <CLoadingButton
-              className="mb-3"
+              className="mb-3 mx-1"
               type="submit"
               color="success"
-              variant="outline"
+              // variant="outline"
               loading={loader}
             >
               Save & Confirm

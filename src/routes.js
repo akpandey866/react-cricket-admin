@@ -42,6 +42,10 @@ import ManageFixture from './views/Fixture/ManageFixture'
 import ShowScorecard from './views/Fixture/ShowScorcard'
 import ShowSquaD from './views/Fixture/ShowSquad'
 import ManageScorcard from './views/Fixture/ManageScorcard'
+import PaidUser from './views/User/PaidUser'
+import PlayerClaimProfile from './views/User/PlayerClaimProfile'
+import GamePrize from './views/GamePrize/GamePrize'
+import AssignFeedbackManager from './views/AssignedFeedbackManager/AssignFeedbackManager'
 
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
 const Colors = React.lazy(() => import('./views/theme/colors/Colors'))
@@ -117,7 +121,7 @@ const routes = [
   { path: '/fantasy-values', name: 'Fantasy Values', element: Index },
   { path: '/players', name: 'Players List', element: Player },
   { path: '/players/player-structure', name: 'Player Structure', element: PlayerStructure },
-  { path: '/grades', name: 'Comps', element: Grade },
+  { path: '/comps', name: 'Comps', element: Grade },
   { path: '/point-system', name: 'Point System', element: GradePoint },
   { path: '/teams', name: 'Teams', element: Team },
   { path: '/bonus-cards', name: 'Bonus Cards', element: BonusCard },
@@ -127,6 +131,11 @@ const routes = [
   { path: '/manage-fixtures', name: 'Manage Fixtures', element: ManageFixture },
   { path: '/completed-fixtures', name: 'Completed Fixture', element: CompletedFixture },
   { path: '/manage-fixtures/team-players/:fixtureId', name: 'Team Players', element: TeamPlayer },
+  {
+    path: '/assign-feedback-mnager/:fixtureId',
+    name: 'Assign Feedback Manager',
+    element: AssignFeedbackManager,
+  },
   {
     path: '/completed-fixtures/manage-scorecard/:fixtureId',
     name: 'Manage Scorecard',
@@ -148,7 +157,14 @@ const routes = [
   { path: '/availabilities', name: 'Player Availability', element: PlayerAvailability },
   { path: '/verify-members', name: 'Verify Members', element: VerifyUser },
   { path: '/members', name: 'Members List', element: User },
-  { path: '/manage-members', name: 'Manage Members', element: ManageMember },
+  { path: '/manage-members', name: 'Members List', element: ManageMember },
+  { path: '/paid-members', name: 'Paid Member', element: PaidUser },
+  {
+    path: '/verify-as-player',
+    name: 'Verify as Player',
+    element: PlayerClaimProfile,
+  },
+
   { path: '/game-notifications', name: 'Game Notifications', element: GameNotification },
   { path: '/feedback-fantasy/category', name: 'Categories', element: FeedbackCategory },
   { path: '/feedback-fantasy/managers', name: 'Feedback Managers', element: FeedbackCoach },
@@ -177,6 +193,9 @@ const routes = [
   { path: '/bracket-round', name: 'Bracket Round', element: BracketRound },
   { path: '/bracket-battle/battle-listing/:id', name: 'Bracket Round', element: BattleListing },
   { path: '/bracket-battle/match-result/:id', name: 'Bracket Battle', element: MatchResult },
+
+  // Game Prize Listing
+  { path: '/prizes', name: 'Prizes Listing', element: GamePrize },
 
   { path: '/theme', name: 'Theme', element: Colors, exact: true },
   { path: '/theme/colors', name: 'Colors', element: Colors },

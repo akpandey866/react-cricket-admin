@@ -23,7 +23,7 @@ const Table = (props) => {
   const [columnFilter, setColumnFilter] = useState([])
   const [columnSorter, setColumnSorter] = useState(null)
   const [itemsPerPage, setItemsPerPage] = useState(20)
-  const [users, setUsers] = useState({})
+  const [users, setUsers] = useState([])
   const navigate = useNavigate()
 
   const [details, setDetails] = useState([])
@@ -37,7 +37,7 @@ const Table = (props) => {
     { label: 'Status', filter: false, key: 'is_active' },
     {
       key: 'show_details',
-      label: '',
+      label: 'Actions',
       filter: false,
       sorter: false,
     },
@@ -172,7 +172,14 @@ const Table = (props) => {
                         <strong>Edit Team</strong>
                       </CCardHeader>
                       <CCardBody>
-                        <EditForm teamId={item.id} selectedTeamId={selectedTeamId} />
+                        <EditForm
+                          teamId={item.id}
+                          selectedTeamId={selectedTeamId}
+                          users={users}
+                          setUsers={setUsers}
+                          gradeList={props.gradeList}
+                          teamCategoryList={props.teamCategoryList}
+                        />
                       </CCardBody>
                     </CCard>
                   </CCollapse>

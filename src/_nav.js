@@ -103,7 +103,7 @@ const _nav = [
       {
         component: CNavItem,
         name: 'Comps',
-        to: '/grades',
+        to: '/comps',
       },
       {
         component: CNavItem,
@@ -156,7 +156,7 @@ const _nav = [
       {
         component: CNavItem,
         name: 'Prizes',
-        to: '/',
+        to: '/prizes',
       },
       {
         component: CNavItem,
@@ -249,13 +249,13 @@ const _nav = [
         items: [
           {
             component: CNavItem,
-            name: 'Mark as Paid',
-            to: '/feedback-fantasy/manage-access-by-team',
+            name: 'Paid Members',
+            to: '/paid-members',
           },
           {
             component: CNavItem,
             name: 'Verify as Player',
-            to: '/feedback-fantasy/manage-access-by-fixture',
+            to: '/verify-as-player',
           },
         ],
       },

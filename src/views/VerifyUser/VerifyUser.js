@@ -43,7 +43,7 @@ const VerifyUser = () => {
             </CRow>
           </CCardHeader>
           <CCardBody>
-            <Table users={users} />
+            <Table users={users} setUsers={setUsers} />
           </CCardBody>
         </CCard>
       </CCol>

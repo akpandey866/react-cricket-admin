@@ -70,7 +70,7 @@ const Index = () => {
         <CCol xs={12}>
           <CCard className="mb-4">
             <CCardHeader>
-              <strong>Fantasy</strong> <small>Values</small>
+              <strong>Fantasy Values</strong>
             </CCardHeader>
 
             <CCardBody>

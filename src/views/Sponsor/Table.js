@@ -15,6 +15,7 @@ import ToastComponent from 'src/components/common/TaostComponent.js'
 import SponsorService from 'src/service/SponsorService'
 import EditForm from './EditForm'
 import Helper from '../Helper'
+import { useNavigate } from 'react-router-dom'
 const Table = (props) => {
   const [loading, setLoading] = useState()
   const [visibleHorizontal, setVisibleHorizontal] = useState(false)
@@ -23,7 +24,7 @@ const Table = (props) => {
   const [columnSorter, setColumnSorter] = useState(null)
   const [itemsPerPage, setItemsPerPage] = useState(10)
   const [selectedId, setSelectedId] = useState(0)
-  const [users, setUsers] = useState({})
+  const [users, setUsers] = useState([])
 
   const [details, setDetails] = useState([])
   const columns = [
@@ -35,10 +36,9 @@ const Table = (props) => {
     },
     { key: 'name' },
     { label: 'Status', filter: false, key: 'is_active', _style: { width: '20%' } },
-    { label: 'Created On', key: 'created_at', _style: { width: '20%' } },
     {
       key: 'show_details',
-      label: '',
+      label: 'Actions',
       _style: { width: '1%' },
       filter: false,
       sorter: false,
@@ -85,6 +85,7 @@ const Table = (props) => {
     })
   }
 
+  const navigate = useNavigate()
   const getUsers = useEffect(() => {
     setLoading(true)
     const offset = itemsPerPage * activePage - itemsPerPage
@@ -106,11 +107,46 @@ const Table = (props) => {
 
   const [sponsorDetail, setSponsorDetail] = useState({})
   const handleEdit = (id) => {
-    console.log('item id', id)
     SponsorService.getSponsorDetail(id)
       .then((res) => {
         if (res.status === 200) {
           setSponsorDetail(res.data)
+        }
+      })
+      .catch((e) => {
+        console.log('Catch Block', e)
+      })
+  }
+  const handleFeaturedUnfeatured = (id, status) => {
+    SponsorService.updateFeatured(id, status)
+      .then((res) => {
+        if (res.status === 200) {
+          SponsorService.getSponsor()
+            // .then((response) => response.json())
+            .then((result) => {
+              setUsers(result.data)
+              setLoading(false)
+            })
+          ToastComponent(res.message, 'success')
+        } else {
+          ToastComponent(res.message, 'error')
+        }
+      })
+      .catch((e) => {
+        console.log('Catch Block', e)
+      })
+  }
+  const handleStatus = (id, status) => {
+    SponsorService.updateStatus(id, status)
+      .then((res) => {
+        if (res.status === 200) {
+          SponsorService.getSponsor()
+            // .then((response) => response.json())
+            .then((result) => {
+              setUsers(result.data)
+              setLoading(false)
+            })
+          ToastComponent(res.message, 'success')
         }
       })
       .catch((e) => {
@@ -136,13 +172,16 @@ const Table = (props) => {
                 )}
             </td>
           ),
-          created_at: (item) => <td>{moment(item.created_at).format('D.MM.YYYY')}</td>,
           is_active: (item) => (
             <td>
               <CBadge color={getBadge(item.is_active)}>
                 {' '}
                 {item.is_active === 1 ? 'Activated' : 'Deactivated'}
               </CBadge>
+              &nbsp;{' '}
+              {item.is_featured === 1 && (
+                <CBadge color={getBadge(item.is_featured)}>Featured</CBadge>
+              )}
             </td>
           ),
           show_details: (item) => {
@@ -184,11 +223,51 @@ const Table = (props) => {
                   <CButton
                     size="sm"
                     color="danger"
-                    className="ml-3"
+                    className="ml-1"
                     onClick={() => deleteSponsor(item.id)}
                   >
                     Delete
                   </CButton>
+
+                  {item.is_active === 1 ? (
+                    <CButton
+                      size="sm"
+                      color="dark"
+                      className="ml-1"
+                      onClick={() => handleStatus(item.id, 0)}
+                    >
+                      Deactivate
+                    </CButton>
+                  ) : (
+                    <CButton
+                      size="sm"
+                      color="dark"
+                      className="ml-1"
+                      onClick={() => handleStatus(item.id, 1)}
+                    >
+                      Activate
+                    </CButton>
+                  )}
+                  {item.is_featured === 1 ? (
+                    <CButton
+                      size="sm"
+                      color="info"
+                      className="ml-1"
+                      onClick={() => handleFeaturedUnfeatured(item.id, 0)}
+                    >
+                      Remove Featured
+                    </CButton>
+                  ) : (
+                    <CButton
+                      size="sm"
+                      color="info"
+                      className="ml-1"
+                      onClick={() => handleFeaturedUnfeatured(item.id, 1)}
+                    >
+                      Mark Featured
+                    </CButton>
+                  )}
+
                   <CCollapse id="collapseEdit" horizontal visible={visibleHorizontal}>
                     <CCard className="mb-4">
                       <CCardHeader>

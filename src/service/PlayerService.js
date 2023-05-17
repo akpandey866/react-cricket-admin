@@ -59,6 +59,14 @@ const getPlayerStructureInfo = async () => {
   const response = await agent.get(API_URL + '/players/get-player-structure-info')
   return response.data
 }
+const playerProfileClaimListing = async () => {
+  const response = await agent.get(API_URL + 'players/player-profile-claim-listing')
+  return response.data
+}
+const verifyPlayerRequest = async (data) => {
+  const response = await agent.post(API_URL + 'players/verify-player-request', data)
+  return response.data
+}
 const PlayerService = {
   getPlayers,
   savePlayer,
@@ -72,6 +80,8 @@ const PlayerService = {
   saveDefaultPriceStructure,
   savePlayerStructure,
   getPlayerStructureInfo,
+  playerProfileClaimListing,
+  verifyPlayerRequest,
 }
 
 export default PlayerService

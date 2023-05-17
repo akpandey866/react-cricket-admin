@@ -3,7 +3,7 @@ import { CCard, CCardBody, CCardHeader, CCol, CRow } from '@coreui/react-pro'
 import Table from './Table'
 import AddForm from './AddForm'
 const Sponsor = () => {
-  const [users, setUsers] = useState({})
+  const [users, setUsers] = useState([])
   return (
     <CRow>
       <CCol xs={12}>
@@ -28,7 +28,7 @@ const Sponsor = () => {
             </CRow>
           </CCardHeader>
           <CCardBody>
-            <Table users={users} />
+            <Table users={users} setUsers={setUsers} />
           </CCardBody>
         </CCard>
       </CCol>

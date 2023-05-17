@@ -92,215 +92,213 @@ const PlayerStructure = () => {
     },
   })
   return (
-    <CRow>
-      <CCol xs={12}>
-        <CCard className="mb-4">
-          <CCardHeader>
-            <strong>Player Structure</strong>
-          </CCardHeader>
-          <CCardBody>
-            <CRow>
-              <CCol xs={12} sm={6} lg={3}>
-                <CWidgetStatsF
-                  className="mb-3"
-                  icon={<CIcon width={24} icon={cilSettings} size="xl" />}
-                  title="Game Structure"
-                  value={details?.player_allowed}
-                  color="primary-gradient"
-                />
-              </CCol>
-              <CCol xs={12} sm={6} lg={3}>
-                <CWidgetStatsF
-                  className="mb-3"
-                  icon={<CIcon width={24} icon={cilBell} size="xl" />}
-                  title="Salary Cap"
-                  value={`$${details?.salary}M`}
-                  color="danger-gradient"
-                />
-              </CCol>
-            </CRow>
-            <CForm className="row g-3" onSubmit={formik.handleSubmit}>
-              <p className="text-medium-emphasis small">
-                You can set Player structure here. Here Price and Player allowed will show from Game
-                set up section.
-              </p>
+    <CCol xs={12}>
+      <CCard className="mb-4">
+        <CCardHeader>
+          <strong>Player Structure</strong>
+        </CCardHeader>
+        <CCardBody>
+          {/* <CRow>
+            <CCol xs={12} sm={6} lg={3}>
+              <CWidgetStatsF
+                className="mb-3"
+                icon={<CIcon width={24} icon={cilSettings} size="xl" />}
+                title="Game Structure"
+                value={details?.player_allowed}
+                color="primary-gradient"
+              />
+            </CCol>
+            <CCol xs={12} sm={6} lg={3}>
+              <CWidgetStatsF
+                className="mb-3"
+                icon={<CIcon width={24} icon={cilBell} size="xl" />}
+                title="Salary Cap"
+                value={`$${details?.salary}M`}
+                color="danger-gradient"
+              />
+            </CCol>
+          </CRow> */}
+          <CForm className="row g-3" onSubmit={formik.handleSubmit}>
+            <p className="text-medium-emphasis small">
+              You can set Player structure here. Here Price and Player allowed will show from Game
+              set up section.
+            </p>
 
-              <CInputGroup className="mb-3 fw-bold">
-                <CInputGroupText className="fw-bold w-23" style={{ width: '170px' }}>
-                  Min Batsman
-                </CInputGroupText>
-                <CFormInput
-                  placeholder="Min Batsman"
-                  className={
-                    'form-control' +
-                    (formik.errors.min_bat && formik.touched.min_bat ? ' is-invalid' : '')
-                  }
-                  defaultValue={formik.values.max_bat}
-                  onChange={formik.handleChange}
-                  aria-label="min_bat"
-                  id="min_bat"
-                />
+            <CInputGroup className="mb-3 fw-bold">
+              <CInputGroupText className="fw-bold w-23" style={{ width: '170px' }}>
+                Min Bat
+              </CInputGroupText>
+              <CFormInput
+                placeholder="Min Bat"
+                className={
+                  'form-control' +
+                  (formik.errors.min_bat && formik.touched.min_bat ? ' is-invalid' : '')
+                }
+                defaultValue={formik.values.max_bat}
+                onChange={formik.handleChange}
+                aria-label="min_bat"
+                id="min_bat"
+              />
 
-                <CInputGroupText className="fw-bold">-</CInputGroupText>
-                <CFormInput
-                  placeholder="Max Batsman"
-                  className={
-                    'form-control' +
-                    (formik.errors.max_bat && formik.touched.max_bat ? ' is-invalid' : '')
-                  }
-                  defaultValue={formik.values.max_bat}
-                  onChange={formik.handleChange}
-                  aria-label="max_bat"
-                  id="max_bat"
-                />
-                <CInputGroupText className="fw-bold" style={{ width: '170px' }}>
-                  Max Batsman
-                </CInputGroupText>
-                {formik.errors.min_bat && formik.touched.min_bat && (
-                  <CFormFeedback invalid>{formik.errors.min_bat}</CFormFeedback>
-                )}
-                {formik.errors.max_bat && formik.touched.max_bat && (
-                  <CFormFeedback invalid className="d-inline-block">
-                    {formik.errors.max_bat}
-                  </CFormFeedback>
-                )}
-              </CInputGroup>
+              <CInputGroupText className="fw-bold">-</CInputGroupText>
+              <CFormInput
+                placeholder="Max Bat"
+                className={
+                  'form-control' +
+                  (formik.errors.max_bat && formik.touched.max_bat ? ' is-invalid' : '')
+                }
+                defaultValue={formik.values.max_bat}
+                onChange={formik.handleChange}
+                aria-label="max_bat"
+                id="max_bat"
+              />
+              <CInputGroupText className="fw-bold" style={{ width: '170px' }}>
+                Max Bat
+              </CInputGroupText>
+              {formik.errors.min_bat && formik.touched.min_bat && (
+                <CFormFeedback invalid>{formik.errors.min_bat}</CFormFeedback>
+              )}
+              {formik.errors.max_bat && formik.touched.max_bat && (
+                <CFormFeedback invalid className="d-inline-block">
+                  {formik.errors.max_bat}
+                </CFormFeedback>
+              )}
+            </CInputGroup>
 
-              <CInputGroup className="mb-3 fw-bold">
-                <CInputGroupText className="fw-bold" style={{ width: '170px' }}>
-                  Min Bowler
-                </CInputGroupText>
-                <CFormInput
-                  placeholder="Min Bowler"
-                  className={
-                    'form-control' +
-                    (formik.errors.min_bowl && formik.touched.min_bowl ? ' is-invalid' : '')
-                  }
-                  defaultValue={formik.values.min_bowl}
-                  onChange={formik.handleChange}
-                  aria-label="min_bowl"
-                  id="min_bowl"
-                />
+            <CInputGroup className="mb-3 fw-bold">
+              <CInputGroupText className="fw-bold" style={{ width: '170px' }}>
+                Min Bowl
+              </CInputGroupText>
+              <CFormInput
+                placeholder="Min Bowler"
+                className={
+                  'form-control' +
+                  (formik.errors.min_bowl && formik.touched.min_bowl ? ' is-invalid' : '')
+                }
+                defaultValue={formik.values.min_bowl}
+                onChange={formik.handleChange}
+                aria-label="min_bowl"
+                id="min_bowl"
+              />
 
-                <CInputGroupText className="fw-bold">-</CInputGroupText>
-                <CFormInput
-                  placeholder="Max Bowler"
-                  className={
-                    'form-control' +
-                    (formik.errors.max_bowl && formik.touched.max_bowl ? ' is-invalid' : '')
-                  }
-                  defaultValue={formik.values.max_bowl}
-                  onChange={formik.handleChange}
-                  aria-label="max_bowl"
-                  id="max_bowl"
-                />
+              <CInputGroupText className="fw-bold">-</CInputGroupText>
+              <CFormInput
+                placeholder="Max Bowler"
+                className={
+                  'form-control' +
+                  (formik.errors.max_bowl && formik.touched.max_bowl ? ' is-invalid' : '')
+                }
+                defaultValue={formik.values.max_bowl}
+                onChange={formik.handleChange}
+                aria-label="max_bowl"
+                id="max_bowl"
+              />
 
-                <CInputGroupText className="fw-bold" style={{ width: '170px' }}>
-                  Max Bowler
-                </CInputGroupText>
-                {formik.errors.min_bowl && formik.touched.min_bowl && (
-                  <CFormFeedback invalid>{formik.errors.min_bowl}</CFormFeedback>
-                )}
-                {formik.errors.max_bowl && formik.touched.max_bowl && (
-                  <CFormFeedback invalid>{formik.errors.max_bowl}</CFormFeedback>
-                )}
-              </CInputGroup>
+              <CInputGroupText className="fw-bold" style={{ width: '170px' }}>
+                Max Bowl
+              </CInputGroupText>
+              {formik.errors.min_bowl && formik.touched.min_bowl && (
+                <CFormFeedback invalid>{formik.errors.min_bowl}</CFormFeedback>
+              )}
+              {formik.errors.max_bowl && formik.touched.max_bowl && (
+                <CFormFeedback invalid>{formik.errors.max_bowl}</CFormFeedback>
+              )}
+            </CInputGroup>
 
-              <CInputGroup className="mb-3 fw-bold">
-                <CInputGroupText className="fw-bold w-22" style={{ width: '170px' }}>
-                  Min All-Rounder
-                </CInputGroupText>
-                <CFormInput
-                  placeholder="Min All-Rounder"
-                  className={
-                    'form-control' +
-                    (formik.errors.min_ar && formik.touched.min_ar ? ' is-invalid' : '')
-                  }
-                  defaultValue={formik.values.min_ar}
-                  onChange={formik.handleChange}
-                  aria-label="min_ar"
-                  id="min_ar"
-                />
+            <CInputGroup className="mb-3 fw-bold">
+              <CInputGroupText className="fw-bold w-22" style={{ width: '170px' }}>
+                Min AR
+              </CInputGroupText>
+              <CFormInput
+                placeholder="Min All-Rounder"
+                className={
+                  'form-control' +
+                  (formik.errors.min_ar && formik.touched.min_ar ? ' is-invalid' : '')
+                }
+                defaultValue={formik.values.min_ar}
+                onChange={formik.handleChange}
+                aria-label="min_ar"
+                id="min_ar"
+              />
 
-                <CInputGroupText className="fw-bold">-</CInputGroupText>
-                <CFormInput
-                  placeholder="Max All-Rounder"
-                  className={
-                    'form-control' +
-                    (formik.errors.max_ar && formik.touched.max_ar ? ' is-invalid' : '')
-                  }
-                  defaultValue={formik.values.max_ar}
-                  onChange={formik.handleChange}
-                  aria-label="max_ar"
-                  id="max_ar"
-                />
+              <CInputGroupText className="fw-bold">-</CInputGroupText>
+              <CFormInput
+                placeholder="Max All-Rounder"
+                className={
+                  'form-control' +
+                  (formik.errors.max_ar && formik.touched.max_ar ? ' is-invalid' : '')
+                }
+                defaultValue={formik.values.max_ar}
+                onChange={formik.handleChange}
+                aria-label="max_ar"
+                id="max_ar"
+              />
 
-                <CInputGroupText className="fw-bold" style={{ width: '170px' }}>
-                  Max All-Rounder
-                </CInputGroupText>
-                {formik.errors.min_ar && formik.touched.min_ar && (
-                  <CFormFeedback invalid>{formik.errors.min_ar}</CFormFeedback>
-                )}
-                {formik.errors.max_ar && formik.touched.max_ar && (
-                  <CFormFeedback invalid>{formik.errors.max_ar}</CFormFeedback>
-                )}
-              </CInputGroup>
+              <CInputGroupText className="fw-bold" style={{ width: '170px' }}>
+                Max AR
+              </CInputGroupText>
+              {formik.errors.min_ar && formik.touched.min_ar && (
+                <CFormFeedback invalid>{formik.errors.min_ar}</CFormFeedback>
+              )}
+              {formik.errors.max_ar && formik.touched.max_ar && (
+                <CFormFeedback invalid>{formik.errors.max_ar}</CFormFeedback>
+              )}
+            </CInputGroup>
 
-              <CInputGroup className="mb-3 fw-bold">
-                <CInputGroupText className="fw-bold" style={{ width: '170px' }}>
-                  Min Wicket Keeper
-                </CInputGroupText>
-                <CFormInput
-                  placeholder="Min Wicket Keeper"
-                  className={
-                    'form-control' +
-                    (formik.errors.min_wk && formik.touched.min_wk ? ' is-invalid' : '')
-                  }
-                  defaultValue={formik.values.min_wk}
-                  onChange={formik.handleChange}
-                  aria-label="min_wk"
-                  id="min_wk"
-                />
+            <CInputGroup className="mb-3 fw-bold">
+              <CInputGroupText className="fw-bold" style={{ width: '170px' }}>
+                Min WK
+              </CInputGroupText>
+              <CFormInput
+                placeholder="Min Wicket Keeper"
+                className={
+                  'form-control' +
+                  (formik.errors.min_wk && formik.touched.min_wk ? ' is-invalid' : '')
+                }
+                defaultValue={formik.values.min_wk}
+                onChange={formik.handleChange}
+                aria-label="min_wk"
+                id="min_wk"
+              />
 
-                <CInputGroupText className="fw-bold">-</CInputGroupText>
-                <CFormInput
-                  placeholder="Max Wicket Keeper"
-                  className={
-                    'form-control' +
-                    (formik.errors.max_wk && formik.touched.max_wk ? ' is-invalid' : '')
-                  }
-                  defaultValue={formik.values.max_wk}
-                  onChange={formik.handleChange}
-                  aria-label="max_wk"
-                  id="max_wk"
-                />
+              <CInputGroupText className="fw-bold">-</CInputGroupText>
+              <CFormInput
+                placeholder="Max Wicket Keeper"
+                className={
+                  'form-control' +
+                  (formik.errors.max_wk && formik.touched.max_wk ? ' is-invalid' : '')
+                }
+                defaultValue={formik.values.max_wk}
+                onChange={formik.handleChange}
+                aria-label="max_wk"
+                id="max_wk"
+              />
 
-                <CInputGroupText className="fw-bold" style={{ width: '170px' }}>
-                  Max Wicket Keeper
-                </CInputGroupText>
-                {formik.errors.min_wk && formik.touched.min_wk && (
-                  <CFormFeedback invalid>{formik.errors.min_wk}</CFormFeedback>
-                )}
-                {formik.errors.max_wk && formik.touched.max_wk && (
-                  <CFormFeedback invalid>{formik.errors.max_wk}</CFormFeedback>
-                )}
-              </CInputGroup>
-              <CCol md={6}>
-                <CLoadingButton
-                  type="submit"
-                  color="success"
-                  variant="outline"
-                  loading={loader}
-                  id="submit"
-                >
-                  Submit
-                </CLoadingButton>
-              </CCol>
-            </CForm>
-          </CCardBody>
-        </CCard>
-      </CCol>
-    </CRow>
+              <CInputGroupText className="fw-bold" style={{ width: '170px' }}>
+                Max WK
+              </CInputGroupText>
+              {formik.errors.min_wk && formik.touched.min_wk && (
+                <CFormFeedback invalid>{formik.errors.min_wk}</CFormFeedback>
+              )}
+              {formik.errors.max_wk && formik.touched.max_wk && (
+                <CFormFeedback invalid>{formik.errors.max_wk}</CFormFeedback>
+              )}
+            </CInputGroup>
+            <CCol md={6}>
+              <CLoadingButton
+                type="submit"
+                color="success"
+                variant="outline"
+                loading={loader}
+                id="submit"
+              >
+                Submit
+              </CLoadingButton>
+            </CCol>
+          </CForm>
+        </CCardBody>
+      </CCard>
+    </CCol>
   )
 }
 

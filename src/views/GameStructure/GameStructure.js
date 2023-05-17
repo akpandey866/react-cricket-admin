@@ -11,11 +11,12 @@ import GameStrucurePage from './GameStrucurePage'
 import SalaryCapPage from './SalaryCapPage'
 import CommonService from 'src/service/CommonService'
 import ToastComponent from 'src/components/common/TaostComponent'
+import PlayerStructure from '../Player/PlayerStructure/PlayerStructure'
 
 const GameStructure = () => {
   const [key, setKey] = useState('home')
   const [gameSpotData, setGameSpotData] = useState({})
-  const [gameStuctureData, setGameStructureData] = useState({})
+  const [gameStuctureData, setGameStructureData] = useState(0)
   const [salaryCapData, setSalaryCapData] = useState({})
   useEffect(() => {
     CommonService.gameStructureInfo()
@@ -43,6 +44,7 @@ const GameStructure = () => {
           </CCardBody>
         </CCard>
       </CCol>
+      <PlayerStructure />
       <CCol xs={12}>
         <CCard className="mb-4">
           <CCardHeader>
@@ -53,15 +55,12 @@ const GameStructure = () => {
           </CCardBody>
         </CCard>
       </CCol>
-      <CCol xs={12}>
-        <GameSpot gameSpotData={gameSpotData} />
-      </CCol>
       <CCol xs={12} className="mb-4">
         <Trade />
       </CCol>
-      <CCol xs={12} className="mb-4">
+      {/* <CCol xs={12} className="mb-4">
         <CViceCaptain />
-      </CCol>
+      </CCol> */}
     </CRow>
   )
 }

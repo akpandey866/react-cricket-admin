@@ -141,7 +141,7 @@ const AddForm = (props) => {
             // onChange={formik.handleChange}
             id="grade"
           >
-            <option value="0">Select Grade</option>
+            <option value="0">Select Comp</option>
             {gradeList &&
               gradeList.map((item, key) => (
                 <option value={item?.id} key={key}>
@@ -287,7 +287,7 @@ const AddForm = (props) => {
           )}
         </CCol>
         <CCol md={3}>
-          <CFormLabel htmlFor="alast_name">Oppostion</CFormLabel>
+          <CFormLabel htmlFor="alast_name">Opponent</CFormLabel>
           <input
             type="text"
             name="opposition_club"
@@ -296,7 +296,7 @@ const AddForm = (props) => {
               (formik.errors.opposition_club && formik.touched.opposition_club ? ' is-invalid' : '')
             }
             id="opposition_club"
-            placeholder="Oppostion"
+            placeholder="Opponent"
             defaultValue={formik.values.opposition_club}
             onChange={formik.handleChange}
           />

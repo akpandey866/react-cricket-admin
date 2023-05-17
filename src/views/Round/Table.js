@@ -35,7 +35,7 @@ const Table = (props) => {
     { label: 'Lockout End', key: 'lockout_end_time' },
     {
       key: 'show_details',
-      label: '',
+      label: 'Action',
       _style: { width: '1%' },
       filter: false,
       sorter: false,

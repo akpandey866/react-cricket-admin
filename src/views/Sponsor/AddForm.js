@@ -213,7 +213,7 @@ const AddForm = (props) => {
             />
           ) : null}
         </CCol>
-        <CCol md={8}>
+        <CCol md={12}>
           <CFormLabel htmlFor="Entry Fee Info">About</CFormLabel>
           <Editor
             toolbarHidden={false}
@@ -222,7 +222,7 @@ const AddForm = (props) => {
             editorStyle={{ border: '1px solid', height: '150px' }}
           />
         </CCol>
-        <CCol md={4}>
+        <CCol md={6}>
           <CLoadingButton type="submit" color="success" variant="outline" loading={loader}>
             Submit
           </CLoadingButton>
