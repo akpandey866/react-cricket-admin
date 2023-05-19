@@ -70,13 +70,8 @@ const BasicSetting = (props) => {
     )
   }
   return (
-    <CCard className="mb-3">
-      <CCardHeader>
-        <strong>Game Details</strong>
-      </CCardHeader>
-      <CCardBody>
-        <CForm className="row g-3" onSubmit={formik.handleSubmit}>
-          {/* <CCol md={6}>
+    <CForm className="row g-3" onSubmit={formik.handleSubmit}>
+      {/* <CCol md={6}>
             <CFormLabel htmlFor="Facebook">Game Mode</CFormLabel>
             <CFormInput id="game_mode" defaultValue={'Club Mode'} name="game_mode" disabled />
           </CCol>
@@ -90,26 +85,26 @@ const BasicSetting = (props) => {
             />
           </CCol> */}
 
-          <CCol md={6}>
-            <CFormLabel htmlFor="club_name">Club/League Name*</CFormLabel>
-            <CFormInput
-              id="club_name"
-              defaultValue={formik.values.club_name}
-              name="club_name"
-              onChange={formik.handleChange}
-            />
-          </CCol>
-          <CCol md={6}>
-            <CFormLabel htmlFor="game_name">Game Name*</CFormLabel>
-            <CFormInput
-              id="game_name"
-              defaultValue={formik.values.game_name}
-              name="game_name"
-              onChange={formik.handleChange}
-            />
-          </CCol>
+      <CCol md={6}>
+        <CFormLabel htmlFor="club_name">Club/League Name*</CFormLabel>
+        <CFormInput
+          id="club_name"
+          defaultValue={formik.values.club_name}
+          name="club_name"
+          onChange={formik.handleChange}
+        />
+      </CCol>
+      <CCol md={6}>
+        <CFormLabel htmlFor="game_name">Game Name*</CFormLabel>
+        <CFormInput
+          id="game_name"
+          defaultValue={formik.values.game_name}
+          name="game_name"
+          onChange={formik.handleChange}
+        />
+      </CCol>
 
-          {/* <CCol md={12}>
+      {/* <CCol md={12}>
             <CFormLabel htmlFor="game_name">Game Share Link</CFormLabel>
             <CInputGroup className="mb-3">
               <CInputGroupText id="shareUrl">
@@ -120,57 +115,55 @@ const BasicSetting = (props) => {
               </CInputGroupText>
             </CInputGroup>
           </CCol> */}
-          <CCol md={6}>
-            <div>
-              <CFormLabel htmlFor="formFile">Logo</CFormLabel>
-              <CFormInput
-                type="file"
-                id="formFile"
-                name="image"
-                className={
-                  formik.touched.image
-                    ? formik.errors.image
-                      ? 'form-control input_user is-invalid'
-                      : 'form-control input_user is-valid'
-                    : 'form-control'
-                }
-                onChange={(event) => {
-                  formik.setTouched({
-                    ...formik.touched,
-                    image: true,
-                  })
-                  formik.setFieldValue('image', event.target.files[0])
-                }}
-              />
-              {formik.touched.image && formik.errors.image ? (
-                <CFormFeedback invalid>{formik.errors.image}</CFormFeedback>
-              ) : null}
-            </div>
-            <br></br>
-            {formik.values.image ? (
-              <PreviewImage
-                className={{ margin: 'auto' }}
-                width={150}
-                height={150}
-                file={formik.values.image}
-              />
-            ) : null}
-          </CCol>
-          <CCol md={6}></CCol>
-          <CCol md={6}>
-            <CLoadingButton
-              type="submit"
-              color="success"
-              variant="outline"
-              loading={loader}
-              disabled={loader}
-            >
-              Submit
-            </CLoadingButton>
-          </CCol>
-        </CForm>
-      </CCardBody>
-    </CCard>
+      <CCol md={6}>
+        <div>
+          <CFormLabel htmlFor="formFile">Logo</CFormLabel>
+          <CFormInput
+            type="file"
+            id="formFile"
+            name="image"
+            className={
+              formik.touched.image
+                ? formik.errors.image
+                  ? 'form-control input_user is-invalid'
+                  : 'form-control input_user is-valid'
+                : 'form-control'
+            }
+            onChange={(event) => {
+              formik.setTouched({
+                ...formik.touched,
+                image: true,
+              })
+              formik.setFieldValue('image', event.target.files[0])
+            }}
+          />
+          {formik.touched.image && formik.errors.image ? (
+            <CFormFeedback invalid>{formik.errors.image}</CFormFeedback>
+          ) : null}
+        </div>
+        <br></br>
+        {formik.values.image ? (
+          <PreviewImage
+            className={{ margin: 'auto' }}
+            width={150}
+            height={150}
+            file={formik.values.image}
+          />
+        ) : null}
+      </CCol>
+      <CCol md={6}></CCol>
+      <CCol md={6}>
+        <CLoadingButton
+          type="submit"
+          color="success"
+          variant="outline"
+          loading={loader}
+          disabled={loader}
+        >
+          Submit
+        </CLoadingButton>
+      </CCol>
+    </CForm>
   )
 }
 

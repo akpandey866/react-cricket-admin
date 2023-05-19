@@ -23,7 +23,7 @@ const Table = (props) => {
   const [columnFilter, setColumnFilter] = useState([])
   const [columnSorter, setColumnSorter] = useState(null)
   const [itemsPerPage, setItemsPerPage] = useState(20)
-  const [users, setUsers] = useState([])
+  const [users, setUsers] = useState(props.users)
   const navigate = useNavigate()
 
   const [details, setDetails] = useState([])

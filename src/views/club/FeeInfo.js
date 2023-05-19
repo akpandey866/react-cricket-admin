@@ -80,9 +80,6 @@ const FeeInfo = (props) => {
 
   return (
     <CCard className="mb-4">
-      <CCardHeader>
-        <strong>Entry Fees & Welcome Message</strong>
-      </CCardHeader>
       <CCardBody>
         <CForm className="row g-3" onSubmit={formik.handleSubmit}>
           <CCol md={12}>

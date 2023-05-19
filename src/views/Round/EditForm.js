@@ -36,6 +36,7 @@ const EditForm = (props) => {
   const validationSchema = Yup.object().shape({
     round: Yup.string().required('Round is required'),
   })
+  const navigate = useNavigate()
   const formik = useFormik({
     initialValues: {
       round: roundDetail?.round,
@@ -124,6 +125,21 @@ const EditForm = (props) => {
           )}
         </CCol>
         <CCol md={4}>
+          <CFormLabel htmlFor="grade">Start Time</CFormLabel>
+          <CDatePicker
+            date={lockoutStartTime}
+            locale="en-US"
+            name="lockout_start_time"
+            placeholder={'Start Time'}
+            onDateChange={handleLockoutStartTime}
+            timepicker={false}
+            seconds="false"
+          />
+          {formik.errors.lockout_start_time && formik.touched.lockout_start_time && (
+            <CFormFeedback invalid>{formik.errors.lockout_start_time}</CFormFeedback>
+          )}
+        </CCol>
+        <CCol md={4}>
           <CFormLabel htmlFor="grade">End Date</CFormLabel>
           <CDatePicker
             date={endDate}
@@ -136,28 +152,14 @@ const EditForm = (props) => {
             <CFormFeedback invalid>{formik.errors.end_date}</CFormFeedback>
           )}
         </CCol>
+
         <CCol md={4}>
-          <CFormLabel htmlFor="grade">Lockout Start Time</CFormLabel>
-          <CDatePicker
-            date={lockoutStartTime}
-            locale="en-US"
-            name="lockout_start_time"
-            placeholder={'Lockout Start Time'}
-            onDateChange={handleLockoutStartTime}
-            timepicker
-            seconds="false"
-          />
-          {formik.errors.lockout_start_time && formik.touched.lockout_start_time && (
-            <CFormFeedback invalid>{formik.errors.lockout_start_time}</CFormFeedback>
-          )}
-        </CCol>
-        <CCol md={4}>
-          <CFormLabel htmlFor="grade">Lockout End Time</CFormLabel>
+          <CFormLabel htmlFor="grade">End Time</CFormLabel>
           <CDatePicker
             date={lockoutEndTime}
             locale="en-US"
             name="lockout_end_time"
-            placeholder={'Lockout End Time'}
+            placeholder={'End Time'}
             onDateChange={handleLockoutEndTime}
             seconds="false"
             timepicker

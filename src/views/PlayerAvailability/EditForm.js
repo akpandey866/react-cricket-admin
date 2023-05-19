@@ -34,7 +34,7 @@ const EditForm = (props) => {
   }, [props])
   const [loader, setLoader] = useState(false)
   const validationSchema = Yup.object().shape({
-    player: Yup.array().required('Player is required'),
+    // player: Yup.array().required('Player is required'),
     date_from: Yup.date().required('Date from is required'),
     date_till: Yup.date().required('Date to is required'),
   })
@@ -53,6 +53,7 @@ const EditForm = (props) => {
       PlayerAvailabilityService.editAvailability(data)
         .then((res) => {
           if (res.status === 200) {
+            props.setUsers(res.data)
             ToastComponent(res.message, 'success')
             setLoader(false)
           } else {
@@ -66,46 +67,17 @@ const EditForm = (props) => {
         })
     },
   })
-  const [dateFrom, setDateFrom] = useState(availabilityData?.date_from)
-  const [dateTill, setDateTill] = useState()
   const handleDateFromChange = (event) => {
     const dateFormat = moment(event).format('YYYY-MM-DD')
-    setDateFrom(dateFormat)
+    props.setDateFrom(dateFormat)
   }
   const handleDateTillChange = (event) => {
     const dateFormat = moment(event).format('YYYY-MM-DD')
-    setDateTill(dateFormat)
-  }
-  const [selectedValue, setSelectedValue] = useState(availabilityData?.player)
-  const handleChange = (e) => {
-    setSelectedValue(e.target.value)
+    props.setDateTill(dateFormat)
   }
   return (
     <>
       <CForm className="row g-3" onSubmit={formik.handleSubmit}>
-        <CCol md={6}>
-          <CFormLabel htmlFor="grade">Player *</CFormLabel>
-          <CFormSelect
-            aria-label="Select Player"
-            name="player"
-            className={
-              'form-control' + (formik.errors.player && formik.touched.player ? ' is-invalid' : '')
-            }
-            value={selectedValue}
-            onChange={handleChange}
-            id="player"
-          >
-            <option value="0">Select Player</option>
-            {props.multiOption.map((index, key) => (
-              <option value={index.value} key={key}>
-                {index.text}
-              </option>
-            ))}
-          </CFormSelect>
-          {formik.errors.player && formik.touched.player && (
-            <CFormFeedback invalid>{formik.errors.player}</CFormFeedback>
-          )}
-        </CCol>
         <CCol md={6}>
           <CFormLabel htmlFor="Reason">Reason *</CFormLabel>
           <CFormInput
@@ -113,7 +85,7 @@ const EditForm = (props) => {
             className={
               'form-control' + (formik.errors.reason && formik.touched.reason ? ' is-invalid' : '')
             }
-            defaultValue={formik.values.reason}
+            defaultValue={props.avData?.reason}
             onChange={formik.handleChange}
             aria-label="reason"
             id="reason"
@@ -125,8 +97,8 @@ const EditForm = (props) => {
         <CCol md={6}>
           <CFormLabel htmlFor="grade">Unavailable From*</CFormLabel>
           <CDatePicker
-            date={dateFrom}
-            defaultValue={dateFrom}
+            date={props?.avData.date_from}
+            defaultValue={props.avData?.date_from}
             locale="en-US"
             name="date_from"
             placeholder={'Date From'}
@@ -149,10 +121,10 @@ const EditForm = (props) => {
         <CCol md={6}>
           <CFormLabel htmlFor="grade">Unavailable Till*</CFormLabel>
           <CDatePicker
-            date={dateTill}
+            date={props.dateTill}
             locale="en-US"
             name="date_till"
-            value={dateTill}
+            value={props.dateTill}
             placeholder={'Date Till'}
             className={formik.errors.date_till && formik.touched.date_till ? 'is-invalid' : ''}
             // onDateChange={handleDateTillChange}
@@ -164,7 +136,6 @@ const EditForm = (props) => {
                 ...formik.touched,
                 date_till: true,
               })
-
               formik.setFieldValue('date_till', moment(e).format('YYYY-MM-DD'))
             }}
           />
@@ -172,6 +143,7 @@ const EditForm = (props) => {
             <CFormFeedback invalid>{formik.errors.date_till}</CFormFeedback>
           )}
         </CCol>
+        <CCol md={6}></CCol>
         <CCol md={6}>
           <CLoadingButton
             type="submit"

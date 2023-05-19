@@ -6,6 +6,7 @@ import {
   CFormInput,
   CFormLabel,
   CLoadingButton,
+  CTimePicker,
 } from '@coreui/react-pro'
 import moment from 'moment'
 import React, { useState } from 'react'
@@ -13,14 +14,16 @@ import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import RoundService from 'src/service/RoundService'
 import ToastComponent from 'src/components/common/TaostComponent'
+import { useNavigate } from 'react-router-dom'
 const AddForm = (props) => {
+  const navigate = useNavigate()
   const [loader, setLoader] = useState(false)
   const validationSchema = Yup.object().shape({
     round: Yup.number().required('round is required'),
   })
   const formik = useFormik({
     initialValues: {
-      round: '',
+      round: props.roundNumber,
       start_date: '',
       end_date: '',
       lockout_start_time: '',
@@ -29,10 +32,16 @@ const AddForm = (props) => {
     enableReinitialize: true,
     validationSchema,
     onSubmit: (data, actions) => {
+      actions.resetForm({
+        values: {
+          round: '',
+        },
+      })
       data.start_date = startDate
       data.end_date = endDate
       data.lockout_start_time = lockoutStartTime
       data.lockout_end_time = lockoutEndTime
+
       setLoader(true)
       RoundService.saveRound(data)
         .then((res) => {
@@ -40,15 +49,16 @@ const AddForm = (props) => {
             props.setUsers(res.data)
             ToastComponent(res.message, 'success')
             setLoader(false)
+            navigate('/rounds')
           } else {
             setLoader(false)
             ToastComponent(res.message, 'error')
           }
         })
         .catch((e) => {
-          ToastComponent(e.response?.data?.message, 'error')
+          console.log('Error: ', e)
+          ToastComponent('Something went wrong. Please try again.', 'error')
           setLoader(false)
-          ToastComponent(e.response?.data?.message, 'error')
         })
     },
   })
@@ -57,19 +67,19 @@ const AddForm = (props) => {
   const [lockoutStartTime, setLockoutStartTime] = useState('')
   const [lockoutEndTime, setLockoutEndTime] = useState('')
   const handleStartDate = (event) => {
-    const dateFormat = moment(event).format('YYYY-MM-DD')
+    const dateFormat = moment(event).format('DD.MM.YYYY')
     setStartDate(dateFormat)
   }
   const handleEndDate = (event) => {
-    const dateFormat = moment(event).format('YYYY-MM-DD')
+    const dateFormat = moment(event).format('DD.MM.YYYY')
     setEndDate(dateFormat)
   }
   const handleLockoutStartTime = (event) => {
-    const dateFormat = moment(event).format('YYYY-MM-DD hh:mm')
+    const dateFormat = moment(event).format('hh:mm')
     setLockoutStartTime(dateFormat)
   }
   const handleLockoutEndTime = (event) => {
-    const dateFormat = moment(event).format('YYYY-MM-DD hh:mm')
+    const dateFormat = moment(event).format('hh:mm')
     setLockoutEndTime(dateFormat)
   }
 
@@ -77,16 +87,18 @@ const AddForm = (props) => {
     <>
       <CForm className="row g-3" onSubmit={formik.handleSubmit}>
         <CCol md={4}>
-          <CFormLabel htmlFor="grade">Round</CFormLabel>
+          <CFormLabel htmlFor="grade">Round </CFormLabel>
           <CFormInput
             placeholder="Round"
             className={
               'form-control' + (formik.errors.round && formik.touched.round ? ' is-invalid' : '')
             }
-            value={formik.values.round}
-            onChange={formik.handleChange}
+            defaultValue={props.roundNumber}
+            // onChange={formik.handleChange}
             aria-label="round"
             id="round"
+            name="round"
+            disabled
           />
           {formik.errors.round && formik.touched.round && (
             <CFormFeedback invalid>{formik.errors.round}</CFormFeedback>
@@ -100,9 +112,24 @@ const AddForm = (props) => {
             name="start_date"
             placeholder={'Start Date'}
             onDateChange={handleStartDate}
+            format={'dd.mm.yyyy'}
           />
           {formik.errors.start_date && formik.touched.start_date && (
             <CFormFeedback invalid>{formik.errors.start_date}</CFormFeedback>
+          )}
+        </CCol>
+        <CCol md={4}>
+          <CFormLabel htmlFor="grade">Start Time</CFormLabel>
+          <CTimePicker
+            locale="en-US"
+            value={lockoutStartTime}
+            placeholder="Start Time"
+            seconds={false}
+            onTimeChange={handleLockoutEndTime}
+          />
+
+          {formik.errors.lockout_start_time && formik.touched.lockout_start_time && (
+            <CFormFeedback invalid>{formik.errors.lockout_start_time}</CFormFeedback>
           )}
         </CCol>
         <CCol md={4}>
@@ -118,31 +145,15 @@ const AddForm = (props) => {
             <CFormFeedback invalid>{formik.errors.end_date}</CFormFeedback>
           )}
         </CCol>
+
         <CCol md={4}>
-          <CFormLabel htmlFor="grade">Lockout Start Time</CFormLabel>
-          <CDatePicker
-            date={lockoutStartTime}
+          <CFormLabel htmlFor="grade">End Time</CFormLabel>
+          <CTimePicker
             locale="en-US"
-            name="lockout_start_time"
-            placeholder={'Lockout Start Time'}
-            onDateChange={handleLockoutStartTime}
-            timepicker
-            seconds="false"
-          />
-          {formik.errors.lockout_start_time && formik.touched.lockout_start_time && (
-            <CFormFeedback invalid>{formik.errors.lockout_start_time}</CFormFeedback>
-          )}
-        </CCol>
-        <CCol md={4}>
-          <CFormLabel htmlFor="grade">Lockout End Time</CFormLabel>
-          <CDatePicker
-            date={lockoutEndTime}
-            locale="en-US"
-            name="lockout_end_time"
-            placeholder={'Lockout End Time'}
-            onDateChange={handleLockoutEndTime}
-            seconds="false"
-            timepicker
+            value={lockoutEndTime}
+            seconds={false}
+            placeholder="End Time"
+            onTimeChange={handleLockoutEndTime}
           />
           {formik.errors.lockout_end_time && formik.touched.lockout_end_time && (
             <CFormFeedback invalid>{formik.errors.lockout_end_time}</CFormFeedback>

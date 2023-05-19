@@ -39,28 +39,29 @@ const PlayerStructure = () => {
   const [loader, setLoader] = useState(false)
   const validationSchema = Yup.object().shape({
     min_bat: Yup.number()
-      .min(1, 'Please enter a Min Batsman more than 1 character')
+      .min(1, 'Minimum value of 1 is required')
       .required('Min Batsman is required'),
     max_bat: Yup.number()
-      .min(1, 'Please enter a Max Batsman more than 1 character')
+      .min(1, 'Maximum cannot be less than Minimum')
       .required('Max Batsman is required'),
+
     min_bowl: Yup.number()
-      .min(1, 'Please enter a Min Bowler more than 1 character')
+      .min(1, 'Minimum value of 1 is required')
       .required('Min Bowler is required'),
     max_bowl: Yup.number()
-      .min(1, 'Please enter a Max Bowler more than 1 character')
+      .min(1, 'Maximum cannot be less than Minimum')
       .required('Max Bowler is required'),
     min_ar: Yup.number()
-      .min(1, 'Please enter a Min Bowler more than 1 character')
+      .min(1, 'Minimum value of 1 is required')
       .required('Min All-Rounder is required'),
     max_ar: Yup.number()
-      .min(1, 'Please enter a Max All-Rounder more than 1 character')
+      .min(1, 'Maximum cannot be less than Minimum')
       .required('Max All-Rounder is required'),
     min_wk: Yup.number()
-      .min(1, 'Please enter a Min Wicket Keeper more than 1 character')
+      .min(1, 'Minimum value of 1 is required')
       .required('Min Wicket Keeper is required'),
     max_wk: Yup.number()
-      .min(1, 'Please enter a Max Wicket Keeper more than 1 character')
+      .min(1, 'Maximum cannot be less than Minimum')
       .required('Max Wicket Keeper is required'),
   })
   const formik = useFormik({

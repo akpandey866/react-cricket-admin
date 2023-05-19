@@ -33,9 +33,10 @@ const GameStrucurePage = (props) => {
         })
     },
   })
-  // const handleChange = (e) => {
-  //   setDefaultStructure(e.target.value)
-  // }
+  console.log('Asdasasd', props.gameStuctureData)
+  const handleChange = (e) => {
+    props.setGameStructureData(e.target.value)
+  }
   return (
     <>
       <CForm className="row g-3" onSubmit={formik.handleSubmit}>
@@ -47,10 +48,10 @@ const GameStrucurePage = (props) => {
               'mt-3 form-control' +
               (formik.errors.structure && formik.touched.structure ? ' is-invalid' : '')
             }
-            value={props.game_structure}
-            // onChange={handleChange}
+            value={props.gameStuctureData}
+            onChange={handleChange}
             id="structure"
-            onChange={formik.handleChange}
+            // onChange={formik.handleChange}
             // onChange={(event) => {
             //   formik.setTouched({
             //     ...formik.touched,

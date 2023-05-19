@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { CCard, CCardBody, CCardHeader, CCol, CRow } from '@coreui/react-pro'
 import Table from './Table'
-
 import AddForm from './AddForm'
 const Article = () => {
   const [users, setUsers] = useState([])
@@ -29,7 +28,7 @@ const Article = () => {
             </CRow>
           </CCardHeader>
           <CCardBody>
-            <Table users={users} setUsers={setUsers} />
+            <Table users={users} />
           </CCardBody>
         </CCard>
       </CCol>

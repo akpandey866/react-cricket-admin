@@ -1,6 +1,6 @@
 import { agent } from '../utils/agent'
 const API_URL = process.env.REACT_APP_API_URL
-const getRound = async (offset, itemsPerPage, activePage, params) => {
+const getRound = async (offset = 0, itemsPerPage = 0, activePage = 0, params = []) => {
   const response = await agent.get(
     `${API_URL}rounds/listing?offset=${offset}&limit=${itemsPerPage}&page=${activePage}&${params}`,
   )

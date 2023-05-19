@@ -10,7 +10,6 @@ import React, { useEffect, useState } from 'react'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import SponsorService from 'src/service/SponsorService'
-import { useNavigate } from 'react-router-dom'
 import ToastComponent from 'src/components/common/TaostComponent'
 import PreviewImage from '../PreviewImage'
 import { EditorState, convertToRaw, ContentState, convertFromHTML } from 'draft-js'
@@ -18,7 +17,7 @@ import draftToHtml from 'draftjs-to-html'
 import { Editor } from 'react-draft-wysiwyg'
 const EditForm = (props) => {
   console.log('calling', props.sponsorId)
-  const aboutText = props.sponsorDetail.about ?? '<p>asdasad</p>'
+  const aboutText = props.sponsorDetail?.about ?? '<p>asdasad</p>'
   const [description, setDescription] = useState({
     htmlValue: aboutText,
     editorState: EditorState.createWithContent(

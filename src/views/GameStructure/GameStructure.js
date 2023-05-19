@@ -1,4 +1,14 @@
-import { CCard, CCardHeader, CCardBody, CCol, CRow } from '@coreui/react-pro'
+import {
+  CCard,
+  CCardHeader,
+  CCardBody,
+  CCol,
+  CRow,
+  CAccordion,
+  CAccordionItem,
+  CAccordionHeader,
+  CAccordionBody,
+} from '@coreui/react-pro'
 import Tab from 'react-bootstrap/Tab'
 import Tabs from 'react-bootstrap/Tabs'
 import React, { useEffect, useState } from 'react'
@@ -34,27 +44,38 @@ const GameStructure = () => {
   }, [])
   return (
     <CRow>
-      <CCol xs={12}>
-        <CCard className="mb-4">
-          <CCardHeader>
+      <CAccordion activeItemKey={2}>
+        <CAccordionItem itemKey={1}>
+          <CAccordionHeader>
+            {' '}
             <strong>Team Structure</strong>
-          </CCardHeader>
-          <CCardBody>
-            <GameStrucurePage game_structure={gameStuctureData} />
-          </CCardBody>
-        </CCard>
-      </CCol>
-      <PlayerStructure />
-      <CCol xs={12}>
-        <CCard className="mb-4">
-          <CCardHeader>
+          </CAccordionHeader>
+          <CAccordionBody>
+            <GameStrucurePage
+              gameStuctureData={gameStuctureData}
+              setGameStructureData={setGameStructureData}
+            />
+          </CAccordionBody>
+        </CAccordionItem>
+        <CAccordionItem itemKey={2}>
+          <CAccordionHeader>
             <strong>Salary Cap ($m) </strong>
-          </CCardHeader>
-          <CCardBody>
+          </CAccordionHeader>
+          <CAccordionBody>
             <SalaryCapPage />
-          </CCardBody>
-        </CCard>
-      </CCol>
+          </CAccordionBody>
+        </CAccordionItem>
+        <CAccordionItem itemKey={2}>
+          <CAccordionHeader>
+            <strong>Salary Cap ($m) </strong>
+          </CAccordionHeader>
+          <CAccordionBody>
+            <SalaryCapPage />
+          </CAccordionBody>
+        </CAccordionItem>
+      </CAccordion>
+
+      <PlayerStructure />
       <CCol xs={12} className="mb-4">
         <Trade />
       </CCol>

@@ -28,15 +28,18 @@ const Table = (props) => {
   const columns = [
     {
       key: 'round',
+      _style: { width: '15%' },
+      filter: false,
+      sorter: false,
     },
-    { key: 'start_date' },
-    { key: 'end_date' },
-    { label: 'Lockout Start', key: 'lockout_start_time' },
-    { label: 'Lockout End', key: 'lockout_end_time' },
+    { key: 'start_date', filter: false, sorter: false },
+    { label: 'Start Time', key: 'lockout_start_time', filter: false, sorter: false },
+    { key: 'end_date', filter: false, sorter: false },
+    { label: 'End Time', key: 'lockout_end_time', filter: false, sorter: false },
     {
       key: 'show_details',
       label: 'Action',
-      _style: { width: '1%' },
+      _style: { width: '5%' },
       filter: false,
       sorter: false,
     },
@@ -86,6 +89,7 @@ const Table = (props) => {
       // .then((response) => response.json())
       .then((result) => {
         setUsers(result.data)
+        props.setRoundNumber(result.rd_number)
         setLoading(false)
       })
   }, [activePage, columnFilter, columnSorter, itemsPerPage, props])

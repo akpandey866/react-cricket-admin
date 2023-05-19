@@ -52,105 +52,98 @@ const GameIntro = (props) => {
     },
   })
   return (
-    <CCard className="mb-4">
-      <CCardHeader>
-        <strong>Game Videos & Photos</strong>
-      </CCardHeader>
-      <CCardBody>
-        <CForm className="row g-3" onSubmit={formik.handleSubmit}>
-          <CCol md={6}>
-            <CFormLabel htmlFor="youtube_video1">Insert Youtube Embed Code (Video 1)</CFormLabel>
-            <CFormInput
-              id="youtube_video1"
-              defaultValue={formik.values.youtube_video1}
-              name="youtube_video1"
-              onChange={formik.handleChange}
-            />
-          </CCol>
-          <CCol md={6}>
-            <CFormLabel htmlFor="youtube2">Insert Youtube Embed Code (Video 2)</CFormLabel>
-            <CFormInput
-              id="youtube_video2"
-              defaultValue={formik.values.youtube_video2}
-              name="youtube_video2"
-              onChange={formik.handleChange}
-            />
-          </CCol>
+    <CForm className="row g-3" onSubmit={formik.handleSubmit}>
+      <CCol md={6}>
+        <CFormLabel htmlFor="youtube_video1">Insert Youtube Embed Code (Video 1)</CFormLabel>
+        <CFormInput
+          id="youtube_video1"
+          defaultValue={formik.values.youtube_video1}
+          name="youtube_video1"
+          onChange={formik.handleChange}
+        />
+      </CCol>
+      <CCol md={6}>
+        <CFormLabel htmlFor="youtube2">Insert Youtube Embed Code (Video 2)</CFormLabel>
+        <CFormInput
+          id="youtube_video2"
+          defaultValue={formik.values.youtube_video2}
+          name="youtube_video2"
+          onChange={formik.handleChange}
+        />
+      </CCol>
 
-          <CCol md={6}>
-            <CFormLabel htmlFor="youtube_video3">Insert Youtube Embed Code (Video 3)</CFormLabel>
-            <CFormInput
-              id="youtube_video3"
-              defaultValue={formik.values.youtube_video3}
-              name="youtube_video3"
-              onChange={formik.handleChange}
-            />
-          </CCol>
-          <CCol md={6}>
-            <CFormLabel htmlFor="youtube4">Insert Youtube Embed Code (Video 4)</CFormLabel>
-            <CFormInput
-              id="youtube_video4"
-              defaultValue={formik.values.youtube_video4}
-              name="youtube_video4"
-              onChange={formik.handleChange}
-            />
-          </CCol>
-          <CCol md={6}>
-            <div className="mb-3">
-              <CFormLabel htmlFor="video">Uplaod a Video (Max File Size Allowed = 10MB)</CFormLabel>
-              <CFormInput
-                type="file"
-                id="video"
-                name="video"
-                className={
-                  formik.touched.video
-                    ? formik.errors.video
-                      ? 'form-control input_user is-invalid'
-                      : 'form-control input_user is-valid'
-                    : 'form-control'
-                }
-                onChange={(event) => {
-                  formik.setTouched({
-                    ...formik.touched,
-                    video: true,
-                  })
-                  formik.setFieldValue('video', event.target.files[0])
-                }}
-              />
-            </div>
-          </CCol>
-          <CCol md={6}>
-            <div className="mb-3">
-              <CFormLabel htmlFor="image">Image (Dimesion: 540 px x 310 px)</CFormLabel>
-              <CFormInput
-                type="file"
-                id="image"
-                name="image"
-                className={
-                  formik.touched.image
-                    ? formik.errors.image
-                      ? 'form-control input_user is-invalid'
-                      : 'form-control input_user is-valid'
-                    : 'form-control'
-                }
-                onChange={(event) => {
-                  formik.setTouched({
-                    ...formik.touched,
-                    image: true,
-                  })
-                  formik.setFieldValue('image', event.target.files[0])
-                }}
-              />
-            </div>
-          </CCol>
-          <CCol md={6}>
-            <CLoadingButton type="submit" color="success" variant="outline" loading={loading}>
-              Submit
-            </CLoadingButton>
-          </CCol>
-        </CForm>
-      </CCardBody>
-    </CCard>
+      <CCol md={6}>
+        <CFormLabel htmlFor="youtube_video3">Insert Youtube Embed Code (Video 3)</CFormLabel>
+        <CFormInput
+          id="youtube_video3"
+          defaultValue={formik.values.youtube_video3}
+          name="youtube_video3"
+          onChange={formik.handleChange}
+        />
+      </CCol>
+      <CCol md={6}>
+        <CFormLabel htmlFor="youtube4">Insert Youtube Embed Code (Video 4)</CFormLabel>
+        <CFormInput
+          id="youtube_video4"
+          defaultValue={formik.values.youtube_video4}
+          name="youtube_video4"
+          onChange={formik.handleChange}
+        />
+      </CCol>
+      <CCol md={6}>
+        <div className="mb-3">
+          <CFormLabel htmlFor="video">Uplaod a Video (Max File Size Allowed = 10MB)</CFormLabel>
+          <CFormInput
+            type="file"
+            id="video"
+            name="video"
+            className={
+              formik.touched.video
+                ? formik.errors.video
+                  ? 'form-control input_user is-invalid'
+                  : 'form-control input_user is-valid'
+                : 'form-control'
+            }
+            onChange={(event) => {
+              formik.setTouched({
+                ...formik.touched,
+                video: true,
+              })
+              formik.setFieldValue('video', event.target.files[0])
+            }}
+          />
+        </div>
+      </CCol>
+      <CCol md={6}>
+        <div className="mb-3">
+          <CFormLabel htmlFor="image">Image (Dimesion: 540 px x 310 px)</CFormLabel>
+          <CFormInput
+            type="file"
+            id="image"
+            name="image"
+            className={
+              formik.touched.image
+                ? formik.errors.image
+                  ? 'form-control input_user is-invalid'
+                  : 'form-control input_user is-valid'
+                : 'form-control'
+            }
+            onChange={(event) => {
+              formik.setTouched({
+                ...formik.touched,
+                image: true,
+              })
+              formik.setFieldValue('image', event.target.files[0])
+            }}
+          />
+        </div>
+      </CCol>
+      <CCol md={6}>
+        <CLoadingButton type="submit" color="success" variant="outline" loading={loading}>
+          Submit
+        </CLoadingButton>
+      </CCol>
+    </CForm>
   )
 }
 

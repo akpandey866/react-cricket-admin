@@ -13,6 +13,10 @@ import {
   CRow,
   CFormFeedback,
   CDatePicker,
+  CAccordionHeader,
+  CAccordionItem,
+  CAccordionBody,
+  CAccordion,
 } from '@coreui/react-pro'
 import { DocsExample } from 'src/components'
 import ClubService from 'src/service/ClubService'
@@ -82,14 +86,14 @@ const ClubAboutGame = () => {
     last_name: Yup.string().required('Last Name is required'),
     dob: Yup.string().required('DOB is required'),
     phone: Yup.string().required('Phone is required'),
-    // image: Yup.mixed()
-    //   .required('A file is required')
-    //   .test('fileSize', 'File too large', (value) => value && value.size <= FILE_SIZE)
-    //   .test(
-    //     'fileFormat',
-    //     'Unsupported Format',
-    //     (value) => value && SUPPORTED_FORMATS.includes(value.type),
-    //   ),
+    image: Yup.mixed()
+      .required('A file is required')
+      .test('fileSize', 'File too large', (value) => value && value.size <= FILE_SIZE)
+      .test(
+        'fileFormat',
+        'Unsupported Format',
+        (value) => value && SUPPORTED_FORMATS.includes(value.type),
+      ),
   })
 
   const formik = useFormik({
@@ -152,28 +156,43 @@ const ClubAboutGame = () => {
     <Loader />
   ) : (
     <CRow>
-      <CCol xs={12}>
-        <BasicSetting />
-      </CCol>
-      <CCol xs={12}>
-        <AboutGame
-          userDetail={userDetail}
-          countryList={countryList}
-          stateList={stateList}
-          setStateList={setStateList}
-        />
-      </CCol>
-      {/* About Fee Information start here */}
-      <CCol xs={12}>
-        <FeeInfo userDetail={userDetail} />
-      </CCol>
-      {/* Game admin section  */}
-      <CCol xs={12}>
-        <CCard className="mb-4">
-          <CCardHeader>
+      <CAccordion activeItemKey={2}>
+        <CAccordionItem itemKey={1}>
+          <CAccordionHeader>
+            {' '}
+            <strong>Game Details</strong>
+          </CAccordionHeader>
+          <CAccordionBody>
+            <BasicSetting />
+          </CAccordionBody>
+        </CAccordionItem>
+        <CAccordionItem itemKey={2}>
+          <CAccordionHeader>
+            {' '}
+            <strong>Timezone & Location</strong>
+          </CAccordionHeader>
+          <CAccordionBody>
+            <AboutGame
+              userDetail={userDetail}
+              countryList={countryList}
+              stateList={stateList}
+              setStateList={setStateList}
+            />
+          </CAccordionBody>
+        </CAccordionItem>
+        <CAccordionItem itemKey={3}>
+          <CAccordionHeader>
+            <strong>Entry Fees & Welcome Message</strong>
+          </CAccordionHeader>
+          <CAccordionBody>
+            <FeeInfo userDetail={userDetail} />
+          </CAccordionBody>
+        </CAccordionItem>
+        <CAccordionItem itemKey={4}>
+          <CAccordionHeader>
             <strong>Game Admin</strong>
-          </CCardHeader>
-          <CCardBody>
+          </CAccordionHeader>
+          <CAccordionBody>
             <form className="row g-3" onSubmit={formik.handleSubmit}>
               <CCol md={6}>
                 <CFormLabel htmlFor="first_name">First Name *</CFormLabel>
@@ -353,18 +372,25 @@ const ClubAboutGame = () => {
                 </CLoadingButton>
               </CCol>
             </form>
-          </CCardBody>
-        </CCard>
-      </CCol>
-      {/* Game Social Sectin start here */}
-      <CCol xs={12}>
-        <GameSocial userDetail={userDetail} />
-      </CCol>
-      {/* Game Intro Sectin start here */}
-      <CCol xs={12}>
-        <GameIntro userFile={userFile} />
-      </CCol>
-      {/* About Game Sectin start here */}
+          </CAccordionBody>
+        </CAccordionItem>
+        <CAccordionItem itemKey={5}>
+          <CAccordionHeader>
+            <strong>Game Social Links</strong>
+          </CAccordionHeader>
+          <CAccordionBody>
+            <GameSocial userDetail={userDetail} />
+          </CAccordionBody>
+        </CAccordionItem>
+        <CAccordionItem itemKey={6}>
+          <CAccordionHeader>
+            <strong>Game Videos & Photos</strong>
+          </CAccordionHeader>
+          <CAccordionBody>
+            <GameIntro userFile={userFile} />
+          </CAccordionBody>
+        </CAccordionItem>
+      </CAccordion>
     </CRow>
   )
 }

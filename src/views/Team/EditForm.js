@@ -67,9 +67,8 @@ const EditForm = (props) => {
       setLoader(true)
       TeamService.editTeam(formData)
         .then((res) => {
-          const newEditedData = res.data
           if (res.status === 200) {
-            // props.setUsers(newState)
+            props.setUsers(res.data)
             ToastComponent(res.message, 'success')
             setLoader(false)
           } else {

@@ -12,7 +12,6 @@ import React, { useEffect, useState } from 'react'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import ArticleService from 'src/service/ArticleService'
-import { useNavigate } from 'react-router-dom'
 import ToastComponent from 'src/components/common/TaostComponent'
 import moment from 'moment'
 import { EditorState, convertToRaw, ContentState, convertFromHTML } from 'draft-js'
@@ -34,7 +33,6 @@ const EditForm = (props) => {
       editorState: editorValue,
     })
   }
-  const navigate = useNavigate()
   const [loader, setLoader] = useState(false)
   const [date, setDate] = useState(props.date)
   const validationSchema = Yup.object().shape({
@@ -63,9 +61,9 @@ const EditForm = (props) => {
       ArticleService.editArticle(formData)
         .then((res) => {
           if (res.status === 200) {
+            props.setUsers(res.data)
             ToastComponent(res.message, 'success')
             setLoader(false)
-            navigate('/articles')
           } else {
             setLoader(false)
             ToastComponent(res.message, 'error')

@@ -81,7 +81,6 @@ const Table = (props) => {
         setUsers(res.data)
         ToastComponent(res.message, 'success')
         setLoading(false)
-        navigate('/grades')
       }
     })
   }
@@ -104,7 +103,23 @@ const Table = (props) => {
         setLoading(false)
       })
   }, [activePage, columnFilter, columnSorter, itemsPerPage, props])
-
+  const [avData, setAvData] = useState({})
+  const [dateFrom, setDateFrom] = useState()
+  const [dateTill, setDateTill] = useState()
+  const changeEditAction = (index) => {
+    setVisibleHorizontal(true)
+    PlayerAvailabilityService.getAvailabilityDetail(index)
+      .then((res) => {
+        if (res.status === 200) {
+          setAvData(res.data)
+          setDateFrom(res.data.date_from)
+          setDateTill(res.data.date_till)
+        }
+      })
+      .catch((e) => {
+        ToastComponent(e.response?.data?.message, 'error')
+      })
+  }
   return (
     <>
       <CSmartTable
@@ -154,7 +169,7 @@ const Table = (props) => {
                     size="sm"
                     color="success"
                     className="ml-1"
-                    onClick={() => setVisibleHorizontal(!visibleHorizontal)}
+                    onClick={() => changeEditAction(item.id)}
                     aria-expanded={visibleHorizontal}
                     aria-controls="collapseEdit"
                   >
@@ -177,8 +192,14 @@ const Table = (props) => {
                         <EditForm
                           multiOption={props.multiOption}
                           avId={item.id}
+                          avData={avData}
                           selectedId={selectedId}
+                          dateFrom={dateFrom}
+                          setDateFrom={setDateFrom}
+                          dateTill={dateTill}
+                          setDateTill={setDateTill}
                           visibleHorizontal={visibleHorizontal}
+                          setUsers={setUsers}
                         />
                       </CCardBody>
                     </CCard>

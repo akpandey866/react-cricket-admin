@@ -44,58 +44,51 @@ const GameSocial = (props) => {
     },
   })
   return (
-    <CCard className="mb-4">
-      <CCardHeader>
-        <strong>Game Social Links</strong>
-      </CCardHeader>
-      <CCardBody>
-        <CForm className="row g-3" onSubmit={formik.handleSubmit}>
-          <CCol md={6}>
-            <CFormLabel htmlFor="Facebook">Facebook URL</CFormLabel>
-            <CFormInput
-              id="facebook"
-              defaultValue={formik.values.facebook}
-              name="facebook"
-              onChange={formik.handleChange}
-            />
-          </CCol>
-          <CCol md={6}>
-            <CFormLabel htmlFor="Twitter">Twitter URL</CFormLabel>
-            <CFormInput
-              id="twitter"
-              defaultValue={formik.values.twitter}
-              name="twitter"
-              onChange={formik.handleChange}
-            />
-          </CCol>
+    <CForm className="row g-3" onSubmit={formik.handleSubmit}>
+      <CCol md={6}>
+        <CFormLabel htmlFor="Facebook">Facebook URL</CFormLabel>
+        <CFormInput
+          id="facebook"
+          defaultValue={formik.values.facebook}
+          name="facebook"
+          onChange={formik.handleChange}
+        />
+      </CCol>
+      <CCol md={6}>
+        <CFormLabel htmlFor="Twitter">Twitter URL</CFormLabel>
+        <CFormInput
+          id="twitter"
+          defaultValue={formik.values.twitter}
+          name="twitter"
+          onChange={formik.handleChange}
+        />
+      </CCol>
 
-          <CCol md={6}>
-            <CFormLabel htmlFor="Instagram">Instagram URL</CFormLabel>
-            <CFormInput
-              id="instagram"
-              defaultValue={formik.values.instagram}
-              name="instagram"
-              onChange={formik.handleChange}
-            />
-          </CCol>
-          <CCol md={6}>
-            <CFormLabel htmlFor="Website">Website URL</CFormLabel>
-            <CFormInput
-              id="website"
-              defaultValue={formik.values.website}
-              name="website"
-              onChange={formik.handleChange}
-            />
-          </CCol>
+      <CCol md={6}>
+        <CFormLabel htmlFor="Instagram">Instagram URL</CFormLabel>
+        <CFormInput
+          id="instagram"
+          defaultValue={formik.values.instagram}
+          name="instagram"
+          onChange={formik.handleChange}
+        />
+      </CCol>
+      <CCol md={6}>
+        <CFormLabel htmlFor="Website">Website URL</CFormLabel>
+        <CFormInput
+          id="website"
+          defaultValue={formik.values.website}
+          name="website"
+          onChange={formik.handleChange}
+        />
+      </CCol>
 
-          <CCol md={6}>
-            <CLoadingButton type="submit" color="success" variant="outline" loading={loading}>
-              Submit
-            </CLoadingButton>
-          </CCol>
-        </CForm>
-      </CCardBody>
-    </CCard>
+      <CCol md={6}>
+        <CLoadingButton type="submit" color="success" variant="outline" loading={loading}>
+          Submit
+        </CLoadingButton>
+      </CCol>
+    </CForm>
   )
 }
 

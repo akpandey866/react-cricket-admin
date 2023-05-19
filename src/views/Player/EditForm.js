@@ -75,6 +75,7 @@ const EditForm = (props) => {
       PlayerService.editPlayer(formData)
         .then((res) => {
           if (res.status === 200) {
+            props.setUsers(res.data)
             ToastComponent(res.message, 'success')
             setLoader(false)
           } else {

@@ -49,7 +49,7 @@ const Team = () => {
             </CRow>
           </CCardHeader>
           <CCardBody>
-            <Table gradeList={gradeList} teamCategoryList={teamCategoryList} />
+            <Table gradeList={gradeList} users={users} teamCategoryList={teamCategoryList} />
           </CCardBody>
         </CCard>
       </CCol>

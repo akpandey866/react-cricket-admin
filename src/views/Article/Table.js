@@ -25,8 +25,6 @@ const Table = (props) => {
   const [itemsPerPage, setItemsPerPage] = useState(10)
   const [selectedId, setSelectedId] = useState(0)
   const [users, setUsers] = useState(props.users)
-  const navigate = useNavigate()
-
   const [details, setDetails] = useState([])
   const columns = [
     {
@@ -201,6 +199,7 @@ const Table = (props) => {
                           description={description}
                           setArticleId={setArticleId}
                           setDate={setDate}
+                          setUsers={setUsers}
                         />
                       </CCardBody>
                     </CCard>
