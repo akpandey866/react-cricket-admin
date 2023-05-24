@@ -1,5 +1,15 @@
 import React from 'react'
-import { CCard, CCardBody, CCardHeader, CCol, CRow } from '@coreui/react-pro'
+import {
+  CCard,
+  CCardBody,
+  CCardHeader,
+  CCol,
+  CRow,
+  CAccordion,
+  CAccordionItem,
+  CAccordionHeader,
+  CAccordionBody,
+} from '@coreui/react-pro'
 import AddForm from './AddForm'
 import Table from './Table'
 import { useState } from 'react'
@@ -25,41 +35,35 @@ const AssignFeedbackManager = () => {
   }, [param.fixtureId])
   return (
     <CRow>
-      <CCol xs={12}>
-        <CCard className="mb-4">
-          <CCardHeader>
-            <CRow>
-              <CCol xs={10}>
-                <strong>Assign FeedbackManager</strong>
-              </CCol>
-            </CRow>
-          </CCardHeader>
-          <CCardBody>
+      <CAccordion activeItemKey={2}>
+        <CAccordionItem itemKey={1}>
+          <CAccordionHeader>
+            {' '}
+            <strong>Assign FeedbackManager</strong>
+          </CAccordionHeader>
+          <CAccordionBody>
             <AddForm
               userList={userList}
               setUserList={setUserList}
               fixtureId={param.fixtureId}
               setCoachListing={setCoachListing}
             />
-          </CCardBody>
-        </CCard>
-        <CCard className="mb-4">
-          <CCardHeader>
-            <CRow>
-              <CCol xs={10}>
-                <strong>Manage Assigned Members</strong>
-              </CCol>
-            </CRow>
-          </CCardHeader>
-          <CCardBody>
+          </CAccordionBody>
+        </CAccordionItem>
+        <CAccordionItem itemKey={2}>
+          <CAccordionHeader>
+            {' '}
+            <strong>Manage Assigned Members</strong>
+          </CAccordionHeader>
+          <CAccordionBody>
             <Table
               coachListing={coachListing}
               setCoachListing={setCoachListing}
               fixtureId={param.fixtureId}
             />
-          </CCardBody>
-        </CCard>
-      </CCol>
+          </CAccordionBody>
+        </CAccordionItem>
+      </CAccordion>
     </CRow>
   )
 }

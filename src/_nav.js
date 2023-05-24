@@ -125,6 +125,16 @@ const _nav = [
         name: 'Fantasy Values',
         to: '/fantasy-values',
       },
+      {
+        component: CNavItem,
+        name: 'Activate Game',
+        to: '/activate-game',
+      },
+      {
+        component: CNavItem,
+        name: 'Account',
+        to: '/accounts',
+      },
     ],
   },
   {

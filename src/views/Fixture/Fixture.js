@@ -1,5 +1,17 @@
 import React, { useState } from 'react'
-import { CButton, CCard, CCardBody, CCardHeader, CCol, CCollapse, CRow } from '@coreui/react-pro'
+import {
+  CButton,
+  CCard,
+  CCardBody,
+  CCardHeader,
+  CCol,
+  CCollapse,
+  CRow,
+  CAccordion,
+  CAccordionItem,
+  CAccordionHeader,
+  CAccordionBody,
+} from '@coreui/react-pro'
 import Table from './Table'
 import AddForm from './AddForm'
 import { useEffect } from 'react'
@@ -20,33 +32,26 @@ const Fixture = () => {
   }, [])
   return (
     <CRow>
-      <CCol xs={12}>
-        <CCard className="mb-4">
-          <CCardHeader>
-            <CRow>
-              <CCol xs={10}>
-                <strong>Create Fixture</strong>
-              </CCol>
-            </CRow>
-          </CCardHeader>
-          <CCardBody>
-            <AddForm />
-          </CCardBody>
-        </CCard>
-        <CCard className="mb-4">
-          <CCardHeader>
-            <CRow>
-              <CCol xs={10}>
-                <strong>Manage Fixtures List</strong>
-              </CCol>
-            </CRow>
-          </CCardHeader>
-          <CCardBody>
+      <CAccordion activeItemKey={2}>
+        <CAccordionItem itemKey={1}>
+          <CAccordionHeader>
             {' '}
+            <strong>Create Fixture</strong>
+          </CAccordionHeader>
+          <CAccordionBody>
+            <AddForm />
+          </CAccordionBody>
+        </CAccordionItem>
+        <CAccordionItem itemKey={2}>
+          <CAccordionHeader>
+            {' '}
+            <strong>Manage Fixtures List</strong>
+          </CAccordionHeader>
+          <CAccordionBody>
             <Table displayDetails={displayDetails} setDisplayDetails={setDisplayDetails} />
-          </CCardBody>
-        </CCard>
-      </CCol>
+          </CAccordionBody>
+        </CAccordionItem>
+      </CAccordion>
     </CRow>
   )
 }

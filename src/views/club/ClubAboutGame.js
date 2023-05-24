@@ -156,7 +156,7 @@ const ClubAboutGame = () => {
     <Loader />
   ) : (
     <CRow>
-      <CAccordion activeItemKey={2}>
+      <CAccordion alwaysOpen>
         <CAccordionItem itemKey={1}>
           <CAccordionHeader>
             {' '}

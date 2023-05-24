@@ -309,10 +309,10 @@ const Navs = () => {
             </p>
             <DocsExample href="components/navs-tabs#working-with-flex-utilities">
               <CNav component="nav" variant="pills" className="flex-column flex-sm-row">
+                <CNavLink href="#">Active</CNavLink>
                 <CNavLink href="#" active>
-                  Active
+                  Link
                 </CNavLink>
-                <CNavLink href="#">Link</CNavLink>
                 <CNavLink href="#">Link</CNavLink>
                 <CNavLink href="#" disabled>
                   Disabled

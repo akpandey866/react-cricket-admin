@@ -3,11 +3,10 @@ import {
   CCardBody,
   CCardHeader,
   CCol,
-  CForm,
-  CFormInput,
-  CFormLabel,
-  CFormSwitch,
-  CLoadingButton,
+  CAccordion,
+  CAccordionItem,
+  CAccordionHeader,
+  CAccordionBody,
   CRow,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
@@ -48,12 +47,13 @@ const PowerControl = () => {
 
   return (
     <CRow>
-      <CCol xs={12} md={6}>
-        <CCard className="mb-4">
-          <CCardHeader>
+      <CAccordion activeItemKey={2}>
+        <CAccordionItem itemKey={1}>
+          <CAccordionHeader>
+            {' '}
             <strong>Triple Captain</strong>
-          </CCardHeader>
-          <CCardBody>
+          </CAccordionHeader>
+          <CAccordionBody>
             <TripleCap
               data={data}
               setTripleCapLoader={setTripleCapLoader}
@@ -62,15 +62,14 @@ const PowerControl = () => {
               setTripleCheck={setTripleCheck}
               tripleCheck={tripleCheck}
             />
-          </CCardBody>
-        </CCard>
-      </CCol>
-      <CCol xs={12} md={6}>
-        <CCard className="mb-4">
-          <CCardHeader>
+          </CAccordionBody>
+        </CAccordionItem>
+        <CAccordionItem itemKey={2}>
+          <CAccordionHeader>
+            {' '}
             <strong>12th Man</strong>
-          </CCardHeader>
-          <CCardBody>
+          </CAccordionHeader>
+          <CAccordionBody>
             <TwelthMen
               data={data}
               setTwelthMenLoader={setTwelthMenLoader}
@@ -79,15 +78,14 @@ const PowerControl = () => {
               twelthMenCheck={twelthMenCheck}
               setTwelthMenCheck={setTwelthMenCheck}
             />
-          </CCardBody>
-        </CCard>
-      </CCol>
-      <CCol xs={12} md={6}>
-        <CCard className="mb-4">
-          <CCardHeader>
+          </CAccordionBody>
+        </CAccordionItem>
+        <CAccordionItem itemKey={3}>
+          <CAccordionHeader>
+            {' '}
             <strong>Dealer</strong>
-          </CCardHeader>
-          <CCardBody>
+          </CAccordionHeader>
+          <CAccordionBody>
             <Dealer
               data={data}
               setDealerLoader={setDealerLoader}
@@ -96,15 +94,14 @@ const PowerControl = () => {
               setDealerCheck={setDealerCheck}
               dealerCheck={dealerCheck}
             />
-          </CCardBody>
-        </CCard>
-      </CCol>
-      <CCol xs={12} md={6}>
-        <CCard className="mb-4">
-          <CCardHeader>
+          </CAccordionBody>
+        </CAccordionItem>
+        <CAccordionItem itemKey={4}>
+          <CAccordionHeader>
+            {' '}
             <strong>Flipper</strong>
-          </CCardHeader>
-          <CCardBody>
+          </CAccordionHeader>
+          <CAccordionBody>
             <Flipper
               data={data}
               setFlipperLoader={setFlipperLoader}
@@ -113,9 +110,9 @@ const PowerControl = () => {
               setFlipperCheck={setFlipperCheck}
               flipperCheck={flipperCheck}
             />
-          </CCardBody>
-        </CCard>
-      </CCol>
+          </CAccordionBody>
+        </CAccordionItem>
+      </CAccordion>
     </CRow>
   )
 }

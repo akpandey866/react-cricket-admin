@@ -105,13 +105,13 @@ const Table = (props) => {
           external: true,
         }}
         scopedColumns={{
-          start_date: (item) => <td>{moment(item.start_date).format('D.MM.YYYY hh:mm')}</td>,
-          end_date: (item) => <td>{moment(item.end_date).format('D.MM.YYYY hh:mm')}</td>,
+          start_date: (item) => <td>{moment(item.start_date).format('D.MM.YYYY')}</td>,
+          end_date: (item) => <td>{moment(item.end_date).format('D.MM.YYYY')}</td>,
           lockout_start_time: (item) => (
-            <td>{moment(item.lockout_start_time).format('D.MM.YYYY hh:mm')}</td>
+            <td>{moment(item.lockout_start_time, ['h:mm A']).format('HH:mm')}</td>
           ),
           lockout_end_time: (item) => (
-            <td>{moment(item.lockout_end_time).format('D.MM.YYYY hh:mm')}</td>
+            <td>{moment(item.lockout_end_time, ['h:mm A']).format('HH:mm')}</td>
           ),
           show_details: (item) => {
             return (

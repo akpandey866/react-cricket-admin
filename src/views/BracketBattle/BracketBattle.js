@@ -13,6 +13,10 @@ import {
   CFormTextarea,
   CLoadingButton,
   CRow,
+  CAccordion,
+  CAccordionItem,
+  CAccordionHeader,
+  CAccordionBody,
 } from '@coreui/react-pro'
 import { useEffect } from 'react'
 import { useState } from 'react'
@@ -95,16 +99,13 @@ const BracketBattle = () => {
   ]
   return (
     <CRow>
-      <CCol xs={12}>
-        <CCard className="mb-4">
-          <CCardHeader>
-            <CRow>
-              <CCol xs={10}>
-                <strong>Create Bracket Battle</strong>
-              </CCol>
-            </CRow>
-          </CCardHeader>
-          <CCardBody>
+      <CAccordion activeItemKey={1}>
+        <CAccordionItem itemKey={1}>
+          <CAccordionHeader>
+            {' '}
+            <strong>Create Bracket Battle</strong>
+          </CAccordionHeader>
+          <CAccordionBody>
             <CForm className="row g-3" onSubmit={formik.handleSubmit}>
               <CCol md={6}>
                 <CFormLabel htmlFor="structure">Select Your Bracket Battle Stucture</CFormLabel>
@@ -178,9 +179,9 @@ const BracketBattle = () => {
                 </CLoadingButton>
               </CCol>
             </CForm>
-          </CCardBody>
-        </CCard>
-      </CCol>
+          </CAccordionBody>
+        </CAccordionItem>
+      </CAccordion>
     </CRow>
   )
 }

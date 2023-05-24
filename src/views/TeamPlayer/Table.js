@@ -12,6 +12,10 @@ import {
   CTableHead,
   CTableHeaderCell,
   CTableRow,
+  CAccordion,
+  CAccordionItem,
+  CAccordionHeader,
+  CAccordionBody,
 } from '@coreui/react-pro'
 import { toast } from 'react-toastify'
 
@@ -99,12 +103,13 @@ const Table = (props) => {
   return (
     <>
       <CRow>
-        <CCol xs={12} md={12}>
-          <CCard className="mb-4">
-            <CCardHeader>
+        <CAccordion activeItemKey={1}>
+          <CAccordionItem itemKey={1}>
+            <CAccordionHeader>
+              {' '}
               <strong>Add Individual Player</strong>
-            </CCardHeader>
-            <CCardBody>
+            </CAccordionHeader>
+            <CAccordionBody>
               <CSmartTable
                 columns={columns}
                 columnFilter={{
@@ -155,15 +160,17 @@ const Table = (props) => {
                 }}
                 onSorterChange={(sorter) => setColumnSorter(sorter)}
               />
-            </CCardBody>
-          </CCard>
-        </CCol>
-        <CCol xs={12} md={12}>
-          <CCard className="mb-4 mt-3">
-            <CCardHeader>
+            </CAccordionBody>
+          </CAccordionItem>
+        </CAccordion>
+
+        <CAccordion>
+          <CAccordionItem>
+            <CAccordionHeader>
+              {' '}
               <strong>Squad (Picked Players)</strong>
-            </CCardHeader>
-            <CCardBody style={{ maxHeight: '500px !important', overflowY: 'auto !important' }}>
+            </CAccordionHeader>
+            <CAccordionBody>
               <CTable striped responsive={true}>
                 <CTableHead>
                   <CTableRow>
@@ -179,11 +186,9 @@ const Table = (props) => {
                     ))}
                 </CTableBody>
               </CTable>
-            </CCardBody>
-          </CCard>
-          <br></br>
-          asdl;j;a;siodlaisdhkajsdhkjahdj
-        </CCol>
+            </CAccordionBody>
+          </CAccordionItem>
+        </CAccordion>
       </CRow>
     </>
   )

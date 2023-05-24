@@ -69,108 +69,99 @@ const AboutGame = (props) => {
     })
   }
   return (
-    <CCard className="mb-4">
-      <CCardBody>
-        <CForm className="row g-3" onSubmit={formik.handleSubmit}>
-          <CCol md={6}>
-            <CFormLabel htmlFor="Timezone">Timezone *</CFormLabel>
-            <TimezoneSelect
-              value={selectedTimezone}
-              onChange={setSelectedTimezone}
-              name="timezone"
-            />
-          </CCol>
-          <CCol md={6}>
-            <CFormLabel htmlFor="Country">Country*</CFormLabel>
-            <CFormSelect
-              aria-label="select country"
-              name="country"
-              className={
-                'form-control' +
-                (formik.errors.country && formik.touched.country ? ' is-invalid' : '')
-              }
-              defaultValue={country}
-              onChange={handleCountryChange}
-              id="country"
-            >
-              <option value={0}>Select Country</option>
-              {props.countryList &&
-                props.countryList.map((item, key) => (
-                  <option value={item?.id} key={key}>
-                    {item?.name}
-                  </option>
-                ))}
-            </CFormSelect>
-            {formik.errors.country && formik.touched.country && (
-              <CFormFeedback invalid>{formik.errors.country}</CFormFeedback>
-            )}
-          </CCol>
+    <CForm className="row g-3" onSubmit={formik.handleSubmit}>
+      <CCol md={6}>
+        <CFormLabel htmlFor="Timezone">Timezone *</CFormLabel>
+        <TimezoneSelect value={selectedTimezone} onChange={setSelectedTimezone} name="timezone" />
+      </CCol>
+      <CCol md={6}>
+        <CFormLabel htmlFor="Country">Country*</CFormLabel>
+        <CFormSelect
+          aria-label="select country"
+          name="country"
+          className={
+            'form-control' + (formik.errors.country && formik.touched.country ? ' is-invalid' : '')
+          }
+          defaultValue={country}
+          onChange={handleCountryChange}
+          id="country"
+        >
+          <option value={0}>Select Country</option>
+          {props.countryList &&
+            props.countryList.map((item, key) => (
+              <option value={item?.id} key={key}>
+                {item?.name}
+              </option>
+            ))}
+        </CFormSelect>
+        {formik.errors.country && formik.touched.country && (
+          <CFormFeedback invalid>{formik.errors.country}</CFormFeedback>
+        )}
+      </CCol>
 
-          <CCol md={6}>
-            <CFormLabel htmlFor="state">State *</CFormLabel>
-            <CFormSelect
-              aria-label="select state"
-              name="state"
-              className={
-                'form-control' + (formik.errors.state && formik.touched.state ? ' is-invalid' : '')
-              }
-              defaultValue={formik.values.state}
-              onChange={formik.handleChange}
-              id="state"
-            >
-              <option value={0}>Select State</option>
-              {props.stateList &&
-                props.stateList.map((item, key) => (
-                  <option value={item?.id} key={key}>
-                    {item?.name}
-                  </option>
-                ))}
-            </CFormSelect>
-            {formik.errors.state && formik.touched.state && (
-              <CFormFeedback invalid>{formik.errors.state}</CFormFeedback>
-            )}
-          </CCol>
-          <CCol md={6}>
-            <CFormLabel htmlFor="city">City *</CFormLabel>
-            <CFormInput
-              id="city"
-              className={
-                'form-control' + (formik.errors.city && formik.touched.city ? ' is-invalid' : '')
-              }
-              defaultValue={formik.values.city}
-              name="city"
-              onChange={formik.handleChange}
-            />
-            {formik.errors.city && formik.touched.city && (
-              <CFormFeedback invalid>{formik.errors.city}</CFormFeedback>
-            )}
-          </CCol>
-          <CCol md={6}>
-            <CFormLabel htmlFor="Post Code">Post Code *</CFormLabel>
-            <CFormInput
-              id="post_code"
-              className={
-                'form-control' +
-                (formik.errors.post_code && formik.touched.post_code ? ' is-invalid' : '')
-              }
-              defaultValue={formik.values.post_code}
-              name="post_code"
-              onChange={formik.handleChange}
-            />
-            {formik.errors.post_code && formik.touched.post_code && (
-              <CFormFeedback invalid>{formik.errors.post_code}</CFormFeedback>
-            )}
-          </CCol>
+      <CCol md={6}>
+        <CFormLabel htmlFor="state">State *</CFormLabel>
+        <CFormSelect
+          aria-label="select state"
+          name="state"
+          className={
+            'form-control' + (formik.errors.state && formik.touched.state ? ' is-invalid' : '')
+          }
+          defaultValue={formik.values.state}
+          onChange={formik.handleChange}
+          id="state"
+        >
+          <option value={0}>Select State</option>
+          {props.stateList &&
+            props.stateList.map((item, key) => (
+              <option value={item?.id} key={key}>
+                {item?.name}
+              </option>
+            ))}
+        </CFormSelect>
+        {formik.errors.state && formik.touched.state && (
+          <CFormFeedback invalid>{formik.errors.state}</CFormFeedback>
+        )}
+      </CCol>
+      <CCol md={6}>
+        <CFormLabel htmlFor="city">City *</CFormLabel>
+        <CFormInput
+          id="city"
+          className={
+            'form-control' + (formik.errors.city && formik.touched.city ? ' is-invalid' : '')
+          }
+          defaultValue={formik.values.city}
+          name="city"
+          onChange={formik.handleChange}
+        />
+        {formik.errors.city && formik.touched.city && (
+          <CFormFeedback invalid>{formik.errors.city}</CFormFeedback>
+        )}
+      </CCol>
+      <CCol md={6}>
+        <CFormLabel htmlFor="Post Code">Post Code *</CFormLabel>
+        <CFormInput
+          id="post_code"
+          className={
+            'form-control' +
+            (formik.errors.post_code && formik.touched.post_code ? ' is-invalid' : '')
+          }
+          defaultValue={formik.values.post_code}
+          name="post_code"
+          onChange={formik.handleChange}
+        />
+        {formik.errors.post_code && formik.touched.post_code && (
+          <CFormFeedback invalid>{formik.errors.post_code}</CFormFeedback>
+        )}
+      </CCol>
 
-          <CCol md={6}></CCol>
-          <CCol md={6}>
-            <CLoadingButton type="submit" color="success" variant="outline" loading={loading}>
-              Submit
-            </CLoadingButton>
-          </CCol>
-        </CForm>
-      </CCardBody>
-    </CCard>
+      <CCol md={6}></CCol>
+      <CCol md={6}>
+        <CLoadingButton type="submit" color="success" variant="outline" loading={loading}>
+          Submit
+        </CLoadingButton>
+      </CCol>
+    </CForm>
   )
 }
 

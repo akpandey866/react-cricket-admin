@@ -10,6 +10,10 @@ import {
   CFormSelect,
   CForm,
   CFormFeedback,
+  CAccordion,
+  CAccordionItem,
+  CAccordionHeader,
+  CAccordionBody,
 } from '@coreui/react-pro'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
@@ -58,45 +62,49 @@ const DisplaySetting = (props) => {
     setSelectedValue(e.target.value)
   }
   return (
-    <CCard className="mb-4">
-      <CCardHeader>
-        <strong>Display Setting</strong>
-      </CCardHeader>
-      <CCardBody>
-        <CForm className="row g-3" onSubmit={formik.handleSubmit}>
-          <CCol md={6}>
-            <CFormLabel htmlFor="display_view">Set Your Lobby View</CFormLabel>
-            {!loading && (
-              <CFormSelect
-                aria-label="select your view"
-                name="view"
-                className={
-                  'form-control' + (formik.errors.view && formik.touched.view ? ' is-invalid' : '')
-                }
-                value={formik.values.view}
-                onChange={handleChange}
-                id="view"
-              >
-                <option value={0}>Select your view</option>
-                <option value={1}>Default View</option>
-                <option value={2}>Feedback View</option>
-                <option value={3}>Detailed View</option>
-              </CFormSelect>
-            )}
-            {formik.errors.view && formik.touched.view && (
-              <CFormFeedback invalid>{formik.errors.view}</CFormFeedback>
-            )}
-          </CCol>
+    <CAccordion activeItemKey={1}>
+      <CAccordionItem itemKey={1}>
+        <CAccordionHeader>
+          {' '}
+          <strong>Display Setting</strong>
+        </CAccordionHeader>
+        <CAccordionBody>
+          <CForm className="row g-3" onSubmit={formik.handleSubmit}>
+            <CCol md={6}>
+              <CFormLabel htmlFor="display_view">Set Your Lobby View</CFormLabel>
+              {!loading && (
+                <CFormSelect
+                  aria-label="select your view"
+                  name="view"
+                  className={
+                    'form-control' +
+                    (formik.errors.view && formik.touched.view ? ' is-invalid' : '')
+                  }
+                  value={formik.values.view}
+                  onChange={handleChange}
+                  id="view"
+                >
+                  <option value={0}>Select your view</option>
+                  <option value={1}>Default View</option>
+                  <option value={2}>Feedback View</option>
+                  <option value={3}>Detailed View</option>
+                </CFormSelect>
+              )}
+              {formik.errors.view && formik.touched.view && (
+                <CFormFeedback invalid>{formik.errors.view}</CFormFeedback>
+              )}
+            </CCol>
 
-          <CCol md={6}></CCol>
-          <CCol md={6}>
-            <CLoadingButton type="submit" color="success" variant="outline" loading={loading}>
-              Submit
-            </CLoadingButton>
-          </CCol>
-        </CForm>
-      </CCardBody>
-    </CCard>
+            <CCol md={6}></CCol>
+            <CCol md={6}>
+              <CLoadingButton type="submit" color="success" variant="outline" loading={loading}>
+                Submit
+              </CLoadingButton>
+            </CCol>
+          </CForm>
+        </CAccordionBody>
+      </CAccordionItem>
+    </CAccordion>
   )
 }
 

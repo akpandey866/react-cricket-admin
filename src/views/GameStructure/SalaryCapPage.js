@@ -8,8 +8,6 @@ import InputRange from 'react-input-range'
 import 'react-input-range/lib/css/index.css'
 const SalaryCapPage = () => {
   const [loader, setLoader] = useState(false)
-  const [salaryType, setSalaryType] = useState('1')
-  const [hideClass, setHideClass] = useState('')
   const [rangeValue, setRangValue] = useState(100)
   const formik = useFormik({
     initialValues: {

@@ -85,59 +85,52 @@ const GameSpot = () => {
     setRangValue(value)
   }
   return (
-    <CCard className="mt-3 mb-10">
-      <CCardHeader>
-        <strong>Trade Allowed</strong>
-      </CCardHeader>
-      <CCardBody>
-        <CForm className="row g-3" onSubmit={formik.handleSubmit}>
-          {/* <CRow className="">
-            <CFormLabel htmlFor="staticEmail" className="col-sm-2 col-form-label">
-              Status
-            </CFormLabel>
-            <div className="col-sm-10 mb-3 pt-2">
-              <CFormSwitch
-                label=""
-                id="triple_captain"
-                name="trade_check"
-                checked={tradeCheck}
-                onChange={handleTradeCheck}
-              />
-            </div>
-          </CRow> */}
+    <CForm className="row g-3" onSubmit={formik.handleSubmit}>
+      {/* <CRow className="">
+      <CFormLabel htmlFor="staticEmail" className="col-sm-2 col-form-label">
+        Status
+      </CFormLabel>
+      <div className="col-sm-10 mb-3 pt-2">
+        <CFormSwitch
+          label=""
+          id="triple_captain"
+          name="trade_check"
+          checked={tradeCheck}
+          onChange={handleTradeCheck}
+        />
+      </div>
+    </CRow> */}
 
-          <CCol md={12}>
-            <CCol md={12} className="mb-4 mt-3">
-              <InputRange
-                name={`trades`}
-                id="price"
-                className={'form-control'}
-                maxValue={100}
-                minValue={0}
-                step={1}
-                formatLabel={(value) => value.toFixed(2)}
-                value={rangeValue}
-                onChange={(value) => handleChange(value)}
-                // classNames={'valueLabel:fw-bold'}
-              />
-              {/* <CFormInput
-                type="number"
-                id="trades"
-                defaultValue={data?.trades}
-                name="trades"
-                onChange={formik.handleChange}
-              /> */}
-            </CCol>
-          </CCol>
+      <CCol md={12}>
+        <CCol md={12} className="mb-4 mt-3">
+          <InputRange
+            name={`trades`}
+            id="price"
+            className={'form-control'}
+            maxValue={100}
+            minValue={0}
+            step={1}
+            formatLabel={(value) => value.toFixed(2)}
+            value={rangeValue}
+            onChange={(value) => handleChange(value)}
+            // classNames={'valueLabel:fw-bold'}
+          />
+          {/* <CFormInput
+          type="number"
+          id="trades"
+          defaultValue={data?.trades}
+          name="trades"
+          onChange={formik.handleChange}
+        /> */}
+        </CCol>
+      </CCol>
 
-          <CCol md={6}>
-            <CLoadingButton type="submit" color="success" variant="outline" loading={loader}>
-              Submit
-            </CLoadingButton>
-          </CCol>
-        </CForm>
-      </CCardBody>
-    </CCard>
+      <CCol md={6}>
+        <CLoadingButton type="submit" color="success" variant="outline" loading={loader}>
+          Submit
+        </CLoadingButton>
+      </CCol>
+    </CForm>
   )
 }
 

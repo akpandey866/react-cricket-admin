@@ -79,50 +79,46 @@ const FeeInfo = (props) => {
   }
 
   return (
-    <CCard className="mb-4">
-      <CCardBody>
-        <CForm className="row g-3" onSubmit={formik.handleSubmit}>
-          <CCol md={12}>
-            <CFormLabel htmlFor="Entry Fee">Entry Fee</CFormLabel>
-            <CFormInput
-              placeholder="Entry Price"
-              className={
-                'form-control' +
-                (formik.errors.entry_price && formik.touched.entry_price ? ' is-invalid' : '')
-              }
-              defaultValue={formik.values.entry_price}
-              onChange={formik.handleChange}
-              aria-label="entry_price"
-              id="entry_price"
-            />
-          </CCol>
-          <CCol md={12}>
-            <CFormLabel htmlFor="Entry Fee Info">Entry Fee Information</CFormLabel>
-            <Editor
-              toolbarHidden={false}
-              editorState={description.editorState}
-              onEditorStateChange={onEditorStateChange}
-              editorStyle={{ border: '1px solid', height: '150px' }}
-            />
-          </CCol>
-          <CCol md={12}>
-            <CFormLabel htmlFor="About Game">Welcome Message For Members</CFormLabel>
-            <Editor
-              toolbarHidden={false}
-              editorState={message.editorMessageState}
-              onEditorStateChange={onEditorMessageStateChange}
-              editorStyle={{ border: '1px solid', height: '150px' }}
-            />
-          </CCol>
+    <CForm className="row g-3" onSubmit={formik.handleSubmit}>
+      <CCol md={12}>
+        <CFormLabel htmlFor="Entry Fee">Entry Fee</CFormLabel>
+        <CFormInput
+          placeholder="Entry Price"
+          className={
+            'form-control' +
+            (formik.errors.entry_price && formik.touched.entry_price ? ' is-invalid' : '')
+          }
+          defaultValue={formik.values.entry_price}
+          onChange={formik.handleChange}
+          aria-label="entry_price"
+          id="entry_price"
+        />
+      </CCol>
+      <CCol md={12}>
+        <CFormLabel htmlFor="Entry Fee Info">Entry Fee Information</CFormLabel>
+        <Editor
+          toolbarHidden={false}
+          editorState={description.editorState}
+          onEditorStateChange={onEditorStateChange}
+          editorStyle={{ border: '1px solid', height: '150px' }}
+        />
+      </CCol>
+      <CCol md={12}>
+        <CFormLabel htmlFor="About Game">Welcome Message For Members</CFormLabel>
+        <Editor
+          toolbarHidden={false}
+          editorState={message.editorMessageState}
+          onEditorStateChange={onEditorMessageStateChange}
+          editorStyle={{ border: '1px solid', height: '150px' }}
+        />
+      </CCol>
 
-          <CCol md={6}>
-            <CLoadingButton type="submit" color="success" variant="outline" loading={loading}>
-              Submit
-            </CLoadingButton>
-          </CCol>
-        </CForm>
-      </CCardBody>
-    </CCard>
+      <CCol md={6}>
+        <CLoadingButton type="submit" color="success" variant="outline" loading={loading}>
+          Submit
+        </CLoadingButton>
+      </CCol>
+    </CForm>
   )
 }
 

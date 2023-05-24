@@ -9,6 +9,10 @@ import {
   CFormLabel,
   CLoadingButton,
   CRow,
+  CAccordion,
+  CAccordionItem,
+  CAccordionHeader,
+  CAccordionBody,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import { useFormik } from 'formik'
@@ -70,12 +74,13 @@ const Branding = () => {
   })
   return (
     <CRow>
-      <CCol xs={12}>
-        <CCard className="mb-4">
-          <CCardHeader>
+      <CAccordion activeItemKey={1}>
+        <CAccordionItem itemKey={1}>
+          <CAccordionHeader>
+            {' '}
             <strong>Manage Branding</strong>
-          </CCardHeader>
-          <CCardBody>
+          </CAccordionHeader>
+          <CAccordionBody>
             <CForm className="row g-3" onSubmit={formik.handleSubmit}>
               <CCol md={6}>
                 <CFormLabel htmlFor="name">Name *</CFormLabel>
@@ -158,9 +163,9 @@ const Branding = () => {
                 </CLoadingButton>
               </CCol>
             </CForm>
-          </CCardBody>
-        </CCard>
-      </CCol>
+          </CAccordionBody>
+        </CAccordionItem>
+      </CAccordion>
     </CRow>
   )
 }

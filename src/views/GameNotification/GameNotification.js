@@ -1,37 +1,37 @@
 import React, { useState } from 'react'
-import { CCard, CCardBody, CCardHeader, CCol, CRow } from '@coreui/react-pro'
+import {
+  CRow,
+  CAccordion,
+  CAccordionItem,
+  CAccordionHeader,
+  CAccordionBody,
+} from '@coreui/react-pro'
 import Table from './Table'
 import AddForm from './AddForm'
 const GameNotification = () => {
   const [users, setUsers] = useState([])
   return (
     <CRow>
-      <CCol xs={12}>
-        <CCard className="mb-4">
-          <CCardHeader>
-            <CRow>
-              <CCol xs={10}>
-                <strong>Create Notification</strong>
-              </CCol>
-            </CRow>
-          </CCardHeader>
-          <CCardBody>
+      <CAccordion activeItemKey={2}>
+        <CAccordionItem itemKey={1}>
+          <CAccordionHeader>
+            {' '}
+            <strong>Create Notification</strong>
+          </CAccordionHeader>
+          <CAccordionBody>
             <AddForm setUsers={setUsers} />
-          </CCardBody>
-        </CCard>
-        <CCard className="mb-4">
-          <CCardHeader>
-            <CRow>
-              <CCol xs={10}>
-                <strong>Manage Notifications</strong>
-              </CCol>
-            </CRow>
-          </CCardHeader>
-          <CCardBody>
+          </CAccordionBody>
+        </CAccordionItem>
+        <CAccordionItem itemKey={2}>
+          <CAccordionHeader>
+            {' '}
+            <strong>Manage Notifications</strong>
+          </CAccordionHeader>
+          <CAccordionBody>
             <Table users={users} />
-          </CCardBody>
-        </CCard>
-      </CCol>
+          </CAccordionBody>
+        </CAccordionItem>
+      </CAccordion>
     </CRow>
   )
 }

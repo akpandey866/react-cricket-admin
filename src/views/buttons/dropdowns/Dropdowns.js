@@ -83,7 +83,7 @@ const Dropdowns = () => {
               <>
                 {['primary', 'secondary', 'success', 'info', 'warning', 'danger'].map(
                   (color, index) => (
-                    <CDropdown variant="btn-group" key={index}>
+                    <CDropdown variant="btn-group" key={index} alignment={"sm: 'start' | 'end'"}>
                       <CButton color={color}>{color}</CButton>
                       <CDropdownToggle color={color} split />
                       <CDropdownMenu>

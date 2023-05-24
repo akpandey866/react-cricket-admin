@@ -9,6 +9,10 @@ import {
   CCollapse,
   CRow,
   CSmartTable,
+  CAccordion,
+  CAccordionItem,
+  CAccordionHeader,
+  CAccordionBody,
 } from '@coreui/react-pro'
 import { toast } from 'react-toastify'
 
@@ -114,16 +118,13 @@ const ManageFixture = (props) => {
   return (
     <>
       <CRow>
-        <CCol xs={12}>
-          <CCard className="mb-4">
-            <CCardHeader>
-              <CRow>
-                <CCol xs={10}>
-                  <strong>Manage Fixtures</strong>
-                </CCol>
-              </CRow>
-            </CCardHeader>
-            <CCardBody>
+        <CAccordion activeItemKey={1}>
+          <CAccordionItem itemKey={1}>
+            <CAccordionHeader>
+              {' '}
+              <strong>Manage Fixtures</strong>
+            </CAccordionHeader>
+            <CAccordionBody>
               <CSmartTable
                 columns={columns}
                 columnFilter={{
@@ -250,9 +251,9 @@ const ManageFixture = (props) => {
                 }}
                 onSorterChange={(sorter) => setColumnSorter(sorter)}
               />
-            </CCardBody>
-          </CCard>
-        </CCol>
+            </CAccordionBody>
+          </CAccordionItem>
+        </CAccordion>
       </CRow>
     </>
   )

@@ -1,5 +1,17 @@
 import React, { useState } from 'react'
-import { CButton, CCard, CCardBody, CCardHeader, CCol, CCollapse, CRow } from '@coreui/react-pro'
+import {
+  CButton,
+  CCard,
+  CCardBody,
+  CCardHeader,
+  CCol,
+  CCollapse,
+  CRow,
+  CAccordion,
+  CAccordionItem,
+  CAccordionHeader,
+  CAccordionBody,
+} from '@coreui/react-pro'
 import AddForm from './AddForm'
 import Table from './Table'
 import { useEffect } from 'react'
@@ -23,36 +35,30 @@ const Team = () => {
   }, [])
   return (
     <CRow>
-      <CCol xs={12}>
-        <CCard className="mb-4">
-          <CCardHeader>
-            <CRow>
-              <CCol xs={10}>
-                <strong>Add Teams</strong>
-              </CCol>
-            </CRow>
-          </CCardHeader>
-          <CCardBody>
+      <CAccordion activeItemKey={2}>
+        <CAccordionItem itemKey={1}>
+          <CAccordionHeader>
+            {' '}
+            <strong>Create Teams</strong>
+          </CAccordionHeader>
+          <CAccordionBody>
             <AddForm
               gradeList={gradeList}
               teamCategoryList={teamCategoryList}
               setUsers={setUsers}
             />
-          </CCardBody>
-        </CCard>
-        <CCard className="mb-4">
-          <CCardHeader>
-            <CRow>
-              <CCol xs={10}>
-                <strong>Manage Teams</strong>
-              </CCol>
-            </CRow>
-          </CCardHeader>
-          <CCardBody>
+          </CAccordionBody>
+        </CAccordionItem>
+        <CAccordionItem itemKey={2}>
+          <CAccordionHeader>
+            {' '}
+            <strong>Manage Teams</strong>
+          </CAccordionHeader>
+          <CAccordionBody>
             <Table gradeList={gradeList} users={users} teamCategoryList={teamCategoryList} />
-          </CCardBody>
-        </CCard>
-      </CCol>
+          </CAccordionBody>
+        </CAccordionItem>
+      </CAccordion>
     </CRow>
   )
 }

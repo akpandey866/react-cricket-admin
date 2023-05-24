@@ -120,6 +120,22 @@ const gameStructureInfo = async () => {
   const response = await agent.get(API_URL + 'common/get-game-structure-info')
   return response.data
 }
+const updateGamePrivacy = async (data) => {
+  const response = await agent.post(API_URL + 'common/update-game-privacy', data)
+  return response.data
+}
+const getGameActivateInfo = async () => {
+  const response = await agent.get(API_URL + 'common/getGameActivateInfo')
+  return response.data
+}
+const activateGame = async (data) => {
+  const response = await agent.post(API_URL + 'common/activateGame', data)
+  return response.data
+}
+const gameAccount = async (data) => {
+  const response = await agent.post(API_URL + 'common/gameAccount', data)
+  return response.data
+}
 const CommonService = {
   roundListing,
   bonusCardPlayer,
@@ -145,8 +161,12 @@ const CommonService = {
   totwPlayerList,
   updateTotwPlayerPoint,
   editGameStructure,
+  getGameActivateInfo,
   gameStructureInfo,
   deleteVerifyUser,
+  updateGamePrivacy,
+  activateGame,
+  gameAccount,
 }
 
 export default CommonService

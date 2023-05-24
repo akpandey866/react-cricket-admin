@@ -18,43 +18,43 @@ const Table = (props) => {
   }
   return (
     <>
-      <table className="main-table table innertable">
-        <thead>
-          <tr>
-            <th>SN</th>
-            <th>Member</th>
-            <th>Email</th>
-            <th>Created On</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {props.users &&
-            props.users.map((item, key) => (
-              <tr key={key}>
-                <th>{key + 1}</th>
-                <th>{item.username}</th>
-                <th>{item.email}</th>
-                <th>{moment(item.created_at).format('D.MM.YYYY')}</th>
-                <td>
-                  <CButton
-                    size="sm"
-                    color="danger"
-                    className="ml-3"
-                    onClick={() => deleteManager(item.id)}
-                  >
-                    Delete
-                  </CButton>
-                </td>
-              </tr>
-            ))}
-          {props.users.length <= 0 && (
+      <div className="table-responsive">
+        <table className="main-table table innertable">
+          <thead>
             <tr>
-              <td colSpan={4}>No record yet available.</td>
+              <th>Member</th>
+              <th>Email</th>
+              <th>Created On</th>
+              <th>Action</th>
             </tr>
-          )}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {props.users &&
+              props.users.map((item, key) => (
+                <tr key={key}>
+                  <td>{item.username}</td>
+                  <td>{item.email}</td>
+                  <td>{moment(item.created_at).format('D.MM.YYYY')}</td>
+                  <td>
+                    <CButton
+                      size="sm"
+                      color="danger"
+                      className="ml-3"
+                      onClick={() => deleteManager(item.id)}
+                    >
+                      Delete
+                    </CButton>
+                  </td>
+                </tr>
+              ))}
+            {props.users.length <= 0 && (
+              <tr>
+                <td colSpan={4}>No record yet available.</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
     </>
   )
 }

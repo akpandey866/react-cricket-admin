@@ -1,5 +1,15 @@
 import React, { useState } from 'react'
-import { CCard, CCardBody, CCardHeader, CCol, CRow } from '@coreui/react-pro'
+import {
+  CCard,
+  CCardBody,
+  CCardHeader,
+  CCol,
+  CRow,
+  CAccordion,
+  CAccordionItem,
+  CAccordionHeader,
+  CAccordionBody,
+} from '@coreui/react-pro'
 import Table from './Table'
 import AddForm from './AddForm'
 import { useEffect } from 'react'
@@ -28,16 +38,13 @@ const ManageAccessByTeam = () => {
   }, [])
   return (
     <CRow>
-      <CCol xs={12}>
-        <CCard className="mb-4">
-          <CCardHeader>
-            <CRow>
-              <CCol xs={10}>
-                <strong>Assign Access By Teams</strong>
-              </CCol>
-            </CRow>
-          </CCardHeader>
-          <CCardBody>
+      <CAccordion activeItemKey={2}>
+        <CAccordionItem itemKey={1}>
+          <CAccordionHeader>
+            {' '}
+            <strong>Assign Access By Teams</strong>
+          </CAccordionHeader>
+          <CAccordionBody>
             <AddForm
               setUsers={setUsers}
               managerDropdown={managerDropdown}
@@ -46,21 +53,18 @@ const ManageAccessByTeam = () => {
               userList={userList}
               setUserList={setUserList}
             />
-          </CCardBody>
-        </CCard>
-        <CCard className="mb-4">
-          <CCardHeader>
-            <CRow>
-              <CCol xs={10}>
-                <strong>Manage Access By Teams</strong>
-              </CCol>
-            </CRow>
-          </CCardHeader>
-          <CCardBody>
+          </CAccordionBody>
+        </CAccordionItem>
+        <CAccordionItem itemKey={2}>
+          <CAccordionHeader>
+            {' '}
+            <strong>Manage Access By Teams</strong>
+          </CAccordionHeader>
+          <CAccordionBody>
             <Table users={users} setUsers={setUsers} setLoader={setLoader} />
-          </CCardBody>
-        </CCard>
-      </CCol>
+          </CAccordionBody>
+        </CAccordionItem>
+      </CAccordion>
     </CRow>
   )
 }

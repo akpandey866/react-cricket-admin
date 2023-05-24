@@ -9,6 +9,10 @@ import {
   CTableHeaderCell,
   CLoadingButton,
   CTableRow,
+  CAccordion,
+  CAccordionItem,
+  CAccordionHeader,
+  CAccordionBody,
 } from '@coreui/react-pro'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
@@ -60,69 +64,72 @@ const PointSystem = () => {
 
   return (
     <>
-      <CForm className="row g-3" onSubmit={formik.handleSubmit}>
-        <CRow>
-          <CCol xs={12}>
-            <CCard className="">
-              <CCardHeader>
-                <strong>Rating Point System</strong>
-              </CCardHeader>
-              <CCardBody>
-                {loader ? (
-                  <Loader />
-                ) : (
-                  <div className="table-responsive">
-                    <table className="main-table table innertable">
-                      <thead>
-                        <tr>
-                          <th>Rating</th>
-                          <th>Rating Description</th>
-                          <th>Fantasy Points</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {pointSystemDetail &&
-                          pointSystemDetail.map((item, key) => (
-                            <CTableRow key={key}>
-                              <CTableHeaderCell>{item.name} Star</CTableHeaderCell>
-                              <CTableHeaderCell>
-                                <CFormInput
-                                  name={`data[${key}]description`}
-                                  defaultValue={item.description}
-                                  onChange={formik.handleChange}
-                                  id="description"
-                                />
-                              </CTableHeaderCell>
-                              <CTableHeaderCell>
-                                <CFormInput
-                                  name={`data[${key}]points`}
-                                  defaultValue={item.points}
-                                  onChange={formik.handleChange}
-                                  id="points"
-                                />
-                              </CTableHeaderCell>
-                            </CTableRow>
-                          ))}
-                      </tbody>
-                    </table>
-                  </div>
-                )}
-              </CCardBody>
-            </CCard>
-          </CCol>
-          <CCol xs={6}>
-            <CLoadingButton
-              type="submit"
-              color="success"
-              variant="outline"
-              loading={loader}
-              className="mt-2"
-            >
-              Submit
-            </CLoadingButton>
-          </CCol>
-        </CRow>
-      </CForm>
+      <CAccordion activeItemKey={1}>
+        <CAccordionItem itemKey={1}>
+          <CAccordionHeader>
+            {' '}
+            <strong>Rating Point System</strong>
+          </CAccordionHeader>
+          <CAccordionBody>
+            <CForm className="row g-3" onSubmit={formik.handleSubmit}>
+              <CRow>
+                <CCol xs={12}>
+                  {loader ? (
+                    <Loader />
+                  ) : (
+                    <div className="table-responsive">
+                      <table className="main-table table innertable">
+                        <thead>
+                          <tr>
+                            <th>Rating</th>
+                            <th>Rating Description</th>
+                            <th>Fantasy Points</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {pointSystemDetail &&
+                            pointSystemDetail.map((item, key) => (
+                              <CTableRow key={key}>
+                                <CTableHeaderCell>{item.name} Star</CTableHeaderCell>
+                                <CTableHeaderCell>
+                                  <CFormInput
+                                    name={`data[${key}]description`}
+                                    defaultValue={item.description}
+                                    onChange={formik.handleChange}
+                                    id="description"
+                                  />
+                                </CTableHeaderCell>
+                                <CTableHeaderCell>
+                                  <CFormInput
+                                    name={`data[${key}]points`}
+                                    defaultValue={item.points}
+                                    onChange={formik.handleChange}
+                                    id="points"
+                                  />
+                                </CTableHeaderCell>
+                              </CTableRow>
+                            ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
+                </CCol>
+                <CCol xs={6}>
+                  <CLoadingButton
+                    type="submit"
+                    color="success"
+                    variant="outline"
+                    loading={loader}
+                    className="mt-2"
+                  >
+                    Submit
+                  </CLoadingButton>
+                </CCol>
+              </CRow>
+            </CForm>
+          </CAccordionBody>
+        </CAccordionItem>
+      </CAccordion>
     </>
   )
 }

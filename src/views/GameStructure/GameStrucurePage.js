@@ -23,6 +23,7 @@ const GameStrucurePage = (props) => {
       CommonService.editGameStructure(data)
         .then((res) => {
           if (res.status === 200) {
+            props.setPlayerStructureDetails(res.multiplayer_data)
             ToastComponent(res.message, 'success')
             setLoader(false)
           }
@@ -33,7 +34,6 @@ const GameStrucurePage = (props) => {
         })
     },
   })
-  console.log('Asdasasd', props.gameStuctureData)
   const handleChange = (e) => {
     props.setGameStructureData(e.target.value)
   }

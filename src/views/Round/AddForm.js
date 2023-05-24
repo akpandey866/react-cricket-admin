@@ -20,14 +20,18 @@ const AddForm = (props) => {
   const [loader, setLoader] = useState(false)
   const validationSchema = Yup.object().shape({
     round: Yup.number().required('round is required'),
+    start_date: Yup.date().required('Start Date is required'),
+    end_date: Yup.date().required('End Date to is required'),
+    start_time: Yup.string().required('Start Time to is required'),
+    end_time: Yup.string().required('End Time to is required'),
   })
   const formik = useFormik({
     initialValues: {
       round: props.roundNumber,
       start_date: '',
       end_date: '',
-      lockout_start_time: '',
-      lockout_end_time: '',
+      start_time: '',
+      end_time: '',
     },
     enableReinitialize: true,
     validationSchema,
@@ -39,9 +43,8 @@ const AddForm = (props) => {
       })
       data.start_date = startDate
       data.end_date = endDate
-      data.lockout_start_time = lockoutStartTime
-      data.lockout_end_time = lockoutEndTime
-
+      data.start_time = lockoutStartTime
+      data.end_time = lockoutEndTime
       setLoader(true)
       RoundService.saveRound(data)
         .then((res) => {
@@ -63,26 +66,32 @@ const AddForm = (props) => {
     },
   })
   const [startDate, setStartDate] = useState('')
+  const [minEndDate, setMinEndDate] = useState(new Date())
   const [endDate, setEndDate] = useState('')
   const [lockoutStartTime, setLockoutStartTime] = useState('')
   const [lockoutEndTime, setLockoutEndTime] = useState('')
   const handleStartDate = (event) => {
-    const dateFormat = moment(event).format('DD.MM.YYYY')
+    setMinEndDate(event)
+    const dateFormat = moment(event).format('YYYY-MM-DD')
     setStartDate(dateFormat)
+    setEndDate('')
   }
   const handleEndDate = (event) => {
-    const dateFormat = moment(event).format('DD.MM.YYYY')
+    const dateFormat = moment(event).format('YYYY-MM-DD')
     setEndDate(dateFormat)
   }
   const handleLockoutStartTime = (event) => {
-    const dateFormat = moment(event).format('hh:mm')
+    const dateFormat = moment(event, ['h:mm A']).format('HH:mm')
     setLockoutStartTime(dateFormat)
   }
   const handleLockoutEndTime = (event) => {
-    const dateFormat = moment(event).format('hh:mm')
+    const dateFormat = moment(event, ['h:mm A']).format('HH:mm')
     setLockoutEndTime(dateFormat)
   }
-
+  const todayDate = new Date()
+  const lastDate = minEndDate
+  const minDate = todayDate.setDate(todayDate.getDate() - 1)
+  const minasdasDate = lastDate.setDate(lastDate.getDate())
   return (
     <>
       <CForm className="row g-3" onSubmit={formik.handleSubmit}>
@@ -108,55 +117,96 @@ const AddForm = (props) => {
           <CFormLabel htmlFor="grade">Start Date</CFormLabel>
           <CDatePicker
             date={startDate}
+            defaultValue={startDate}
+            className={formik.errors.start_date && formik.touched.start_date ? 'is-invalid' : ''}
             locale="en-US"
             name="start_date"
             placeholder={'Start Date'}
-            onDateChange={handleStartDate}
-            format={'dd.mm.yyyy'}
+            // onDateChange={handleStartDate}
+            onDateChange={(e) => {
+              handleStartDate(e)
+              formik.setTouched({
+                ...formik.touched,
+                start_date: true,
+              })
+              formik.setFieldValue('start_date', moment(e).format('YYYY-MM-DD'))
+            }}
+            format={'dd/MM/yyyy'}
+            minDate={todayDate}
+            cleaner={false}
           />
           {formik.errors.start_date && formik.touched.start_date && (
             <CFormFeedback invalid>{formik.errors.start_date}</CFormFeedback>
           )}
         </CCol>
         <CCol md={4}>
-          <CFormLabel htmlFor="grade">Start Time</CFormLabel>
-          <CTimePicker
-            locale="en-US"
-            value={lockoutStartTime}
-            placeholder="Start Time"
-            seconds={false}
-            onTimeChange={handleLockoutEndTime}
-          />
-
-          {formik.errors.lockout_start_time && formik.touched.lockout_start_time && (
-            <CFormFeedback invalid>{formik.errors.lockout_start_time}</CFormFeedback>
-          )}
-        </CCol>
-        <CCol md={4}>
           <CFormLabel htmlFor="grade">End Date</CFormLabel>
           <CDatePicker
             date={endDate}
+            defaultValue={endDate}
+            className={formik.errors.end_date && formik.touched.end_date ? 'is-invalid' : ''}
             locale="en-US"
             name="end_date"
             placeholder={'End Date'}
-            onDateChange={handleEndDate}
+            // onDateChange={handleEndDate}
+            onDateChange={(e) => {
+              handleEndDate(e)
+              formik.setTouched({
+                ...formik.touched,
+                end_date: true,
+              })
+              formik.setFieldValue('end_date', moment(e).format('YYYY-MM-DD'))
+            }}
+            format={'dd/MM/yyyy'}
+            cleaner={false}
+            minDate={minEndDate}
           />
           {formik.errors.end_date && formik.touched.end_date && (
             <CFormFeedback invalid>{formik.errors.end_date}</CFormFeedback>
           )}
         </CCol>
+        <CCol md={4}>
+          <CFormLabel htmlFor="grade">Start Time</CFormLabel>
+          <CTimePicker
+            // locale="en-US"
+            value={lockoutStartTime}
+            seconds={false}
+            // onTimeChange={handleLockoutStartTime}
+            className={formik.errors.start_time && formik.touched.start_time ? 'is-invalid' : ''}
+            onTimeChange={(e) => {
+              handleLockoutStartTime(e)
+              formik.setTouched({
+                ...formik.touched,
+                start_time: true,
+              })
+              formik.setFieldValue('start_time', moment(e).format('YYYY-MM-DD'))
+            }}
+            ampm={false}
+          />
 
+          {formik.errors.start_time && formik.touched.start_time && (
+            <CFormFeedback invalid>{formik.errors.start_time}</CFormFeedback>
+          )}
+        </CCol>
         <CCol md={4}>
           <CFormLabel htmlFor="grade">End Time</CFormLabel>
           <CTimePicker
+            className={formik.errors.end_time && formik.touched.end_time ? 'is-invalid' : ''}
             locale="en-US"
             value={lockoutEndTime}
             seconds={false}
-            placeholder="End Time"
-            onTimeChange={handleLockoutEndTime}
+            onTimeChange={(e) => {
+              handleLockoutEndTime(e)
+              formik.setTouched({
+                ...formik.touched,
+                end_time: true,
+              })
+              formik.setFieldValue('end_time', moment(e).format('YYYY-MM-DD'))
+            }}
+            ampm={false}
           />
-          {formik.errors.lockout_end_time && formik.touched.lockout_end_time && (
-            <CFormFeedback invalid>{formik.errors.lockout_end_time}</CFormFeedback>
+          {formik.errors.end_time && formik.touched.end_time && (
+            <CFormFeedback invalid>{formik.errors.end_time}</CFormFeedback>
           )}
         </CCol>
         <CCol md={4}></CCol>

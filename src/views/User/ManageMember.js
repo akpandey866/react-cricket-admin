@@ -10,6 +10,10 @@ import {
   CFormLabel,
   CRow,
   CSmartTable,
+  CAccordion,
+  CAccordionItem,
+  CAccordionHeader,
+  CAccordionBody,
 } from '@coreui/react-pro'
 import { toast } from 'react-toastify'
 
@@ -32,6 +36,10 @@ const ManageMember = (props) => {
     {
       label: 'Member',
       key: 'full_name',
+    },
+    {
+      label: 'Status',
+      key: 'status',
       filter: false,
       sorter: false,
     },
@@ -100,16 +108,13 @@ const ManageMember = (props) => {
   return (
     <>
       <CRow>
-        <CCol xs={12}>
-          <CCard className="mb-4">
-            <CCardHeader>
-              <CRow>
-                <CCol xs={10}>
-                  <strong>Manage Members</strong>
-                </CCol>
-              </CRow>
-            </CCardHeader>
-            <CCardBody>
+        <CAccordion activeItemKey={1}>
+          <CAccordionItem itemKey={1}>
+            <CAccordionHeader>
+              {' '}
+              <strong>Manage Members</strong>
+            </CAccordionHeader>
+            <CAccordionBody>
               <CSmartTable
                 columns={columns}
                 columnFilter={{
@@ -119,6 +124,39 @@ const ManageMember = (props) => {
                   external: true,
                 }}
                 scopedColumns={{
+                  status: (item) => {
+                    return (
+                      <>
+                        <td className="py-2">
+                          {item.is_fund_paid === 0 ? (
+                            <CButton
+                              color="danger"
+                              // variant="outline"
+                              shape="square"
+                              size="sm"
+                              onClick={() => {
+                                markAsPaid(item.id, 1)
+                              }}
+                            >
+                              Unpaid
+                            </CButton>
+                          ) : (
+                            <CButton
+                              color="success"
+                              // variant="outline"
+                              shape="square"
+                              size="sm"
+                              onClick={() => {
+                                markAsPaid(item.id, 0)
+                              }}
+                            >
+                              Paid
+                            </CButton>
+                          )}
+                        </td>
+                      </>
+                    )
+                  },
                   action: (item) => {
                     return (
                       <>
@@ -146,31 +184,6 @@ const ManageMember = (props) => {
                             Send Login Credentials
                           </CButton>{' '}
                           &nbsp;&nbsp; */}
-                          {item.is_fund_paid === 0 ? (
-                            <CButton
-                              color="danger"
-                              // variant="outline"
-                              shape="square"
-                              size="sm"
-                              onClick={() => {
-                                markAsPaid(item.id, 1)
-                              }}
-                            >
-                              Unpaid
-                            </CButton>
-                          ) : (
-                            <CButton
-                              color="success"
-                              // variant="outline"
-                              shape="square"
-                              size="sm"
-                              onClick={() => {
-                                markAsPaid(item.id, 0)
-                              }}
-                            >
-                              Paid
-                            </CButton>
-                          )}
                           &nbsp;&nbsp;
                           {/* <CButton
                             color="primary"
@@ -242,9 +255,9 @@ const ManageMember = (props) => {
                 }}
                 onSorterChange={(sorter) => setColumnSorter(sorter)}
               />
-            </CCardBody>
-          </CCard>
-        </CCol>
+            </CAccordionBody>
+          </CAccordionItem>
+        </CAccordion>
       </CRow>
     </>
   )

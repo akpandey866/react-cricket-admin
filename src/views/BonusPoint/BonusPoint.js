@@ -1,4 +1,14 @@
-import { CCard, CCardBody, CCardHeader, CCol, CRow } from '@coreui/react-pro'
+import {
+  CCard,
+  CCardBody,
+  CCardHeader,
+  CCol,
+  CRow,
+  CAccordion,
+  CAccordionItem,
+  CAccordionHeader,
+  CAccordionBody,
+} from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import ToastComponent from 'src/components/common/TaostComponent'
 import CommonService from 'src/service/CommonService'
@@ -24,36 +34,36 @@ const BonusPoint = () => {
 
   return (
     <CRow>
-      <CCol xs={12} md={6}>
-        <CCard className="mb-4">
-          <CCardHeader>
+      <CAccordion activeItemKey={2}>
+        <CAccordionItem itemKey={1}>
+          <CAccordionHeader>
+            {' '}
             <strong>Bonus for Player of the Match</strong>
-          </CCardHeader>
-          <CCardBody>
+          </CAccordionHeader>
+          <CAccordionBody>
             <Potm
               data={data}
               setData={setData}
               loadingPotm={loadingPotm}
               setLoadingPotm={setLoadingPotm}
             />
-          </CCardBody>
-        </CCard>
-      </CCol>
-      <CCol xs={12} md={6}>
-        <CCard className="mb-4">
-          <CCardHeader>
+          </CAccordionBody>
+        </CAccordionItem>
+        <CAccordionItem itemKey={2}>
+          <CAccordionHeader>
+            {' '}
             <strong>Bonus for Match Winners</strong>
-          </CCardHeader>
-          <CCardBody>
+          </CAccordionHeader>
+          <CAccordionBody>
             <ResultBonus
               data={data}
               setData={setData}
               setLoadingResultBonus={setLoadingResultBonus}
               loadingResultBonus={loadingResultBonus}
             />
-          </CCardBody>
-        </CCard>
-      </CCol>
+          </CAccordionBody>
+        </CAccordionItem>
+      </CAccordion>
     </CRow>
   )
 }

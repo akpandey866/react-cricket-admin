@@ -36,10 +36,10 @@ const Table = (props) => {
       _style: { width: '20%' },
     },
     { key: 'description', label: 'Category Description', _style: { width: '60%' } },
-    { label: 'Created On', key: 'created_at', _style: { width: '20%' } },
+    // { label: 'Created On', key: 'created_at', _style: { width: '20%' } },
     {
       key: 'show_details',
-      label: '',
+      label: 'Actions',
       _style: { width: '1%' },
       filter: false,
       sorter: false,

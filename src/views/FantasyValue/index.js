@@ -12,6 +12,10 @@ import {
   CListGroupItem,
   CForm,
   CFormFeedback,
+  CAccordion,
+  CAccordionItem,
+  CAccordionHeader,
+  CAccordionBody,
 } from '@coreui/react-pro'
 
 import Tab from 'react-bootstrap/Tab'
@@ -67,15 +71,13 @@ const Index = () => {
   return (
     <>
       <CRow>
-        <CCol xs={12}>
-          <CCard className="mb-4">
-            <CCardHeader>
+        <CAccordion activeItemKey={2}>
+          <CAccordionItem itemKey={1}>
+            <CAccordionHeader>
+              {' '}
               <strong>Fantasy Values</strong>
-            </CCardHeader>
-
-            <CCardBody>
-              {/* <InputRange maxValue={20} minValue={0} value={inputValue} onChange={getValue} /> */}
-
+            </CAccordionHeader>
+            <CAccordionBody>
               <Tabs
                 id="controlled-tab-example"
                 activeKey={key}
@@ -108,13 +110,14 @@ const Index = () => {
                   />
                 </Tab>
               </Tabs>
-            </CCardBody>
-          </CCard>
-          <CCard className="mb-4">
-            <CCardHeader>
+            </CAccordionBody>
+          </CAccordionItem>
+          <CAccordionItem itemKey={2}>
+            <CAccordionHeader>
+              {' '}
               <strong>Select Fantasy Value System</strong>
-            </CCardHeader>
-            <CCardBody>
+            </CAccordionHeader>
+            <CAccordionBody>
               <CForm className="row g-3" onSubmit={formik.handleSubmit}>
                 <CCol md={6} className="">
                   <CFormLabel htmlFor="salary_structure">Default or Custom *</CFormLabel>
@@ -145,9 +148,9 @@ const Index = () => {
                   </CLoadingButton>
                 </CCol>
               </CForm>
-            </CCardBody>
-          </CCard>
-        </CCol>
+            </CAccordionBody>
+          </CAccordionItem>
+        </CAccordion>
       </CRow>
     </>
   )

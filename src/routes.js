@@ -46,6 +46,8 @@ import PaidUser from './views/User/PaidUser'
 import PlayerClaimProfile from './views/User/PlayerClaimProfile'
 import GamePrize from './views/GamePrize/GamePrize'
 import AssignFeedbackManager from './views/AssignedFeedbackManager/AssignFeedbackManager'
+import ActivateGame from './views/ActivateGame/ActivateGame'
+import GameAccount from './views/GameAccount/GameAccount'
 
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
 const Colors = React.lazy(() => import('./views/theme/colors/Colors'))
@@ -119,6 +121,8 @@ const routes = [
   { path: '/game-structure', name: 'Game Structure', element: GameStructure },
   { path: '/spots', name: 'Spots', element: GameSpot },
   { path: '/fantasy-values', name: 'Fantasy Values', element: Index },
+  { path: '/activate-game', name: 'Game Activation', element: ActivateGame },
+  { path: '/accounts', name: 'Game Accounts', element: GameAccount },
   { path: '/players', name: 'Players List', element: Player },
   { path: '/players/player-structure', name: 'Player Structure', element: PlayerStructure },
   { path: '/comps', name: 'Comps', element: Grade },

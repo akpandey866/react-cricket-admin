@@ -1,7 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import ToastComponent from 'src/components/common/TaostComponent'
 import UserService from 'src/service/UserService'
-import { CButton, CCard, CCardBody, CCardHeader, CCol, CRow } from '@coreui/react-pro'
+import {
+  CButton,
+  CCard,
+  CCardBody,
+  CCardHeader,
+  CCol,
+  CRow,
+  CAccordion,
+  CAccordionItem,
+  CAccordionHeader,
+  CAccordionBody,
+} from '@coreui/react-pro'
 
 const PaidUser = () => {
   const [data, setData] = useState([])
@@ -33,12 +44,13 @@ const PaidUser = () => {
   }
   return (
     <CRow>
-      <CCol xs={12} md={12}>
-        <CCard className="mb-4">
-          <CCardHeader>
+      <CAccordion activeItemKey={1}>
+        <CAccordionItem itemKey={1}>
+          <CAccordionHeader>
+            {' '}
             <strong>Paid Member Requests</strong>
-          </CCardHeader>
-          <CCardBody>
+          </CAccordionHeader>
+          <CAccordionBody>
             <table className="main-table table innertable">
               <thead>
                 <tr>
@@ -78,9 +90,9 @@ const PaidUser = () => {
                 )}
               </tbody>
             </table>
-          </CCardBody>
-        </CCard>
-      </CCol>
+          </CAccordionBody>
+        </CAccordionItem>
+      </CAccordion>
     </CRow>
   )
 }

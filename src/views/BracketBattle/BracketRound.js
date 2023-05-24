@@ -12,6 +12,10 @@ import {
   CLoadingButton,
   CMultiSelect,
   CRow,
+  CAccordion,
+  CAccordionItem,
+  CAccordionHeader,
+  CAccordionBody,
 } from '@coreui/react-pro'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
@@ -88,16 +92,13 @@ const BracketRound = () => {
   }
   return (
     <>
-      <CCol xs={12}>
-        <CCard className="mb-4">
-          <CCardHeader>
-            <CRow>
-              <CCol xs={10}>
-                <strong>Create Bracket Round</strong>
-              </CCol>
-            </CRow>
-          </CCardHeader>
-          <CCardBody>
+      <CAccordion activeItemKey={2}>
+        <CAccordionItem itemKey={1}>
+          <CAccordionHeader>
+            {' '}
+            <strong>Create Bracket Round</strong>
+          </CAccordionHeader>
+          <CAccordionBody>
             <CForm className="row g-3" onSubmit={formik.handleSubmit}>
               <CCol md={6}>
                 <CFormLabel htmlFor="round">Select Round</CFormLabel>
@@ -159,15 +160,14 @@ const BracketRound = () => {
                 </CLoadingButton>
               </CCol>
             </CForm>
-          </CCardBody>
-        </CCard>
-      </CCol>
-      <CCol xs={12}>
-        <CCard className="mb-4">
-          <CCardHeader>
+          </CAccordionBody>
+        </CAccordionItem>
+        <CAccordionItem itemKey={2}>
+          <CAccordionHeader>
+            {' '}
             <strong>Manage Bracket Rounds</strong>
-          </CCardHeader>
-          <CCardBody>
+          </CAccordionHeader>
+          <CAccordionBody>
             <table className="main-table table innertable">
               <thead>
                 <tr>
@@ -224,9 +224,9 @@ const BracketRound = () => {
                 )}
               </tbody>
             </table>
-          </CCardBody>
-        </CCard>
-      </CCol>
+          </CAccordionBody>
+        </CAccordionItem>
+      </CAccordion>
     </>
   )
 }

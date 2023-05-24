@@ -1,5 +1,15 @@
 import React, { useState } from 'react'
-import { CCard, CCardBody, CCardHeader, CCol, CRow } from '@coreui/react-pro'
+import {
+  CCard,
+  CCardBody,
+  CCardHeader,
+  CCol,
+  CRow,
+  CAccordion,
+  CAccordionItem,
+  CAccordionHeader,
+  CAccordionBody,
+} from '@coreui/react-pro'
 import Table from './Table'
 import { useEffect } from 'react'
 import FixtureVotingService from 'src/service/FixtureVotingService'
@@ -21,20 +31,16 @@ const FixtureVote = () => {
   }, [])
   return (
     <CRow>
-      <CCol xs={12}>
-        <CCard className="mb-4">
-          <CCardHeader>
-            <CRow>
-              <CCol xs={10}>
-                <strong>Fixture Voting</strong>
-              </CCol>
-            </CRow>
-          </CCardHeader>
-          <CCardBody>
+      <CAccordion activeItemKey={1}>
+        <CAccordionItem itemKey={1}>
+          <CAccordionHeader>
+            <strong>Fixture Voting</strong>
+          </CAccordionHeader>
+          <CAccordionBody>
             <Table users={users} setUsers={setUsers} setLoader={setLoader} />
-          </CCardBody>
-        </CCard>
-      </CCol>
+          </CAccordionBody>
+        </CAccordionItem>
+      </CAccordion>
     </CRow>
   )
 }
