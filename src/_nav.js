@@ -127,11 +127,6 @@ const _nav = [
       },
       {
         component: CNavItem,
-        name: 'Activate Game',
-        to: '/activate-game',
-      },
-      {
-        component: CNavItem,
         name: 'Account',
         to: '/accounts',
       },

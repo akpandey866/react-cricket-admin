@@ -136,6 +136,21 @@ const gameAccount = async (data) => {
   const response = await agent.post(API_URL + 'common/gameAccount', data)
   return response.data
 }
+const dashboardData = async () => {
+  const response = await agent.get(API_URL + 'common/dashboardData')
+  return response.data
+}
+const dashboardUser = async (offset, itemsPerPage, activePage, params) => {
+  const response = await agent.get(
+    `${API_URL}/common/dashboardUser?offset=${offset}&limit=${itemsPerPage}&page=${activePage}&${params}`,
+  )
+  return response.data
+}
+
+const gameLogin = async (data) => {
+  const response = await agent.post(API_URL + 'gameLogin', data)
+  return response.data
+}
 const CommonService = {
   roundListing,
   bonusCardPlayer,
@@ -167,6 +182,9 @@ const CommonService = {
   updateGamePrivacy,
   activateGame,
   gameAccount,
+  dashboardData,
+  dashboardUser,
+  gameLogin,
 }
 
 export default CommonService

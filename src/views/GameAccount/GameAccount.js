@@ -1,4 +1,4 @@
-import { cilBell, cilMoon, cilSettings, cilUser } from '@coreui/icons'
+import { cilBell, cilInfo, cilMoon, cilPlus, cilSettings, cilUser } from '@coreui/icons'
 import CIcon from '@coreui/icons-react'
 import {
   CButton,
@@ -10,12 +10,6 @@ import {
   CNavLink,
   CRow,
   CWidgetStatsF,
-  CTable,
-  CTableBody,
-  CTableDataCell,
-  CTableHead,
-  CTableHeaderCell,
-  CTableRow,
   CAvatar,
   CDropdown,
   CDropdownToggle,
@@ -23,89 +17,38 @@ import {
   CDropdownItem,
   CDropdownDivider,
   CBadge,
+  CSmartTable,
+  CContainer,
 } from '@coreui/react-pro'
-import { cibCcMastercard, cibCcStripe, cibCcVisa, cifBr, cifIn, cilPeople } from '@coreui/icons'
+import { cilPeople } from '@coreui/icons'
 import React, { useEffect, useState } from 'react'
-import avatar1 from 'src/assets/images/avatars/1.jpg'
-import avatar2 from 'src/assets/images/avatars/2.jpg'
-import avatar3 from 'src/assets/images/avatars/3.jpg'
 import CommonService from 'src/service/CommonService'
-const GameAccount = () => {
-  const tableExample = [
-    {
-      avatar: { src: avatar1, status: 'success' },
-      user: {
-        name: 'Deakin Fantasy 2023/24',
-        new: true,
-        registered: 'Jan 1, 2021',
-        status: 'In-Progress',
-      },
-      country: { name: 'USA', flag: 'asdasd' },
-      usage: {
-        value: 50,
-        period: 'Jun 11, 2021 - Jul 10, 2021',
-        color: 'success',
-      },
-      payment: { name: 'Mastercard', icon: cibCcMastercard },
-      activity: '10 sec ago',
-    },
-    {
-      avatar: { src: avatar2, status: 'danger' },
-      user: {
-        name: 'Deakin Fantasy 2022/23',
-        new: false,
-        registered: 'Jan 1, 2021',
-        status: 'In-Active',
-      },
-      country: { name: 'Brazil', flag: cifBr },
-      usage: {
-        value: 22,
-        period: 'Jun 11, 2021 - Jul 10, 2021',
-        color: 'info',
-      },
-      payment: { name: 'Visa', icon: cibCcVisa },
-      activity: '5 minutes ago',
-    },
-    {
-      avatar: { src: avatar3, status: 'warning' },
-      user: {
-        name: 'Deakin Fantasy 2021/22',
-        new: true,
-        registered: 'Jan 1, 2021',
-        status: 'Completed',
-      },
-      country: { name: 'India', flag: cifIn },
-      usage: {
-        value: 74,
-        period: 'Jun 11, 2021 - Jul 10, 2021',
-        color: 'warning',
-        status: 'Completed',
-      },
-      payment: { name: 'Stripe', icon: cibCcStripe },
-      activity: '1 hour ago',
-    },
-  ]
-
+import GameStatusModal from './GameStatusModal'
+import TransferAdminModal from './TransferAdminModal'
+import ToastComponent from 'src/components/common/TaostComponent'
+import { useNavigate } from 'react-router-dom'
+const GameAccount = (props) => {
+  const [visible, setVisible] = useState(false)
   const [activePage, setActivePage] = useState(1)
   const [columnFilter, setColumnFilter] = useState([])
   const [columnSorter, setColumnSorter] = useState(null)
   const [itemsPerPage, setItemsPerPage] = useState(10)
-  const [selectedId, setSelectedId] = useState(0)
   const [users, setUsers] = useState()
-  const [details, setDetails] = useState([])
+  const [dashboardData, setDashboardData] = useState()
   const columns = [
     {
-      label: 'Comp Code',
-      key: 'sn',
-      _style: { width: '20%' },
+      label: <CIcon icon={cilPeople} />,
+      key: 'logo',
+      filter: false,
+      sorter: false,
+      _style: { width: '25%' },
     },
-    { label: 'Comp Name', key: 'grade', _style: { width: '20%' } },
-    { label: 'Created On', key: 'created_at', _style: { width: '20%' } },
-    { label: 'Status', filter: false, key: 'is_active', _style: { width: '20%' } },
+    { label: 'Game', key: 'game_details', _style: { width: '25%' } },
+    { label: 'Admin', key: 'admin', filter: false, sorter: false, _style: { width: '25%' } },
     {
       key: 'show_details',
       label: 'Actions',
-      _style: { width: '1%' },
+      _style: { width: '25%' },
       filter: false,
       sorter: false,
     },
@@ -122,7 +65,7 @@ const GameAccount = () => {
   }
 
   const [loading, setLoading] = useState()
-
+  const [gameStatus, setGameStatus] = useState()
   const getUsers = useEffect(() => {
     setLoading(true)
     const offset = itemsPerPage * activePage - itemsPerPage
@@ -136,121 +79,226 @@ const GameAccount = () => {
 
     CommonService.gameAccount(offset, itemsPerPage, activePage, params).then((result) => {
       setUsers(result.data)
+      setDashboardData(result.new_data)
       setLoading(false)
     })
   }, [activePage, columnFilter, columnSorter, itemsPerPage])
+
+  const [userId, setUserId] = useState()
+  const handleGameStatus = (status, userId) => {
+    setVisible(true)
+    setGameStatus(status)
+    setUserId(userId)
+  }
+
+  const [transferVisible, setTransferVisible] = useState(false)
+  const handleTransferAdmin = (userId) => {
+    setTransferVisible(true)
+    setUserId(userId)
+  }
+
+  const navigate = useNavigate()
+  const gameLogin = (userId) => {
+    const data = {}
+    data.userId = userId
+    CommonService.gameLogin(data)
+      .then((res) => {
+        if (res.status === 200) {
+          navigate('/dashboard')
+        }
+      })
+      .catch((e) => {
+        ToastComponent(e.response?.data?.message, 'error')
+      })
+  }
+
+  const clubRegister = () => {
+    navigate('/register')
+  }
   return (
     <>
-      <CRow>
-        <CCol xs={12} sm={6} lg={3}>
-          <CWidgetStatsF
-            className="mb-3"
-            icon={<CIcon width={24} icon={cilSettings} size="xl" />}
-            title="All Games"
-            value="$1.999,50"
-            color="primary-gradient"
-          />
-        </CCol>
-        <CCol xs={12} sm={6} lg={3}>
-          <CWidgetStatsF
-            className="mb-3"
-            icon={<CIcon width={24} icon={cilUser} size="xl" />}
-            title="Completed Games"
-            value="$1.999,50"
-            color="info-gradient"
-          />
-        </CCol>
-        <CCol xs={12} sm={6} lg={3}>
-          <CWidgetStatsF
-            className="mb-3"
-            icon={<CIcon width={24} icon={cilMoon} size="xl" />}
-            title="All Players"
-            value="$1.999,50"
-            color="warning-gradient"
-          />
-        </CCol>
-        <CCol xs={12} sm={6} lg={3}>
-          <CWidgetStatsF
-            className="mb-3"
-            icon={<CIcon width={24} icon={cilBell} size="xl" />}
-            title="All Members"
-            value="$1.999,50"
-            color="danger-gradient"
-          />
-        </CCol>
-      </CRow>
+      <div className="bg-light min-vh-200 d-flex flex-row align-items-center pt-5">
+        <CContainer>
+          <CRow className="justify-content-center">
+            <CCol xs={12} sm={6} lg={3}>
+              <CWidgetStatsF
+                className="mb-3"
+                icon={<CIcon width={24} icon={cilSettings} size="xl" />}
+                title="All Games"
+                value={dashboardData?.all_games}
+                color="primary-gradient"
+              />
+            </CCol>
+            <CCol xs={12} sm={6} lg={3}>
+              <CWidgetStatsF
+                className="mb-3"
+                icon={<CIcon width={24} icon={cilUser} size="xl" />}
+                title="Completed Games"
+                value={dashboardData?.complete_games}
+                color="info-gradient"
+              />
+            </CCol>
+            <CCol xs={12} sm={6} lg={3}>
+              <CWidgetStatsF
+                className="mb-3"
+                icon={<CIcon width={24} icon={cilMoon} size="xl" />}
+                title="All Players"
+                value={dashboardData?.all_players}
+                color="warning-gradient"
+              />
+            </CCol>
+            <CCol xs={12} sm={6} lg={3}>
+              <CWidgetStatsF
+                className="mb-3"
+                icon={<CIcon width={24} icon={cilBell} size="xl" />}
+                title="All Members"
+                value={dashboardData?.all_members}
+                color="danger-gradient"
+              />
+            </CCol>
+            <CCol xs={12} sm={12} lg={12}>
+              <CCard className="mb-4">
+                <CCardHeader>
+                  <strong>Club Games</strong>
+                  &nbsp;
+                  <CButton
+                    color={'success'}
+                    active={false}
+                    className="float-end ml-2"
+                    onClick={clubRegister}
+                  >
+                    <CIcon icon={cilPlus} className="me-2" />
+                    New
+                  </CButton>{' '}
+                  &nbsp;
+                  <CButton color={'primary'} active={true} className="float-end text-center">
+                    <CIcon icon={cilInfo} className="me-2" />
+                  </CButton>
+                </CCardHeader>
+                <CCardBody>
+                  <CNav component="nav" variant="pills" className="flex-column flex-sm-row">
+                    <CNavLink href="#" active>
+                      Active
+                    </CNavLink>
+                    <CNavLink href="#">Completed</CNavLink>
+                  </CNav>
 
-      <CRow>
-        <CCol xs={12} sm={12} lg={12}>
-          <CCard className="mb-4">
-            <CCardHeader>
-              <strong>Club Games</strong>
-              <CButton color={'primary'} active={'active'} className="float-end">
-                <CIcon icon={cilBell} className="me-2" />
-                Info
-              </CButton>
-            </CCardHeader>
-            <CCardBody>
-              <CNav component="nav" variant="pills" className="flex-column flex-sm-row">
-                <CNavLink href="#" active>
-                  Active
-                </CNavLink>
-                <CNavLink href="#">Completed</CNavLink>
-              </CNav>
-
-              <CTable align="middle" className="mb-0 border mt-3" hover responsive>
-                <CTableHead color="light">
-                  <CTableRow>
-                    <CTableHeaderCell className="text-center">
-                      <CIcon icon={cilPeople} />
-                    </CTableHeaderCell>
-                    <CTableHeaderCell>Game</CTableHeaderCell>
-                    <CTableHeaderCell className="text-center">Admin</CTableHeaderCell>
-                    <CTableHeaderCell>Actions</CTableHeaderCell>
-                  </CTableRow>
-                </CTableHead>
-                <CTableBody>
-                  {tableExample.map((item, index) => (
-                    <CTableRow v-for="item in tableItems" key={index}>
-                      <CTableDataCell className="text-center">
-                        <CAvatar size="md" src={item.avatar.src} status={item.avatar.status} />
-                      </CTableDataCell>
-                      <CTableDataCell>
-                        <div>{item.user.name}</div>
-                        <div className="small text-medium-emphasis text-nowrap">
-                          <span>
-                            <CBadge color={'success'}>{item.user.status}</CBadge>
-                          </span>{' '}
-                        </div>
-                      </CTableDataCell>
-                      <CTableDataCell className="text-center">
-                        <CButton color={'danger'}>
-                          <CIcon icon={cilSettings} />
-                        </CButton>
-                      </CTableDataCell>
-
-                      <CTableDataCell>
-                        <CDropdown variant="btn-group">
-                          <CButton color={'success'}>{'Actions'}</CButton>
-                          <CDropdownToggle color={'success'} split />
-                          <CDropdownMenu>
-                            <CDropdownItem href="#">Game Activation</CDropdownItem>
-                            <CDropdownItem href="#">Game Status</CDropdownItem>
-                            <CDropdownItem href="#">Transfer Admin</CDropdownItem>
-                            {/* <CDropdownItem href="#">Copy Content</CDropdownItem> */}
-                            <CDropdownDivider />
-                            <CDropdownItem href="#">Lobby Login</CDropdownItem>
-                          </CDropdownMenu>
-                        </CDropdown>
-                      </CTableDataCell>
-                    </CTableRow>
-                  ))}
-                </CTableBody>
-              </CTable>
-            </CCardBody>
-          </CCard>
-        </CCol>
-      </CRow>
+                  <CSmartTable
+                    className={'mb-0 border mt-3'}
+                    columns={columns}
+                    columnFilter={{
+                      external: true,
+                    }}
+                    columnSorter={{
+                      external: true,
+                    }}
+                    scopedColumns={{
+                      logo: (item) => (
+                        <td>
+                          <CAvatar
+                            size="md"
+                            src={`${process.env.REACT_APP_API_URL}uploads/club/${item.club_logo}`}
+                          />
+                        </td>
+                      ),
+                      game_details: (item) => (
+                        <td>
+                          <div>{item.game_name}</div>
+                          <div className="small text-medium-emphasis text-nowrap">
+                            <span>
+                              <CBadge color={getBadge(item.is_completed)}>
+                                {item.is_completed === 1
+                                  ? 'Running'
+                                  : item.is_completed === 3
+                                  ? 'In-Progress'
+                                  : 'Completed'}
+                              </CBadge>
+                            </span>{' '}
+                          </div>
+                        </td>
+                      ),
+                      admin: (item) => (
+                        <td>
+                          <CButton color={'danger'} onClick={() => gameLogin(item.id)}>
+                            <CIcon icon={cilSettings} />
+                          </CButton>
+                        </td>
+                      ),
+                      show_details: (item) => {
+                        return (
+                          <>
+                            <td className="py-2">
+                              {' '}
+                              <CDropdown variant="btn-group">
+                                <CButton color={'success'}>{'Actions'}</CButton>
+                                <CDropdownToggle color={'success'} split />
+                                <CDropdownMenu>
+                                  <CDropdownItem href={'/activate-game'}>
+                                    Game Activation
+                                  </CDropdownItem>
+                                  <CDropdownItem
+                                    onClick={() => handleGameStatus(item.is_completed, item.id)}
+                                  >
+                                    Game Status
+                                  </CDropdownItem>
+                                  <CDropdownItem onClick={() => handleTransferAdmin(item.id)}>
+                                    Transfer Admin
+                                  </CDropdownItem>
+                                  {/* <CDropdownItem href="#">Copy Content</CDropdownItem> */}
+                                  <CDropdownDivider />
+                                  <CDropdownItem href="#">Lobby Login</CDropdownItem>
+                                </CDropdownMenu>
+                              </CDropdown>
+                            </td>
+                          </>
+                        )
+                      },
+                    }}
+                    items={users?.data}
+                    itemsPerPage={itemsPerPage}
+                    itemsPerPageSelect
+                    loading={loading}
+                    pagination={{
+                      external: true,
+                    }}
+                    paginationProps={{
+                      activePage: activePage,
+                      pages: Math.ceil(users?.total / itemsPerPage) || 1,
+                    }}
+                    tableProps={{
+                      hover: true,
+                      responsive: true,
+                    }}
+                    onActivePageChange={(activePage) => setActivePage(activePage)}
+                    onColumnFilterChange={(filter) => {
+                      setActivePage(1)
+                      setColumnFilter(filter)
+                    }}
+                    onItemsPerPageChange={(itemsPerPage) => {
+                      setActivePage(1)
+                      setItemsPerPage(itemsPerPage)
+                    }}
+                    onSorterChange={(sorter) => setColumnSorter(sorter)}
+                  />
+                </CCardBody>
+              </CCard>
+            </CCol>
+          </CRow>
+          <GameStatusModal
+            visible={visible}
+            setVisible={setVisible}
+            gameStatus={gameStatus}
+            setGameStatus={setGameStatus}
+            userId={userId}
+            setUsers={setUsers}
+          />
+          <TransferAdminModal
+            transferVisible={transferVisible}
+            setTransferVisible={setTransferVisible}
+            userId={userId}
+          />
+        </CContainer>
+      </div>
     </>
   )
 }

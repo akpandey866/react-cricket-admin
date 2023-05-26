@@ -29,9 +29,9 @@ const Login = () => {
 
   useEffect(() => {
     if (authenticated === 'true') {
-      navigate('/dashboard')
+      navigate('/account')
     }
-  }, [])
+  }, [authenticated, navigate])
 
   const [loader, setLoader] = useState(false)
 
@@ -55,7 +55,7 @@ const Login = () => {
             localStorage.setItem('authenticated', true)
             setauthenticated(true)
             setLoader(false)
-            navigate('/dashboard')
+            navigate('/account')
           } else {
             setLoader(false)
             ToastComponent(res.message, 'error')

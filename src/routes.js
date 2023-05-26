@@ -122,7 +122,7 @@ const routes = [
   { path: '/spots', name: 'Spots', element: GameSpot },
   { path: '/fantasy-values', name: 'Fantasy Values', element: Index },
   { path: '/activate-game', name: 'Game Activation', element: ActivateGame },
-  { path: '/accounts', name: 'Game Accounts', element: GameAccount },
+  // { path: '/accounts', name: 'Game Accounts', element: GameAccount },
   { path: '/players', name: 'Players List', element: Player },
   { path: '/players/player-structure', name: 'Player Structure', element: PlayerStructure },
   { path: '/comps', name: 'Comps', element: Grade },
