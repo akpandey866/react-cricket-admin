@@ -132,8 +132,17 @@ const activateGame = async (data) => {
   const response = await agent.post(API_URL + 'common/activateGame', data)
   return response.data
 }
-const gameAccount = async (data) => {
-  const response = await agent.post(API_URL + 'common/gameAccount', data)
+const gameAccount = async (
+  offset,
+  itemsPerPage,
+  activePage,
+  params,
+  runningActive,
+  completedActive,
+) => {
+  const response = await agent.get(
+    `${API_URL}/common/gameAccount?offset=${offset}&limit=${itemsPerPage}&page=${activePage}&running_game=${runningActive}&complete_game=${completedActive}&${params}`,
+  )
   return response.data
 }
 const dashboardData = async () => {

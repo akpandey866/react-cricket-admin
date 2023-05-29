@@ -31,7 +31,6 @@ const Table = (props) => {
   const [details, setDetails] = useState([])
 
   const columns = [
-    { label: 'Comp Name', key: 'grade' },
     {
       label: 'Team Name',
       key: 'team_name',

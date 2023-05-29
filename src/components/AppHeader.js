@@ -12,7 +12,14 @@ import {
   CHeaderToggler,
 } from '@coreui/react-pro'
 import CIcon from '@coreui/icons-react'
-import { cilApplicationsSettings, cilMenu, cilMoon, cilSun } from '@coreui/icons'
+import {
+  cilApplicationsSettings,
+  cilApps,
+  cilMenu,
+  cilMoon,
+  cilShareAlt,
+  cilSun,
+} from '@coreui/icons'
 
 import { AppBreadcrumb } from './index'
 
@@ -30,7 +37,9 @@ const AppHeader = () => {
     }
   }, [])
   const dispatch = useDispatch()
-
+  const handleAccountPage = () => {
+    navigate('/account')
+  }
   const theme = useSelector((state) => state.theme)
 
   theme === 'dark'
@@ -77,7 +86,13 @@ const AppHeader = () => {
           </CButtonGroup>
         </CHeaderNav>
         <CHeaderNav>
+          <CHeaderNav className="ms-auto ml-2">
+            <CButtonGroup aria-label="Account" onClick={handleAccountPage}>
+              <CIcon icon={cilApps} className="my-1 mx-2 mt-3" size="lg" />
+            </CButtonGroup>
+          </CHeaderNav>
           <AppHeaderDropdownNotif />
+
           <GameLinkBar />
           {/* <AppHeaderDropdownMssg /> */}
         </CHeaderNav>

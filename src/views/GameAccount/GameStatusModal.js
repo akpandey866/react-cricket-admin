@@ -69,9 +69,9 @@ const GameStatusModal = (props) => {
             onChange={handleChange}
           >
             <option value={''}>Select Status </option>
-            <option value={1}>Active </option>
-            <option value={2}>Complete </option>
-            <option value={3}>Starting Soon </option>
+            <option value={1}>In-Progress </option>
+            <option value={2}>Completed </option>
+            <option value={3}>Not Yet Started </option>
           </CFormSelect>
           {formik.errors.game_status && formik.touched.game_status && (
             <CFormFeedback invalid>{formik.errors.game_status}</CFormFeedback>

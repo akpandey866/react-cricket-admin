@@ -90,7 +90,6 @@ const Dashboard = () => {
   }
 
   const [loading, setLoading] = useState()
-  const [dashboardUser, setDashboardUser] = useState([])
   const getUsers = useEffect(() => {
     CommonService.dashboardData()
       .then((res) => {

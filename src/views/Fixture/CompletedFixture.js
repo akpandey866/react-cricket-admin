@@ -39,7 +39,6 @@ const CompletedFixture = (props) => {
       label: 'Team Name',
       key: 'team_name',
     },
-    { label: 'Comp Name', key: 'grade' },
     { label: 'Match Type', key: 'match_type' },
     { label: 'Start Date', filter: false, key: 'start_date' },
     { label: 'End Date', filter: false, key: 'end_date' },

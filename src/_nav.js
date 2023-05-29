@@ -97,6 +97,11 @@ const _nav = [
       },
       {
         component: CNavItem,
+        name: 'Fantasy Values',
+        to: '/fantasy-values',
+      },
+      {
+        component: CNavItem,
         name: 'Rounds',
         to: '/rounds',
       },
@@ -119,16 +124,6 @@ const _nav = [
         component: CNavItem,
         name: 'Bonus Points',
         to: '/bonus-points',
-      },
-      {
-        component: CNavItem,
-        name: 'Fantasy Values',
-        to: '/fantasy-values',
-      },
-      {
-        component: CNavItem,
-        name: 'Account',
-        to: '/accounts',
       },
     ],
   },

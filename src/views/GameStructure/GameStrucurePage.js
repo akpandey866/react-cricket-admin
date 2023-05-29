@@ -1,4 +1,11 @@
-import { CForm, CFormFeedback, CFormLabel, CFormSelect, CLoadingButton } from '@coreui/react-pro'
+import {
+  CBadge,
+  CForm,
+  CFormFeedback,
+  CFormLabel,
+  CFormSelect,
+  CLoadingButton,
+} from '@coreui/react-pro'
 import React from 'react'
 import ToastComponent from 'src/components/common/TaostComponent'
 import { useFormik } from 'formik'

@@ -29,12 +29,16 @@ import ToastComponent from 'src/components/common/TaostComponent'
 import { useNavigate } from 'react-router-dom'
 const GameAccount = (props) => {
   const [visible, setVisible] = useState(false)
+  const [defaultActive, setDefaultActive] = useState(true)
+  const [runningActive, setRunningActive] = useState(false)
+  const [completedActive, setCompletedActive] = useState(false)
   const [activePage, setActivePage] = useState(1)
   const [columnFilter, setColumnFilter] = useState([])
   const [columnSorter, setColumnSorter] = useState(null)
   const [itemsPerPage, setItemsPerPage] = useState(10)
   const [users, setUsers] = useState()
   const [dashboardData, setDashboardData] = useState()
+
   const columns = [
     {
       label: <CIcon icon={cilPeople} />,
@@ -57,13 +61,34 @@ const GameAccount = (props) => {
     switch (status) {
       case 1:
         return 'success'
-      case 0:
+      case 2:
         return 'warning'
+      case 3:
+        return 'danger'
       default:
         return 'primary'
     }
   }
 
+  const handleDefaultActive = () => {
+    // getUsers()
+    setDefaultActive(true)
+    setCompletedActive(false)
+    setRunningActive(false)
+  }
+  const handleCompleteActive = () => {
+    // getUsers()
+    setCompletedActive(true)
+    setRunningActive(false)
+    setDefaultActive(false)
+  }
+
+  const handleRunningActive = () => {
+    // getUsers()
+    setRunningActive(true)
+    setCompletedActive(false)
+    setDefaultActive(false)
+  }
   const [loading, setLoading] = useState()
   const [gameStatus, setGameStatus] = useState()
   const getUsers = useEffect(() => {
@@ -76,13 +101,22 @@ const GameAccount = (props) => {
     columnSorter &&
       columnSorter.column !== undefined &&
       params.append('sort', `${columnSorter.column}%${columnSorter.state}`)
-
-    CommonService.gameAccount(offset, itemsPerPage, activePage, params).then((result) => {
+    const gameType = {}
+    gameType.running = runningActive
+    gameType.completed = completedActive
+    CommonService.gameAccount(
+      offset,
+      itemsPerPage,
+      activePage,
+      params,
+      runningActive,
+      completedActive,
+    ).then((result) => {
       setUsers(result.data)
       setDashboardData(result.new_data)
       setLoading(false)
     })
-  }, [activePage, columnFilter, columnSorter, itemsPerPage])
+  }, [activePage, columnFilter, columnSorter, itemsPerPage, runningActive, completedActive])
 
   const [userId, setUserId] = useState()
   const handleGameStatus = (status, userId) => {
@@ -104,6 +138,8 @@ const GameAccount = (props) => {
     CommonService.gameLogin(data)
       .then((res) => {
         if (res.status === 200) {
+          localStorage.setItem('admin', JSON.stringify(res.user))
+          localStorage.setItem('token', JSON.stringify(res.token))
           navigate('/dashboard')
         }
       })
@@ -113,7 +149,7 @@ const GameAccount = (props) => {
   }
 
   const clubRegister = () => {
-    navigate('/register')
+    navigate('/club-register')
   }
   return (
     <>
@@ -177,10 +213,15 @@ const GameAccount = (props) => {
                 </CCardHeader>
                 <CCardBody>
                   <CNav component="nav" variant="pills" className="flex-column flex-sm-row">
-                    <CNavLink href="#" active>
+                    <CNavLink href="#" active={defaultActive} onClick={handleDefaultActive}>
+                      All
+                    </CNavLink>
+                    <CNavLink href="#" active={runningActive} onClick={handleRunningActive}>
                       Active
                     </CNavLink>
-                    <CNavLink href="#">Completed</CNavLink>
+                    <CNavLink href="#" active={completedActive} onClick={handleCompleteActive}>
+                      Completed
+                    </CNavLink>
                   </CNav>
 
                   <CSmartTable
@@ -209,9 +250,9 @@ const GameAccount = (props) => {
                               <CBadge color={getBadge(item.is_completed)}>
                                 {item.is_completed === 1
                                   ? 'Running'
-                                  : item.is_completed === 3
-                                  ? 'In-Progress'
-                                  : 'Completed'}
+                                  : item.is_completed === 2
+                                  ? 'Completed'
+                                  : 'Not Yet Started'}
                               </CBadge>
                             </span>{' '}
                           </div>

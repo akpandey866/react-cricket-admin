@@ -42,6 +42,10 @@ const transferAdminRight = async (data) => {
   const response = await agent.post(API_URL + 'transferAdminRight', data)
   return response.data
 }
+const createNewClub = async (data) => {
+  const response = await agent.post(API_URL + 'createNewClub', data)
+  return response.data
+}
 const ClubService = {
   getClubDetails,
   updateGameAdmin,
@@ -53,6 +57,7 @@ const ClubService = {
   updateBasicSetting,
   updateGameStatus,
   transferAdminRight,
+  createNewClub,
 }
 
 export default ClubService
