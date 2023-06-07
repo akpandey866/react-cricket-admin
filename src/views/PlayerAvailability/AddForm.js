@@ -67,7 +67,9 @@ const AddForm = (props) => {
     <>
       <CForm className="row g-3" onSubmit={formik.handleSubmit}>
         <CCol md={6}>
-          <CFormLabel htmlFor="grade">Player *</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="grade">
+            Player *
+          </CFormLabel>
           <CMultiSelect
             options={props.multiOption}
             selectionType="tags"
@@ -88,7 +90,9 @@ const AddForm = (props) => {
           )}
         </CCol>
         <CCol md={6}>
-          <CFormLabel htmlFor="Reason">Reason *</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="Reason">
+            Reason *
+          </CFormLabel>
           <CFormInput
             placeholder="Reason"
             className={
@@ -104,7 +108,9 @@ const AddForm = (props) => {
           )}
         </CCol>
         <CCol md={6}>
-          <CFormLabel htmlFor="grade">Unavailable From*</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="grade">
+            Unavailable From*
+          </CFormLabel>
           <CDatePicker
             date={dateFrom}
             defaultValue={dateFrom}
@@ -128,7 +134,9 @@ const AddForm = (props) => {
           )}
         </CCol>
         <CCol md={6}>
-          <CFormLabel htmlFor="unavailabletill">Unavailable Till*</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="unavailabletill">
+            Unavailable Till*
+          </CFormLabel>
           <CDatePicker
             date={dateTill}
             locale="en-US"

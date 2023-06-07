@@ -63,13 +63,16 @@ const GameSpot = (props) => {
         <strong>Game Spots Allowed</strong>
       </CCardHeader>
       <CCardBody>
-        <CForm className="row g-3" onSubmit={formik.handleSubmit}>
+        <CForm className="row" onSubmit={formik.handleSubmit}>
           <CRow className="">
             <CCol md={12}>
+              <CFormLabel htmlFor="name" className="fw-bold">
+                Spots *
+              </CFormLabel>
               <CFormInput
                 type="number"
                 className={
-                  'mt-3 form-control' +
+                  'form-control' +
                   (formik.errors.user_number && formik.touched.user_number ? ' is-invalid' : '')
                 }
                 id="user_number"

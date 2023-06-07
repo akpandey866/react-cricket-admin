@@ -22,6 +22,8 @@ import { toast } from 'react-toastify'
 import ToastComponent from 'src/components/common/TaostComponent.js'
 import TeamPlayerService from 'src/service/TeamPlayerService'
 import { useParams } from 'react-router-dom'
+import CIcon from '@coreui/icons-react'
+import { cilMinus, cilPlus } from '@coreui/icons'
 const Table = (props) => {
   const [loading, setLoading] = useState()
   const [activePage, setActivePage] = useState(1)
@@ -33,15 +35,15 @@ const Table = (props) => {
   const urlParams = useParams()
   const [details, setDetails] = useState([])
   const columns = [
-    { label: 'Player Name', filter: false, key: 'full_name' },
-    { key: 'team_name', filter: false, sorting: false },
     {
       key: 'show_details',
-      label: '',
+      label: 'Pick',
       _style: { width: '1%' },
       filter: false,
       sorter: false,
     },
+    { label: 'Player Name', filter: false, key: 'full_name' },
+    { key: 'team_name', filter: false, sorting: false },
   ]
   const toggleDetails = (index) => {
     setLoading(true)
@@ -103,11 +105,11 @@ const Table = (props) => {
   return (
     <>
       <CRow>
-        <CAccordion activeItemKey={1}>
+        <CAccordion activeItemKey={1} className={`${props.individualPlayerDisplay}`}>
           <CAccordionItem itemKey={1}>
             <CAccordionHeader>
               {' '}
-              <strong>Add Individual Player</strong>
+              <strong>Add Individual Players</strong>
             </CAccordionHeader>
             <CAccordionBody>
               <CSmartTable
@@ -124,15 +126,18 @@ const Table = (props) => {
                       <>
                         <td className="py-2">
                           <CButton
-                            color="primary"
-                            variant="outline"
+                            color={details.includes(item.id) ? 'danger' : 'success'}
+                            // variant="outline"
                             shape="square"
-                            size="sm"
                             onClick={() => {
                               toggleDetails(item.id)
                             }}
                           >
-                            {details.includes(item.id) ? 'Remove' : 'Add'}
+                            {details.includes(item.id) ? (
+                              <CIcon icon={cilMinus} />
+                            ) : (
+                              <CIcon icon={cilPlus} />
+                            )}
                           </CButton>
                         </td>
                       </>
@@ -164,8 +169,8 @@ const Table = (props) => {
           </CAccordionItem>
         </CAccordion>
 
-        <CAccordion>
-          <CAccordionItem>
+        <CAccordion activeItemKey={1}>
+          <CAccordionItem itemKey={1}>
             <CAccordionHeader>
               {' '}
               <strong>Squad (Picked Players)</strong>

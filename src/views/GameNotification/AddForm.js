@@ -18,7 +18,7 @@ import GameNotificationservice from 'src/service/GameNotificationService'
 const AddForm = (props) => {
   const [loader, setLoader] = useState(false)
   const validationSchema = Yup.object().shape({
-    title: Yup.string().required('Title is required'),
+    title: Yup.string().required('Title is required').max(50, '50 Character Limit is allowed.'),
     // message: Yup.string().required('Message is required'),
   })
   const formik = useFormik({
@@ -67,7 +67,9 @@ const AddForm = (props) => {
     <>
       <CForm className="row g-3" onSubmit={formik.handleSubmit}>
         <CCol md={12}>
-          <CFormLabel htmlFor="title">Title</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="title">
+            Title
+          </CFormLabel>
           <CFormInput
             placeholder="Title"
             className={
@@ -83,7 +85,9 @@ const AddForm = (props) => {
           )}
         </CCol>
         <CCol md={12}>
-          <CFormLabel htmlFor="message">Message</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="message">
+            Message
+          </CFormLabel>
           <Editor
             toolbarHidden={false}
             editorState={description.editorState}

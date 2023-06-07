@@ -108,7 +108,9 @@ const BracketBattle = () => {
           <CAccordionBody>
             <CForm className="row g-3" onSubmit={formik.handleSubmit}>
               <CCol md={6}>
-                <CFormLabel htmlFor="structure">Select Your Bracket Battle Stucture</CFormLabel>
+                <CFormLabel className="fw-bold" htmlFor="structure">
+                  Select Your Bracket Battle Stucture
+                </CFormLabel>
                 <CFormSelect
                   aria-label="Select Structure"
                   name="structure"
@@ -135,7 +137,9 @@ const BracketBattle = () => {
                 )}
               </CCol>
               <CCol md={6}>
-                <CFormLabel htmlFor="structure">Bracket Name</CFormLabel>
+                <CFormLabel className="fw-bold" htmlFor="structure">
+                  Bracket Name
+                </CFormLabel>
                 <CFormInput
                   className={
                     'form-control' +
@@ -151,7 +155,9 @@ const BracketBattle = () => {
                 )}
               </CCol>
               <CCol md={6}>
-                <CFormLabel htmlFor="structure">About Your Bracket Battle</CFormLabel>
+                <CFormLabel className="fw-bold" htmlFor="structure">
+                  About Your Bracket Battle
+                </CFormLabel>
                 <CFormTextarea
                   aria-label="about"
                   className={

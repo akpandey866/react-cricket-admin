@@ -46,7 +46,7 @@ const TripleCap = (props) => {
     data.type = 'captain_cards_status'
     CommonService.changePowerControlStatus(data).then((res) => {
       if (res.status === 200) {
-        props.setData(res.data)
+        // props.setData(res.data)
         ToastComponent(res.message, 'success')
       }
     })
@@ -54,7 +54,7 @@ const TripleCap = (props) => {
   return (
     <CForm className="row g-3" onSubmit={formik.handleSubmit}>
       <CRow className="">
-        <CFormLabel htmlFor="staticEmail" className="col-sm-3 col-form-label">
+        <CFormLabel htmlFor="staticEmail" className="col-sm-3 col-form-label fw-bold">
           Status
         </CFormLabel>
         <div className="col-sm-9 mb-3 pt-2">
@@ -68,7 +68,7 @@ const TripleCap = (props) => {
         </div>
       </CRow>
       <CRow className="">
-        <CFormLabel htmlFor="staticEmail" className="col-sm-3 col-form-label">
+        <CFormLabel htmlFor="staticEmail" className="col-sm-3 col-form-label fw-bold">
           Use Limit
         </CFormLabel>
         <div className="col-sm-9 mb-3 pt-2">

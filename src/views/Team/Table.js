@@ -15,6 +15,7 @@ import { useNavigate } from 'react-router-dom'
 import ToastComponent from 'src/components/common/TaostComponent.js'
 import TeamService from 'src/service/TeamService'
 import EditForm from './EditForm'
+import Notify from '../Notify'
 const Table = (props) => {
   const [loading, setLoading] = useState()
   const [visibleHorizontal, setVisibleHorizontal] = useState(false)
@@ -33,8 +34,8 @@ const Table = (props) => {
       key: 'sn',
     },
     { label: 'Team Name', key: 'team_name' },
-    { label: 'Created On', key: 'created_at' },
-    { label: 'Status', filter: false, key: 'is_active' },
+    // { label: 'Created On', key: 'created_at' },
+    // { label: 'Status', filter: false, key: 'is_active' },
     {
       key: 'show_details',
       label: 'Actions',
@@ -104,6 +105,25 @@ const Table = (props) => {
       })
   }, [activePage, columnFilter, columnSorter, itemsPerPage, props])
 
+  // Are you sure want modal
+  const [handleYes, setHandleYes] = useState(false)
+  const [showConfirm, setShowConfirm] = useState(false)
+  const [handleNo, setHandleNo] = useState(false)
+  const [tableId, setTableId] = useState(false)
+  const handleCancel = () => {
+    console.log('You clicked No!')
+    return setShowConfirm(false)
+  }
+
+  const handleConfirm = () => {
+    deleteTeam(tableId)
+    return setShowConfirm(false)
+  }
+  const areYouSureModal = (id) => {
+    setShowConfirm(true)
+    setTableId(id)
+  }
+
   return (
     <>
       <CSmartTable
@@ -162,7 +182,7 @@ const Table = (props) => {
                     size="sm"
                     color="danger"
                     className="ml-3"
-                    onClick={() => deleteTeam(item.id)}
+                    onClick={() => areYouSureModal(item.id)}
                   >
                     Delete
                   </CButton>
@@ -213,6 +233,17 @@ const Table = (props) => {
           setItemsPerPage(itemsPerPage)
         }}
         onSorterChange={(sorter) => setColumnSorter(sorter)}
+      />
+      <Notify
+        setShowConfirm={setShowConfirm}
+        showConfirm={showConfirm}
+        setHandleNo={setHandleNo}
+        handleNo={handleNo}
+        handleYes={handleYes}
+        setHandleYes={setHandleYes}
+        handleConfirm={handleConfirm}
+        handleCancel={handleCancel}
+        text="Are you sure you want to delete this?"
       />
     </>
   )

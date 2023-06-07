@@ -13,7 +13,7 @@ const AddMoreDemo = () => (
           users: [
             {
               name: '',
-              email: '',
+              // email: '',
             },
           ],
           organizationName: [],
@@ -21,12 +21,15 @@ const AddMoreDemo = () => (
         validationSchema={Yup.object({
           users: Yup.array().of(
             Yup.object().shape({
-              name: Yup.string().required('Name required'),
-              email: Yup.string().required('email required').email('Enter valid email'),
+              name: Yup.string().required('Nameasdasds required'),
+              // email: Yup.string().required('email required').email('Enter valid email'),
             }),
           ),
         })}
-        onSubmit={(values) => alert(JSON.stringify(values, null, 2))}
+        onSubmit={
+          (values) => console.log(values)
+          //alert(JSON.stringify(values, null, 2))
+        }
       >
         {({ values }) => (
           <Form>
@@ -41,12 +44,20 @@ const AddMoreDemo = () => (
                     {users && users.length > 0
                       ? users.map((user, index) => (
                           <div key={index}>
-                            <Field placeholder="user name" name={`users.${index}.name`} />
+                            <Field
+                              placeholder="Price"
+                              name={`users.${index}.name`}
+                              className="form-control"
+                            />
                             <ErrorMessage name={`users.${index}.name`} />
                             <br />
 
-                            <Field placeholder="user email" name={`users.${index}.email`} />
-                            <ErrorMessage name={`users.${index}.email`} />
+                            {/* <Field
+                              placeholder="user email"
+                              name={`users.${index}.email`}
+                              className="form-control"
+                            />
+                            <ErrorMessage name={`users.${index}.email`} /> */}
 
                             <button
                               type="button"
@@ -62,7 +73,6 @@ const AddMoreDemo = () => (
                       onClick={() =>
                         arrayHelpers.push({
                           name: '',
-                          email: '',
                         })
                       } // insert an empty string at a position
                     >

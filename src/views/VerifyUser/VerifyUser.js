@@ -31,7 +31,7 @@ const VerifyUser = () => {
   }, [])
   return (
     <CRow>
-      <CAccordion activeItemKey={2}>
+      <CAccordion activeItemKey={1} alwaysOpen>
         <CAccordionItem itemKey={1}>
           <CAccordionHeader>
             {' '}
@@ -41,7 +41,9 @@ const VerifyUser = () => {
             <AddForm userList={userList} playerList={playerList} setUsers={setUsers} />
           </CAccordionBody>
         </CAccordionItem>
-        <CAccordionItem itemKey={2}>
+      </CAccordion>
+      <CAccordion activeItemKey={1}>
+        <CAccordionItem itemKey={1}>
           <CAccordionHeader>
             {' '}
             <strong>Manage Articles</strong>

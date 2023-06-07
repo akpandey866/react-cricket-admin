@@ -67,6 +67,8 @@ const AddForm = (props) => {
   })
   const [startDate, setStartDate] = useState('')
   const [minEndDate, setMinEndDate] = useState(new Date())
+
+  const [minEndTime, setMinEndTime] = useState(new Date())
   const [endDate, setEndDate] = useState('')
   const [lockoutStartTime, setLockoutStartTime] = useState('')
   const [lockoutEndTime, setLockoutEndTime] = useState('')
@@ -96,7 +98,9 @@ const AddForm = (props) => {
     <>
       <CForm className="row g-3" onSubmit={formik.handleSubmit}>
         <CCol md={4}>
-          <CFormLabel htmlFor="grade">Round </CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="grade">
+            Round{' '}
+          </CFormLabel>
           <CFormInput
             placeholder="Round"
             className={
@@ -114,7 +118,9 @@ const AddForm = (props) => {
           )}
         </CCol>
         <CCol md={4}>
-          <CFormLabel htmlFor="grade">Start Date</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="grade">
+            Start Date
+          </CFormLabel>
           <CDatePicker
             date={startDate}
             defaultValue={startDate}
@@ -140,7 +146,9 @@ const AddForm = (props) => {
           )}
         </CCol>
         <CCol md={4}>
-          <CFormLabel htmlFor="grade">End Date</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="grade">
+            End Date
+          </CFormLabel>
           <CDatePicker
             date={endDate}
             defaultValue={endDate}
@@ -166,10 +174,12 @@ const AddForm = (props) => {
           )}
         </CCol>
         <CCol md={4}>
-          <CFormLabel htmlFor="grade">Start Time</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="grade">
+            Start Time
+          </CFormLabel>
           <CTimePicker
             // locale="en-US"
-            value={lockoutStartTime}
+            value={lockoutEndTime}
             seconds={false}
             // onTimeChange={handleLockoutStartTime}
             className={formik.errors.start_time && formik.touched.start_time ? 'is-invalid' : ''}
@@ -181,7 +191,7 @@ const AddForm = (props) => {
               })
               formik.setFieldValue('start_time', moment(e).format('YYYY-MM-DD'))
             }}
-            ampm={false}
+            // ampm={false}
           />
 
           {formik.errors.start_time && formik.touched.start_time && (
@@ -189,7 +199,9 @@ const AddForm = (props) => {
           )}
         </CCol>
         <CCol md={4}>
-          <CFormLabel htmlFor="grade">End Time</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="grade">
+            End Time
+          </CFormLabel>
           <CTimePicker
             className={formik.errors.end_time && formik.touched.end_time ? 'is-invalid' : ''}
             locale="en-US"
@@ -203,7 +215,7 @@ const AddForm = (props) => {
               })
               formik.setFieldValue('end_time', moment(e).format('YYYY-MM-DD'))
             }}
-            ampm={false}
+            // ampm={false}
           />
           {formik.errors.end_time && formik.touched.end_time && (
             <CFormFeedback invalid>{formik.errors.end_time}</CFormFeedback>

@@ -16,7 +16,7 @@ const User = () => {
   const [users, setUsers] = useState([])
   return (
     <CRow>
-      <CAccordion activeItemKey={2}>
+      <CAccordion activeItemKey={1} alwaysOpen>
         <CAccordionItem itemKey={1}>
           <CAccordionHeader>
             <strong>Create Member</strong>
@@ -25,9 +25,11 @@ const User = () => {
             <AddForm setUsers={setUsers} />
           </CAccordionBody>
         </CAccordionItem>
-        <CAccordionItem itemKey={2}>
+      </CAccordion>
+      <CAccordion activeItemKey={1}>
+        <CAccordionItem itemKey={1}>
           <CAccordionHeader>
-            <strong>Manage List</strong>
+            <strong>Manage Members List</strong>
           </CAccordionHeader>
           <CAccordionBody>
             <Table users={users} />

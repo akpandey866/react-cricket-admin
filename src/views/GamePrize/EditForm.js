@@ -35,8 +35,25 @@ const EditForm = (props) => {
     })
   }
   const [loader, setLoader] = useState(false)
+  const SUPPORTED_FORMATS = ['image/jpg', 'image/png', 'image/jpeg', 'image/gif']
   const validationSchema = Yup.object().shape({
-    name: Yup.string().required('Name is required'),
+    name: Yup.string().required('Name is required').max(50, '50 Character Limit is allowed.'),
+    image: Yup.mixed()
+      .nullable(true)
+      .test('fileSize', 'File size too large, max file size is 5 Mb', (file) => {
+        if (file) {
+          return file.size <= 5500000
+        } else {
+          return true
+        }
+      })
+      .test(
+        'type',
+        'Invalid file format selection',
+        (value) =>
+          // console.log(value);
+          !value || (value && SUPPORTED_FORMATS.includes(value?.type)),
+      ),
   })
   const formik = useFormik({
     initialValues: {
@@ -74,7 +91,9 @@ const EditForm = (props) => {
     <>
       <CForm className="row g-3" onSubmit={formik.handleSubmit}>
         <CCol md={12}>
-          <CFormLabel htmlFor="title">Title</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="title">
+            Prize Name
+          </CFormLabel>
           <input
             type="text"
             name="name"
@@ -82,7 +101,7 @@ const EditForm = (props) => {
               'form-control' + (formik.errors.name && formik.touched.name ? ' is-invalid' : '')
             }
             id="title"
-            placeholder="Title"
+            placeholder="Prize Name"
             defaultValue={props.prizeDetail?.title}
             onChange={formik.handleChange}
           />
@@ -92,7 +111,9 @@ const EditForm = (props) => {
         </CCol>
 
         <CCol md={12}>
-          <CFormLabel htmlFor="Entry Fee Info">About</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="Entry Fee Info">
+            Prize Description
+          </CFormLabel>
           <Editor
             toolbarHidden={false}
             editorState={description.editorState}
@@ -101,7 +122,9 @@ const EditForm = (props) => {
           />
         </CCol>
         <CCol md={12}>
-          <CFormLabel htmlFor="formFile">Prize Image</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="formFile">
+            Prize Image
+          </CFormLabel>
           <CFormInput
             type="file"
             id="formFile"

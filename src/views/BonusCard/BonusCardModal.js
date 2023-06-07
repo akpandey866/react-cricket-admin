@@ -78,7 +78,7 @@ const BonusCardModal = (props) => {
                 <strong>Bonus Card</strong>
               </CCardHeader>
               <CCardBody className="row g-3">
-                <CCol md={6}>
+                <CCol md={12}>
                   <CFormLabel htmlFor="title">Bonus Card Name</CFormLabel>
                   <input
                     type="text"
@@ -97,7 +97,7 @@ const BonusCardModal = (props) => {
                   )}
                 </CCol>
 
-                <CCol md={6}>
+                <CCol md={12}>
                   <CFormLabel htmlFor="description">Description</CFormLabel>
                   <textarea
                     name="description"
@@ -114,7 +114,7 @@ const BonusCardModal = (props) => {
                     <CFormFeedback invalid>{formik.errors.description}</CFormFeedback>
                   )}
                 </CCol>
-                <CCol md={6}>
+                <CCol md={12}>
                   <CFormLabel htmlFor="description">Players</CFormLabel>
                   <CMultiSelect
                     options={props.options}

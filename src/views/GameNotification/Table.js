@@ -36,7 +36,6 @@ const Table = (props) => {
       key: 'title',
       _style: { width: '20%' },
     },
-    { key: 'message', _style: { width: '60%' } },
     { label: 'Created On', key: 'created_at', _style: { width: '20%' } },
     {
       key: 'show_details',

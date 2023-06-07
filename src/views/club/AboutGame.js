@@ -71,11 +71,15 @@ const AboutGame = (props) => {
   return (
     <CForm className="row g-3" onSubmit={formik.handleSubmit}>
       <CCol md={6}>
-        <CFormLabel htmlFor="Timezone">Timezone *</CFormLabel>
+        <CFormLabel className="fw-bold" htmlFor="Timezone">
+          Timezone *
+        </CFormLabel>
         <TimezoneSelect value={selectedTimezone} onChange={setSelectedTimezone} name="timezone" />
       </CCol>
       <CCol md={6}>
-        <CFormLabel htmlFor="Country">Country*</CFormLabel>
+        <CFormLabel className="fw-bold" htmlFor="Country">
+          Country*
+        </CFormLabel>
         <CFormSelect
           aria-label="select country"
           name="country"
@@ -100,7 +104,9 @@ const AboutGame = (props) => {
       </CCol>
 
       <CCol md={6}>
-        <CFormLabel htmlFor="state">State *</CFormLabel>
+        <CFormLabel className="fw-bold" htmlFor="state">
+          State *
+        </CFormLabel>
         <CFormSelect
           aria-label="select state"
           name="state"
@@ -124,7 +130,9 @@ const AboutGame = (props) => {
         )}
       </CCol>
       <CCol md={6}>
-        <CFormLabel htmlFor="city">City *</CFormLabel>
+        <CFormLabel className="fw-bold" htmlFor="city">
+          City *
+        </CFormLabel>
         <CFormInput
           id="city"
           className={
@@ -139,7 +147,9 @@ const AboutGame = (props) => {
         )}
       </CCol>
       <CCol md={6}>
-        <CFormLabel htmlFor="Post Code">Post Code *</CFormLabel>
+        <CFormLabel className="fw-bold" htmlFor="Post Code">
+          Post Code *
+        </CFormLabel>
         <CFormInput
           id="post_code"
           className={

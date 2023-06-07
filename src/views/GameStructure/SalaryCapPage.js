@@ -6,9 +6,9 @@ import { useState } from 'react'
 import ToastComponent from 'src/components/common/TaostComponent'
 import InputRange from 'react-input-range'
 import 'react-input-range/lib/css/index.css'
-const SalaryCapPage = () => {
+const SalaryCapPage = (props) => {
   const [loader, setLoader] = useState(false)
-  const [rangeValue, setRangValue] = useState(100)
+
   const formik = useFormik({
     initialValues: {
       salary_type: '',
@@ -17,7 +17,7 @@ const SalaryCapPage = () => {
     enableReinitialize: true,
     // validationSchema,
     onSubmit: (data) => {
-      data.salary = rangeValue
+      data.salary = props.rangeValue
       data.type = 2
       setLoader(true)
       CommonService.editGameStructure(data)
@@ -34,7 +34,7 @@ const SalaryCapPage = () => {
     },
   })
   const handleChange = (value) => {
-    setRangValue(value)
+    props.setRangValue(value)
   }
   return (
     <>
@@ -87,8 +87,8 @@ const SalaryCapPage = () => {
               maxValue={150}
               minValue={50}
               step={1}
-              formatLabel={(value) => value.toFixed(2)}
-              value={rangeValue}
+              // formatLabel={(value) => value}
+              value={props.rangeValue}
               onChange={(value) => handleChange(value)}
               // classNames={'valueLabel:fw-bold'}
             />

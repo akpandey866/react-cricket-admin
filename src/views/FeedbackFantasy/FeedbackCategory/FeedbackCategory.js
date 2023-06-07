@@ -16,7 +16,7 @@ const FeedbackCategory = () => {
   const [users, setUsers] = useState([])
   return (
     <CRow>
-      <CAccordion alwaysOpen>
+      <CAccordion alwaysOpen activeItemKey={1}>
         <CAccordionItem itemKey={1}>
           <CAccordionHeader>
             {' '}
@@ -26,7 +26,9 @@ const FeedbackCategory = () => {
             <AddForm setUsers={setUsers} />
           </CAccordionBody>
         </CAccordionItem>
-        <CAccordionItem itemKey={2}>
+      </CAccordion>
+      <CAccordion activeItemKey={1}>
+        <CAccordionItem itemKey={1}>
           <CAccordionHeader>
             {' '}
             <strong>Manage Categories</strong>

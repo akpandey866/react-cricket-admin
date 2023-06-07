@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import {
@@ -10,11 +10,14 @@ import {
   CHeaderDivider,
   CHeaderNav,
   CHeaderToggler,
+  CButton,
 } from '@coreui/react-pro'
 import CIcon from '@coreui/icons-react'
 import {
   cilApplicationsSettings,
   cilApps,
+  cilExternalLink,
+  cilInfo,
   cilMenu,
   cilMoon,
   cilShareAlt,
@@ -27,6 +30,7 @@ import { AppHeaderDropdown, AppHeaderDropdownNotif, AppHeaderDropdownTasks } fro
 
 import { logo } from 'src/assets/brand/logo'
 import GameLinkBar from './header/GameLinkBar'
+import PageInfoModal from './PageInfoModal'
 
 const AppHeader = () => {
   const navigate = useNavigate()
@@ -47,7 +51,7 @@ const AppHeader = () => {
     : document.body.classList.remove('dark-theme')
 
   const sidebarShow = useSelector((state) => state.sidebarShow)
-
+  const [infoPageModal, setInfoPageModal] = useState(false)
   return (
     <CHeader position="sticky" className="mb-4">
       <CContainer fluid>
@@ -109,7 +113,22 @@ const AppHeader = () => {
       <CHeaderDivider />
       <CContainer fluid>
         <AppBreadcrumb />
+        <CHeaderNav className="ms-auto">
+          <CButtonGroup aria-label="Theme switch">
+            {/*  'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'dark' | 'light' | string */}
+
+            <CButton color={'warning'} onClick={() => setInfoPageModal(!infoPageModal)}>
+              <CIcon icon={cilInfo} />
+            </CButton>
+            <CButton color={'primary'}>
+              <CIcon icon={cilExternalLink} />
+            </CButton>
+          </CButtonGroup>
+        </CHeaderNav>
+        <span></span>
+        <span></span>
       </CContainer>
+      <PageInfoModal infoPageModal={infoPageModal} setInfoPageModal={setInfoPageModal} />
     </CHeader>
   )
 }

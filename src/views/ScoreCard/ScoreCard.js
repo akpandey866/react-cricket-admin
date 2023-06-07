@@ -46,8 +46,11 @@ const ScoreCard = () => {
           setLoader(false)
           setScorecardDetails(res.data)
           if (res.player_list.length <= 0) {
-            ToastComponent('Please add a minimum of 5 players to the Squad!', 'error')
-            navigate('/manage-fixtures')
+            ToastComponent(
+              'Please add a minimum of 5 players to the squad list of this fixture!',
+              'error',
+            )
+            navigate(`/manage-scores/team-players/${param.fixtureId}`)
           }
           setPlayerList(res.player_list)
           setFixtureDetails(res.fixtureDetails)
@@ -562,11 +565,7 @@ const ScoreCard = () => {
               </CCardHeader>
               <CCardBody>
                 <CRow>
-                  <CCol md={4} className="mb-4">
-                    <CFormLabel htmlFor="formFile">Upload Match Scorecard</CFormLabel>
-                    <CFormInput type="file" id="upload_video" />
-                  </CCol>
-                  <CCol md={4}>
+                  <CCol md={6}>
                     <CFormLabel htmlFor="phone">Scorecard Source</CFormLabel>
                     <input
                       type="text"
@@ -578,7 +577,7 @@ const ScoreCard = () => {
                       onChange={formik.handleChange}
                     />
                   </CCol>
-                  <CCol md={4}>
+                  <CCol md={6}>
                     <CFormLabel htmlFor="phone">Scorecard Link</CFormLabel>
                     <input
                       type="text"
@@ -590,7 +589,54 @@ const ScoreCard = () => {
                       onChange={formik.handleChange}
                     />
                   </CCol>
-                  <CCol md={4}>
+
+                  <CCol md={6}>
+                    <CFormLabel htmlFor="Entry Fee Info" className="mt-3">
+                      Fall of Wickets
+                    </CFormLabel>
+                    <CFormTextarea
+                      aria-label="With textarea"
+                      defaultValue={formik.values.fall_of_wickets}
+                      name={'fall_of_wickets'}
+                      onChange={formik.handleChange}
+                    ></CFormTextarea>
+                  </CCol>
+                  <CCol md={6}>
+                    <CFormLabel htmlFor="Add Match Report" className="mt-3">
+                      Add Match Report
+                    </CFormLabel>
+                    <CFormTextarea
+                      aria-label="With textarea"
+                      defaultValue={formik.values.match_report}
+                      name={'match_report'}
+                      onChange={formik.handleChange}
+                    ></CFormTextarea>
+                  </CCol>
+                  <CCol md={6} className="mb-4">
+                    <CFormLabel htmlFor="formFile" className="mt-3">
+                      Upload Match Scorecard
+                    </CFormLabel>
+                    <CFormInput type="file" id="upload_video" />
+                  </CCol>
+                </CRow>
+              </CCardBody>
+            </CCard>
+            <CompleteMarkModal visible={visible} setVisible={setVisible} />
+
+            <MarkAsCompleteModal
+              completMarkModalVisible={completMarkModalVisible}
+              setCompletMarkModalVisible={setCompletMarkModalVisible}
+              data={completeMarkModalData}
+            />
+          </CCol>
+          <CCol xs={12}>
+            <CCard className="mb-6">
+              <CCardHeader>
+                <strong>Bonus Points</strong>
+              </CCardHeader>
+              <CCardBody>
+                <CRow>
+                  <CCol md={6}>
                     <CFormLabel htmlFor="player_of_the_match">Player Of The Match</CFormLabel>
 
                     <CMultiSelect
@@ -602,7 +648,7 @@ const ScoreCard = () => {
                       value={playerList.filter((obj) => selectedValue.includes(obj.value))}
                     />
                   </CCol>
-                  <CCol md={4}>
+                  <CCol md={6}>
                     <CFormLabel htmlFor="Match Result">Match Result</CFormLabel>
                     <CFormSelect
                       id="potm_match_status"
@@ -614,38 +660,25 @@ const ScoreCard = () => {
                       <option value="2">Other</option>
                     </CFormSelect>
                   </CCol>
-                  <CCol md={4}>
-                    <CFormLabel htmlFor="Entry Fee Info">Fall of Wickets</CFormLabel>
-                    <CFormTextarea
-                      aria-label="With textarea"
-                      defaultValue={formik.values.fall_of_wickets}
-                      name={'fall_of_wickets'}
-                      onChange={formik.handleChange}
-                    ></CFormTextarea>
-                  </CCol>
-                  <CCol md={4}>
-                    <CFormLabel htmlFor="Add Match Report">Add Match Report</CFormLabel>
-                    <CFormTextarea
-                      aria-label="With textarea"
-                      defaultValue={formik.values.match_report}
-                      name={'match_report'}
-                      onChange={formik.handleChange}
-                    ></CFormTextarea>
-                  </CCol>
-                  <CCol md={6}></CCol>
-                  <CCol md={4}>
-                    <CLoadingButton
-                      type="submit"
-                      color="success"
-                      variant="outline"
-                      loading={loader}
-                      className="mt-3"
-                    >
-                      Submit
-                    </CLoadingButton>
-                  </CCol>
-                  <CCol md={6}></CCol>
-                  <CCol md={4}>
+                </CRow>
+              </CCardBody>
+            </CCard>
+            <CompleteMarkModal visible={visible} setVisible={setVisible} />
+
+            <MarkAsCompleteModal
+              completMarkModalVisible={completMarkModalVisible}
+              setCompletMarkModalVisible={setCompletMarkModalVisible}
+              data={completeMarkModalData}
+            />
+          </CCol>
+          <CCol xs={12}>
+            <CCard className="mb-4 mt-3">
+              <CCardHeader>
+                <strong>Match Status</strong>
+              </CCardHeader>
+              <CCardBody>
+                <CRow>
+                  <CCol md={6}>
                     {' '}
                     <CFormLabel htmlFor="Add Match Report" className="mr-1 mt-3">
                       Match Status
@@ -670,6 +703,18 @@ const ScoreCard = () => {
                       <option value={2}>In-Progress</option>
                       <option value={3}>Completed</option>
                     </CFormSelect>
+                  </CCol>
+                  <CCol md={6}></CCol>
+                  <CCol md={6}>
+                    <CLoadingButton
+                      type="submit"
+                      color="success"
+                      variant="outline"
+                      loading={loader}
+                      className="mt-3"
+                    >
+                      Submit
+                    </CLoadingButton>
                   </CCol>
                 </CRow>
               </CCardBody>

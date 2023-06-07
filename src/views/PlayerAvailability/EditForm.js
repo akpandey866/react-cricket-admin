@@ -79,7 +79,9 @@ const EditForm = (props) => {
     <>
       <CForm className="row g-3" onSubmit={formik.handleSubmit}>
         <CCol md={6}>
-          <CFormLabel htmlFor="Reason">Reason *</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="Reason">
+            Reason *
+          </CFormLabel>
           <CFormInput
             placeholder="Reason"
             className={
@@ -95,7 +97,9 @@ const EditForm = (props) => {
           )}
         </CCol>
         <CCol md={6}>
-          <CFormLabel htmlFor="grade">Unavailable From*</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="grade">
+            Unavailable From*
+          </CFormLabel>
           <CDatePicker
             date={props?.avData.date_from}
             defaultValue={props.avData?.date_from}
@@ -119,7 +123,9 @@ const EditForm = (props) => {
           )}
         </CCol>
         <CCol md={6}>
-          <CFormLabel htmlFor="grade">Unavailable Till*</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="grade">
+            Unavailable Till*
+          </CFormLabel>
           <CDatePicker
             date={props.dateTill}
             locale="en-US"

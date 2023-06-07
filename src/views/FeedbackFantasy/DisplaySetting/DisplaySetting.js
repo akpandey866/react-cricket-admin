@@ -71,7 +71,9 @@ const DisplaySetting = (props) => {
         <CAccordionBody>
           <CForm className="row g-3" onSubmit={formik.handleSubmit}>
             <CCol md={6}>
-              <CFormLabel htmlFor="display_view">Set Your Lobby View</CFormLabel>
+              <CFormLabel className="fw-bold" htmlFor="display_view">
+                Set Your Lobby View
+              </CFormLabel>
               {!loading && (
                 <CFormSelect
                   aria-label="select your view"

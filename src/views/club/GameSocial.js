@@ -46,41 +46,62 @@ const GameSocial = (props) => {
   return (
     <CForm className="row g-3" onSubmit={formik.handleSubmit}>
       <CCol md={6}>
-        <CFormLabel htmlFor="Facebook">Facebook URL</CFormLabel>
+        <CFormLabel className="fw-bold" htmlFor="Facebook">
+          Facebook
+        </CFormLabel>
         <CFormInput
           id="facebook"
           defaultValue={formik.values.facebook}
           name="facebook"
           onChange={formik.handleChange}
         />
+
+        <small>
+          <i> (Ex: https://www.facebook.com/myclubtap)</i>
+        </small>
       </CCol>
       <CCol md={6}>
-        <CFormLabel htmlFor="Twitter">Twitter URL</CFormLabel>
+        <CFormLabel className="fw-bold" htmlFor="Twitter">
+          Twitter
+        </CFormLabel>
         <CFormInput
           id="twitter"
           defaultValue={formik.values.twitter}
           name="twitter"
           onChange={formik.handleChange}
         />
+        <small>
+          <i> (Ex: https://www.twitter.com/myclubtap)</i>
+        </small>
       </CCol>
 
       <CCol md={6}>
-        <CFormLabel htmlFor="Instagram">Instagram URL</CFormLabel>
+        <CFormLabel className="fw-bold" htmlFor="Instagram">
+          Instagram
+        </CFormLabel>
         <CFormInput
           id="instagram"
           defaultValue={formik.values.instagram}
           name="instagram"
           onChange={formik.handleChange}
         />
+        <small>
+          <i> (Ex: https://www.instagram.com/myclubtap)</i>
+        </small>
       </CCol>
       <CCol md={6}>
-        <CFormLabel htmlFor="Website">Website URL</CFormLabel>
+        <CFormLabel className="fw-bold" htmlFor="Website">
+          Website
+        </CFormLabel>
         <CFormInput
           id="website"
           defaultValue={formik.values.website}
           name="website"
           onChange={formik.handleChange}
         />
+        <small>
+          <i> (Ex: https://www.myclubtap.com)</i>
+        </small>
       </CCol>
 
       <CCol md={6}>

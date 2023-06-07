@@ -67,7 +67,9 @@ const EditForm = (props) => {
     <>
       <CForm className="row g-3" onSubmit={formik.handleSubmit}>
         <CCol md={6}>
-          <CFormLabel htmlFor="first_name">First Name</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="first_name">
+            First Name
+          </CFormLabel>
           <input
             type="text"
             name="first_name"
@@ -85,7 +87,9 @@ const EditForm = (props) => {
           )}
         </CCol>
         <CCol md={6}>
-          <CFormLabel htmlFor="last_name">Last Name</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="last_name">
+            Last Name
+          </CFormLabel>
           <input
             type="text"
             name="last_name"
@@ -103,7 +107,9 @@ const EditForm = (props) => {
           )}
         </CCol>
         <CCol md={6}>
-          <CFormLabel htmlFor="email">Email</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="email">
+            Email
+          </CFormLabel>
           <CFormInput
             placeholder="Email"
             className={

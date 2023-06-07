@@ -14,6 +14,7 @@ import moment from 'moment'
 import ToastComponent from 'src/components/common/TaostComponent.js'
 import RoundService from 'src/service/RoundService'
 import EditForm from './EditForm'
+import Notify from '../Notify'
 const Table = (props) => {
   const [loading, setLoading] = useState()
   const [visibleHorizontal, setVisibleHorizontal] = useState(false)
@@ -25,6 +26,27 @@ const Table = (props) => {
   const [selectedId, setSelectedId] = useState(0)
   const [users, setUsers] = useState(props.users)
   const [details, setDetails] = useState([])
+
+  // Are you sure want modal
+  const [handleYes, setHandleYes] = useState(false)
+  const [showConfirm, setShowConfirm] = useState(false)
+  const [handleNo, setHandleNo] = useState(false)
+  const [tableId, setTableId] = useState(false)
+
+  const handleCancel = () => {
+    console.log('You clicked No!')
+    return setShowConfirm(false)
+  }
+
+  const handleConfirm = () => {
+    deleteRound(tableId)
+    return setShowConfirm(false)
+  }
+  const areYouSureModal = (id) => {
+    setShowConfirm(true)
+    setTableId(id)
+  }
+
   const columns = [
     {
       key: 'round',
@@ -150,7 +172,8 @@ const Table = (props) => {
                     size="sm"
                     color="danger"
                     className="ml-3"
-                    onClick={() => deleteRound(item.id)}
+                    // onClick={() => deleteRound(item.id)}
+                    onClick={() => areYouSureModal(item.id)}
                   >
                     Delete
                   </CButton>
@@ -199,6 +222,17 @@ const Table = (props) => {
           setItemsPerPage(itemsPerPage)
         }}
         onSorterChange={(sorter) => setColumnSorter(sorter)}
+      />
+      <Notify
+        setShowConfirm={setShowConfirm}
+        showConfirm={showConfirm}
+        setHandleNo={setHandleNo}
+        handleNo={handleNo}
+        handleYes={handleYes}
+        setHandleYes={setHandleYes}
+        handleConfirm={handleConfirm}
+        handleCancel={handleCancel}
+        text="Are you sure you want to delete this?"
       />
     </>
   )

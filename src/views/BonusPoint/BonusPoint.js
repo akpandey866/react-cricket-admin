@@ -34,7 +34,7 @@ const BonusPoint = () => {
 
   return (
     <CRow>
-      <CAccordion activeItemKey={2}>
+      <CAccordion activeItemKey={1}>
         <CAccordionItem itemKey={1}>
           <CAccordionHeader>
             {' '}
@@ -49,7 +49,9 @@ const BonusPoint = () => {
             />
           </CAccordionBody>
         </CAccordionItem>
-        <CAccordionItem itemKey={2}>
+      </CAccordion>
+      <CAccordion activeItemKey={1}>
+        <CAccordionItem itemKey={1}>
           <CAccordionHeader>
             {' '}
             <strong>Bonus for Match Winners</strong>

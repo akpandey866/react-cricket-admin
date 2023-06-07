@@ -10,8 +10,8 @@ const deleteTeamPlayer = async (playerId, fixtureId) => {
   const response = await agent.get(`${API_URL}delete-team-player/${playerId}/${fixtureId}`)
   return response.data
 }
-const teamPlayerListing = async () => {
-  const response = await agent.get(`${API_URL}team-player-listing`)
+const teamPlayerListing = async (fixtureId) => {
+  const response = await agent.get(`${API_URL}team-player-listing/${fixtureId}`)
   return response.data
 }
 
@@ -22,6 +22,10 @@ const addInstantPlayer = async (playerId, fixtureId) => {
 
 const saveMultiPlayer = async (data) => {
   const response = await agent.post(`${API_URL}save-multi-team-player`, data)
+  return response.data
+}
+const deleteSquad = async (fixtureId) => {
+  const response = await agent.get(`${API_URL}delete-squad/${fixtureId}`)
   return response.data
 }
 
@@ -36,6 +40,7 @@ const TeamPlayerService = {
   getPickedPlayer,
   addInstantPlayer,
   saveMultiPlayer,
+  deleteSquad,
 }
 
 export default TeamPlayerService

@@ -34,7 +34,7 @@ const AddForm = (props) => {
   const [loader, setLoader] = useState(false)
   const SUPPORTED_FORMATS = ['image/jpg', 'image/png', 'image/jpeg', 'image/gif']
   const validationSchema = Yup.object().shape({
-    name: Yup.string().required('Grade is required'),
+    name: Yup.string().required('Name is required').max(50, '50 Character Limit is allowed.'),
     image: Yup.mixed()
       .nullable()
       .required('Required Field')
@@ -84,9 +84,11 @@ const AddForm = (props) => {
     <>
       <CForm className="row g-3" onSubmit={formik.handleSubmit}>
         <CCol md={12}>
-          <CFormLabel htmlFor="name">Title</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="name">
+            Prize Name
+          </CFormLabel>
           <CFormInput
-            placeholder="Title"
+            placeholder="Prize Name"
             className={
               'form-control' + (formik.errors.name && formik.touched.name ? ' is-invalid' : '')
             }
@@ -100,7 +102,9 @@ const AddForm = (props) => {
           )}
         </CCol>
         <CCol md={12}>
-          <CFormLabel htmlFor="Entry Fee Info">Description</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="Entry Fee Info">
+            Prize Description
+          </CFormLabel>
           <Editor
             toolbarHidden={false}
             editorState={description.editorState}
@@ -109,7 +113,9 @@ const AddForm = (props) => {
           />
         </CCol>
         <CCol md={12}>
-          <CFormLabel htmlFor="formFile">Prize Image</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="formFile">
+            Prize Image
+          </CFormLabel>
           <CFormInput
             type="file"
             id="formFile"

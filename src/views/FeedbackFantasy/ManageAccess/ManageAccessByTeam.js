@@ -38,7 +38,7 @@ const ManageAccessByTeam = () => {
   }, [])
   return (
     <CRow>
-      <CAccordion activeItemKey={2}>
+      <CAccordion activeItemKey={1} alwaysOpen>
         <CAccordionItem itemKey={1}>
           <CAccordionHeader>
             {' '}
@@ -55,7 +55,9 @@ const ManageAccessByTeam = () => {
             />
           </CAccordionBody>
         </CAccordionItem>
-        <CAccordionItem itemKey={2}>
+      </CAccordion>
+      <CAccordion activeItemKey={1}>
+        <CAccordionItem itemKey={1}>
           <CAccordionHeader>
             {' '}
             <strong>Manage Access By Teams</strong>

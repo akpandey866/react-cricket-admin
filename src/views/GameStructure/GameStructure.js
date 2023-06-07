@@ -6,6 +6,7 @@ import {
   CAccordionHeader,
   CAccordionBody,
   CWidgetStatsC,
+  CBadge,
 } from '@coreui/react-pro'
 import Tab from 'react-bootstrap/Tab'
 import Tabs from 'react-bootstrap/Tabs'
@@ -23,25 +24,22 @@ import PlayerStructure from '../Player/PlayerStructure/PlayerStructure'
 import GamePrivacy from './GamePrivacy'
 import CIcon from '@coreui/icons-react'
 import {
-  cilBasket,
-  cilChartPie,
   cilDollar,
   cilGroup,
-  cilLockLocked,
   cilLockUnlocked,
-  cilPeople,
-  cilSpeech,
-  cilSpeedometer,
   cilStar,
   cilStarHalf,
   cilTransfer,
-  cilUserFollow,
 } from '@coreui/icons'
+import { useMemo } from 'react'
 
 const GameStructure = () => {
   const [key, setKey] = useState('home')
   const [gameSpotData, setGameSpotData] = useState({})
-  const [gameStuctureData, setGameStructureData] = useState('')
+  const [savedSalaryCap, setSavedSalaryCap] = useState('')
+  const [rangeValue, setRangValue] = useState(100)
+
+  const [gameStuctureData, setGameStructureData] = useState()
   const [playerStructuredetails, setPlayerStructureDetails] = useState({})
   const [gameprivacy, setGamePrivacy] = useState({})
   useEffect(() => {
@@ -51,14 +49,18 @@ const GameStructure = () => {
           setGameSpotData(res.game_spot)
           setGameStructureData(res.game_structure)
           setPlayerStructureDetails(res.multiplayer_data)
+          setRangValue(res.multiplayer_data.salary)
+          setSavedSalaryCap(res.multiplayer_data.salary)
           setGamePrivacy(res.game_privacy)
         }
       })
       .catch((e) => {
         console.log('E=> ', e)
-        ToastComponent(e.response?.data?.message, 'error')
+        ToastComponent('Something went wron.Please try again', 'error')
       })
   }, [])
+  var boxTeamSize = { 8: '6', 7: '7', 6: '8', 5: '9', 1: '10', 1002: '11' }
+  console.log('salary cap is here', savedSalaryCap)
   return (
     <>
       <CRow>
@@ -66,8 +68,8 @@ const GameStructure = () => {
           <CWidgetStatsC
             color="info-gradient"
             icon={<CIcon icon={cilGroup} height={36} />}
-            value="11"
-            title="Team Structure"
+            value={gameStuctureData && boxTeamSize[gameStuctureData]}
+            title="Team Size"
             inverse
             progress={{ value: 75 }}
             className="mb-4"
@@ -77,7 +79,7 @@ const GameStructure = () => {
           <CWidgetStatsC
             color="success"
             icon={<CIcon icon={cilDollar} height={36} />}
-            value="$385m"
+            value={`$${playerStructuredetails.salary}m`}
             title="Salary Cap"
             inverse
             progress={{ value: 75 }}
@@ -89,7 +91,7 @@ const GameStructure = () => {
             color="warning-gradient"
             icon={<CIcon icon={cilTransfer} height={36} />}
             value="20"
-            title="Trade Allowed"
+            title="Transfers"
             inverse
             progress={{ value: 75 }}
             className="mb-4"
@@ -99,7 +101,7 @@ const GameStructure = () => {
           <CWidgetStatsC
             color="primary-gradient"
             icon={<CIcon icon={cilLockUnlocked} height={36} />}
-            value="Public"
+            value={gameprivacy?.game_visibility === 2 ? 'Private' : 'Public'}
             title="Visibility"
             inverse
             progress={{ value: 75 }}
@@ -130,11 +132,11 @@ const GameStructure = () => {
         </CCol>
       </CRow>
       <CRow>
-        <CAccordion activeItemKey={2}>
+        <CAccordion activeItemKey={1} alwaysOpen>
           <CAccordionItem itemKey={1}>
             <CAccordionHeader>
               {' '}
-              <strong>Team Structure</strong>
+              <strong>Team Size</strong>
             </CAccordionHeader>
             <CAccordionBody>
               <GameStrucurePage
@@ -144,9 +146,13 @@ const GameStructure = () => {
               />
             </CAccordionBody>
           </CAccordionItem>
-          <CAccordionItem itemKey={2}>
+        </CAccordion>
+        <CAccordion activeItemKey={1}>
+          <CAccordionItem itemKey={1}>
             <CAccordionHeader>
-              <strong>Player Structure</strong>
+              <strong>
+                Player Limits for Team Size ({playerStructuredetails?.player_allowed})
+              </strong>
             </CAccordionHeader>
             <CAccordionBody>
               <PlayerStructure
@@ -155,28 +161,39 @@ const GameStructure = () => {
               />
             </CAccordionBody>
           </CAccordionItem>
-          <CAccordionItem itemKey={3}>
+        </CAccordion>
+        <CAccordion activeItemKey={1}>
+          <CAccordionItem itemKey={1}>
             <CAccordionHeader>
               <strong>Salary Cap ($m) </strong>
             </CAccordionHeader>
             <CAccordionBody>
-              <SalaryCapPage />
+              {' '}
+              <SalaryCapPage
+                rangeValue={rangeValue}
+                setRangValue={setRangValue}
+                savedSalaryCap={playerStructuredetails.salary}
+              />
             </CAccordionBody>
           </CAccordionItem>
-          <CAccordionItem itemKey={4}>
+        </CAccordion>
+        <CAccordion activeItemKey={1}>
+          <CAccordionItem itemKey={1}>
             <CAccordionHeader>
-              <strong>Trade Allowed</strong>
+              <strong>Transfers</strong>
             </CAccordionHeader>
             <CAccordionBody>
               <Trade />
             </CAccordionBody>
           </CAccordionItem>
-          <CAccordionItem itemKey={4}>
+        </CAccordion>
+        <CAccordion activeItemKey={1}>
+          <CAccordionItem itemKey={1}>
             <CAccordionHeader>
-              <strong>Game Privacy</strong>
+              <strong>Game Privacy </strong>
             </CAccordionHeader>
             <CAccordionBody>
-              <GamePrivacy gameprivacy={gameprivacy} />
+              <GamePrivacy gameprivacy={gameprivacy} setGamePrivacy={setGamePrivacy} />
             </CAccordionBody>
           </CAccordionItem>
         </CAccordion>

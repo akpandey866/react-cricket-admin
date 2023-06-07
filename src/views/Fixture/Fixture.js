@@ -32,20 +32,22 @@ const Fixture = () => {
   }, [])
   return (
     <CRow>
-      <CAccordion activeItemKey={2}>
+      <CAccordion activeItemKey={1} alwaysOpen>
         <CAccordionItem itemKey={1}>
           <CAccordionHeader>
             {' '}
-            <strong>Create Fixture</strong>
+            <strong>Create Fixtures</strong>
           </CAccordionHeader>
           <CAccordionBody>
             <AddForm />
           </CAccordionBody>
         </CAccordionItem>
-        <CAccordionItem itemKey={2}>
+      </CAccordion>
+      <CAccordion activeItemKey={1}>
+        <CAccordionItem itemKey={1}>
           <CAccordionHeader>
             {' '}
-            <strong>Manage Fixtures List</strong>
+            <strong>Manage Fixtures</strong>
           </CAccordionHeader>
           <CAccordionBody>
             <Table displayDetails={displayDetails} setDisplayDetails={setDisplayDetails} />

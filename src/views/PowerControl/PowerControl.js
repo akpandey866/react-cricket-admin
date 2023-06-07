@@ -47,7 +47,7 @@ const PowerControl = () => {
 
   return (
     <CRow>
-      <CAccordion activeItemKey={2}>
+      <CAccordion activeItemKey={1} alwaysOpen>
         <CAccordionItem itemKey={1}>
           <CAccordionHeader>
             {' '}
@@ -64,7 +64,9 @@ const PowerControl = () => {
             />
           </CAccordionBody>
         </CAccordionItem>
-        <CAccordionItem itemKey={2}>
+      </CAccordion>
+      <CAccordion activeItemKey={1}>
+        <CAccordionItem itemKey={1}>
           <CAccordionHeader>
             {' '}
             <strong>12th Man</strong>
@@ -80,7 +82,9 @@ const PowerControl = () => {
             />
           </CAccordionBody>
         </CAccordionItem>
-        <CAccordionItem itemKey={3}>
+      </CAccordion>
+      <CAccordion activeItemKey={1}>
+        <CAccordionItem itemKey={1}>
           <CAccordionHeader>
             {' '}
             <strong>Dealer</strong>
@@ -96,7 +100,9 @@ const PowerControl = () => {
             />
           </CAccordionBody>
         </CAccordionItem>
-        <CAccordionItem itemKey={4}>
+      </CAccordion>
+      <CAccordion activeItemKey={1}>
+        <CAccordionItem itemKey={1}>
           <CAccordionHeader>
             {' '}
             <strong>Flipper</strong>

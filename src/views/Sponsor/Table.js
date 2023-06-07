@@ -16,6 +16,7 @@ import SponsorService from 'src/service/SponsorService'
 import EditForm from './EditForm'
 import Helper from '../Helper'
 import { useNavigate } from 'react-router-dom'
+import Notify from '../Notify'
 const Table = (props) => {
   const [loading, setLoading] = useState()
   const [visibleHorizontal, setVisibleHorizontal] = useState(false)
@@ -25,7 +26,7 @@ const Table = (props) => {
   const [itemsPerPage, setItemsPerPage] = useState(10)
   const [selectedId, setSelectedId] = useState(0)
   const [users, setUsers] = useState([])
-
+  const [value, setValue] = useState('')
   const [details, setDetails] = useState([])
   const columns = [
     {
@@ -55,7 +56,7 @@ const Table = (props) => {
     }
   }
   const toggleDetails = (index) => {
-    setSelectedId(index)
+    // setSelectedId(index)
     const position = details.indexOf(index)
     let newDetails = details.slice()
     if (position !== -1) {
@@ -105,17 +106,8 @@ const Table = (props) => {
       })
   }, [activePage, columnFilter, columnSorter, itemsPerPage, props])
 
-  const [sponsorDetail, setSponsorDetail] = useState({})
   const handleEdit = (id) => {
-    SponsorService.getSponsorDetail(id)
-      .then((res) => {
-        if (res.status === 200) {
-          setSponsorDetail(res.data)
-        }
-      })
-      .catch((e) => {
-        console.log('Catch Block', e)
-      })
+    setSelectedId(id)
   }
   const handleFeaturedUnfeatured = (id, status) => {
     SponsorService.updateFeatured(id, status)
@@ -152,6 +144,25 @@ const Table = (props) => {
       .catch((e) => {
         console.log('Catch Block', e)
       })
+  }
+  // Are you sure want modal
+  const [handleYes, setHandleYes] = useState(false)
+  const [showConfirm, setShowConfirm] = useState(false)
+  const [handleNo, setHandleNo] = useState(false)
+  const [tableId, setTableId] = useState(false)
+
+  const handleCancel = () => {
+    console.log('You clicked No!')
+    return setShowConfirm(false)
+  }
+
+  const handleConfirm = () => {
+    deleteSponsor(tableId)
+    return setShowConfirm(false)
+  }
+  const areYouSureModal = (id) => {
+    setShowConfirm(true)
+    setTableId(id)
   }
   return (
     <>
@@ -224,7 +235,7 @@ const Table = (props) => {
                     size="sm"
                     color="danger"
                     className="ml-1"
-                    onClick={() => deleteSponsor(item.id)}
+                    onClick={() => areYouSureModal(item.id)}
                   >
                     Delete
                   </CButton>
@@ -279,7 +290,8 @@ const Table = (props) => {
                           selectedId={selectedId}
                           visibleHorizontal={visibleHorizontal}
                           setUsers={setUsers}
-                          sponsorDetail={sponsorDetail}
+                          setValue={setValue}
+                          value={value}
                         />
                       </CCardBody>
                     </CCard>
@@ -314,6 +326,17 @@ const Table = (props) => {
           setItemsPerPage(itemsPerPage)
         }}
         onSorterChange={(sorter) => setColumnSorter(sorter)}
+      />
+      <Notify
+        setShowConfirm={setShowConfirm}
+        showConfirm={showConfirm}
+        setHandleNo={setHandleNo}
+        handleNo={handleNo}
+        handleYes={handleYes}
+        setHandleYes={setHandleYes}
+        handleConfirm={handleConfirm}
+        handleCancel={handleCancel}
+        text="Are you sure you want to delete this?"
       />
     </>
   )

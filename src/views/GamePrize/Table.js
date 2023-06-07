@@ -15,6 +15,7 @@ import GamePrizeService from 'src/service/GamePrizeService'
 import EditForm from './EditForm'
 import Helper from '../Helper'
 import { useNavigate } from 'react-router-dom'
+import Notify from '../Notify'
 const Table = (props) => {
   const [loading, setLoading] = useState()
   const [visibleHorizontal, setVisibleHorizontal] = useState(false)
@@ -27,13 +28,7 @@ const Table = (props) => {
 
   const [details, setDetails] = useState([])
   const columns = [
-    {
-      label: 'Image',
-      key: 'image',
-      filter: false,
-      sorter: false,
-    },
-    { key: 'title' },
+    { key: 'title', label: 'Prize Name' },
     { label: 'Status', filter: false, key: 'is_active', _style: { width: '20%' } },
     {
       key: 'show_details',
@@ -152,6 +147,26 @@ const Table = (props) => {
         console.log('Catch Block', e)
       })
   }
+  // Are you sure want modal
+  const [handleYes, setHandleYes] = useState(false)
+  const [showConfirm, setShowConfirm] = useState(false)
+  const [handleNo, setHandleNo] = useState(false)
+  const [tableId, setTableId] = useState(false)
+
+  const handleCancel = () => {
+    console.log('You clicked No!')
+    return setShowConfirm(false)
+  }
+
+  const handleConfirm = () => {
+    deleteSponsor(tableId)
+    return setShowConfirm(false)
+  }
+  const areYouSureModal = (id) => {
+    setShowConfirm(true)
+    setTableId(id)
+  }
+
   return (
     <>
       <CSmartTable
@@ -223,7 +238,7 @@ const Table = (props) => {
                     size="sm"
                     color="danger"
                     className="ml-1"
-                    onClick={() => deleteSponsor(item.id)}
+                    onClick={() => areYouSureModal(item.id)}
                   >
                     Delete
                   </CButton>
@@ -313,6 +328,17 @@ const Table = (props) => {
           setItemsPerPage(itemsPerPage)
         }}
         onSorterChange={(sorter) => setColumnSorter(sorter)}
+      />
+      <Notify
+        setShowConfirm={setShowConfirm}
+        showConfirm={showConfirm}
+        setHandleNo={setHandleNo}
+        handleNo={handleNo}
+        handleYes={handleYes}
+        setHandleYes={setHandleYes}
+        handleConfirm={handleConfirm}
+        handleCancel={handleCancel}
+        text="Are you sure you want to delete this?"
       />
     </>
   )

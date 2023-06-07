@@ -13,14 +13,12 @@ import React, { useEffect, useState } from 'react'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import FixtureService from 'src/service/FixtureService'
-import GradeService from 'src/service/GradeService'
 import TeamService from 'src/service/TeamService'
 import { useNavigate } from 'react-router-dom'
 import ToastComponent from 'src/components/common/TaostComponent'
 const AddForm = (props) => {
   const navigate = useNavigate()
   const [loader, setLoader] = useState(false)
-  const [gradeList, setGradeList] = useState()
   const [matchTypeList, setMatchTypeList] = useState()
   const [startDate, setStartDate] = useState('')
   const [endDate, setEndDate] = useState('')
@@ -29,33 +27,28 @@ const AddForm = (props) => {
   const [teamList, setTeamList] = useState([])
 
   const validationSchema = Yup.object().shape({
-    grade: Yup.string().required('Grade is required'),
-    // start_date: Yup.date().nullable(),
-    ///team: Yup.string().required('Team is required'),
-    //match_type: Yup.string().required('Match Type is required'),
-    start_date: Yup.string().nullable().required('Start Date is required'),
+    team: Yup.string().required('Team is required'),
+    //start_date: Yup.string().nullable().required('Start Date is required'),
     //end_date: Yup.string().required('End Date is required'),
   })
 
   useEffect(() => {
     setLoader(true)
-    GradeService.gradeData()
+    TeamService.getTeamListByGrade()
       .then((res) => {
         if (res.status === 200) {
           setLoader(false)
-          setGradeList(res.data)
+          setTeamList(res.data)
           setMatchTypeList(res.matchTypeList)
         }
       })
       .catch((e) => {
-        ToastComponent(e.response?.data?.message, 'error')
+        ToastComponent('Something went wrong. Please try again.', 'error')
         setLoader(false)
-        ToastComponent(e.response?.data?.message, 'error')
       })
   }, [props.visibleHorizontal])
   const formik = useFormik({
     initialValues: {
-      grade: '',
       team: '',
       match_type: '',
       start_date: '',
@@ -70,8 +63,6 @@ const AddForm = (props) => {
     onSubmit: (data, actions) => {
       data.start_date = startDate
       data.end_date = endDate
-      console.log('vlaues', data)
-      return false
       // actions.resetForm({
       //   values: {
       //     grade: '',
@@ -83,7 +74,7 @@ const AddForm = (props) => {
           if (res.status === 200) {
             ToastComponent(res.message, 'success')
             setLoader(false)
-            navigate('/fixtures')
+            navigate('/create-fixtures')
           } else {
             setLoader(false)
             ToastComponent(res.message, 'error')
@@ -96,15 +87,6 @@ const AddForm = (props) => {
         })
     },
   })
-  const handleChange = (e) => {
-    const gradeId = e.target.value
-
-    TeamService.getTeamListByGrade(gradeId).then((res) => {
-      if (res.status === 200) {
-        setTeamList(res.data)
-      }
-    })
-  }
   const handleStartDate = (event) => {
     const dateFormat = moment(event).format('YYYY-MM-DD')
     setStartDate(dateFormat)
@@ -115,7 +97,6 @@ const AddForm = (props) => {
   }
   const handleStartTime = (event) => {
     const dateFormat = moment(event, 'hh:mm A').format('HH:mm')
-    console.log('start time', dateFormat)
     setStartTime(dateFormat)
   }
   const handleEndTime = (event) => {
@@ -126,35 +107,9 @@ const AddForm = (props) => {
     <>
       <CForm className="row g-3" onSubmit={formik.handleSubmit}>
         <CCol md={3}>
-          <CFormLabel htmlFor="grade">Comp *</CFormLabel>
-          <CFormSelect
-            aria-label="Select Comp"
-            name="grade"
-            className={
-              'form-control' + (formik.errors.grade && formik.touched.grade ? ' is-invalid' : '')
-            }
-            defaultValue={480}
-            onChange={(e) => {
-              formik.handleChange(e)
-              handleChange(e)
-            }}
-            // onChange={formik.handleChange}
-            id="grade"
-          >
-            <option value="0">Select Comp</option>
-            {gradeList &&
-              gradeList.map((item, key) => (
-                <option value={item?.id} key={key}>
-                  {item?.grade}
-                </option>
-              ))}
-          </CFormSelect>
-          {formik.errors.grade && formik.touched.grade && (
-            <CFormFeedback invalid>{formik.errors.grade}</CFormFeedback>
-          )}
-        </CCol>
-        <CCol md={3}>
-          <CFormLabel htmlFor="team">Team *</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="team">
+            Team *
+          </CFormLabel>
           <CFormSelect
             aria-label="Select Team"
             name="team"
@@ -173,12 +128,14 @@ const AddForm = (props) => {
                 </option>
               ))}
           </CFormSelect>
-          {formik.errors.grade && formik.touched.grade && (
-            <CFormFeedback invalid>{formik.errors.grade}</CFormFeedback>
+          {formik.errors.team && formik.touched.team && (
+            <CFormFeedback invalid>{formik.errors.team}</CFormFeedback>
           )}
         </CCol>
         <CCol md={3}>
-          <CFormLabel htmlFor="team">Match Type *</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="team">
+            Match Type *
+          </CFormLabel>
           <CFormSelect
             aria-label="Select Match Type"
             name="match_type"
@@ -203,7 +160,9 @@ const AddForm = (props) => {
           )}
         </CCol>
         <CCol md={3}>
-          <CFormLabel htmlFor="Start Date">Start Date *</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="Start Date">
+            Start Date *
+          </CFormLabel>
           <CDatePicker
             locale="en-US"
             name="start_date"
@@ -219,7 +178,9 @@ const AddForm = (props) => {
           )}
         </CCol>
         <CCol md={3}>
-          <CFormLabel htmlFor="End Date">End Date *</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="End Date">
+            End Date *
+          </CFormLabel>
           <CDatePicker
             locale="en-US"
             name="end_date"
@@ -235,7 +196,9 @@ const AddForm = (props) => {
           )}
         </CCol>
         <CCol md={3}>
-          <CFormLabel htmlFor="start_time">Start Time *</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="start_time">
+            Start Time *
+          </CFormLabel>
           <CTimePicker
             locale="en-US"
             ampm={false}
@@ -253,7 +216,9 @@ const AddForm = (props) => {
           )}
         </CCol>
         <CCol md={3}>
-          <CFormLabel htmlFor="endTime">End Time *</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="endTime">
+            End Time *
+          </CFormLabel>
           <CTimePicker
             locale="en-US"
             time={endTime}
@@ -270,7 +235,9 @@ const AddForm = (props) => {
           )}
         </CCol>
         <CCol md={3}>
-          <CFormLabel htmlFor="alast_name">Venue</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="alast_name">
+            Venue
+          </CFormLabel>
           <input
             type="text"
             name="vanue"
@@ -287,7 +254,9 @@ const AddForm = (props) => {
           )}
         </CCol>
         <CCol md={3}>
-          <CFormLabel htmlFor="alast_name">Opponent</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="alast_name">
+            Opponent
+          </CFormLabel>
           <input
             type="text"
             name="opposition_club"
@@ -304,10 +273,8 @@ const AddForm = (props) => {
             <CFormFeedback invalid>{formik.errors.opposition_club}</CFormFeedback>
           )}
         </CCol>
-        <CCol md={3}></CCol>
-        <CCol md={3}></CCol>
-        <CCol md={3}></CCol>
-        <CCol md={3}>
+
+        <CCol md={6}>
           <CLoadingButton type="submit" color="success" variant="outline" loading={loader}>
             Submit
           </CLoadingButton>

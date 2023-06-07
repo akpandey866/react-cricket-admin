@@ -170,7 +170,7 @@ const ManageMember = (props) => {
                               toggleDetails(item.id)
                             }}
                           >
-                            {details.includes(item.id) ? 'Hide Details' : 'Member Info'}
+                            {details.includes(item.id) ? 'Hide' : 'Info'}
                           </CButton>{' '}
                           {/* <CButton
                             color="primary"
@@ -222,6 +222,10 @@ const ManageMember = (props) => {
                             <CCol xs="auto">
                               <CFormLabel className="fw-bold">Phone:</CFormLabel>
                               <span className="px-2">{userDetails?.phone}</span>
+                            </CCol>
+                            <CCol xs="auto">
+                              <CFormLabel className="fw-bold">Team Name:</CFormLabel>
+                              <span className="px-2">{userDetails?.my_team_name}</span>
                             </CCol>
                           </CRow>
                         </CCardBody>

@@ -34,7 +34,7 @@ const Table = (props) => {
       key: 'username',
     },
     { label: 'Player', key: 'player_name' },
-    { label: 'Created On', key: 'created_at' },
+    // { label: 'Created On', key: 'created_at' },
     {
       key: 'show_details',
       label: 'Action',

@@ -17,12 +17,17 @@ import {
   cilMugTea,
   cilUser,
   cilGamepad,
-  cilVideogame,
-  cilShieldAlt,
   cilUserPlus,
   cilControl,
   cilAppsSettings,
   cilSettings,
+  cilBook,
+  cilCalendarCheck,
+  cilGroup,
+  cilMap,
+  cilThumbUp,
+  cilBolt,
+  cilChevronRight,
 } from '@coreui/icons'
 import { CNavGroup, CNavItem, CNavTitle } from '@coreui/react-pro'
 
@@ -206,13 +211,13 @@ const _nav = [
     items: [
       {
         component: CNavItem,
-        name: 'Fixtures List',
-        to: '/fixtures',
+        name: 'Create Fixtures',
+        to: '/create-fixtures',
       },
       {
         component: CNavItem,
-        name: 'Manage Fixtures',
-        to: '/manage-fixtures',
+        name: 'Manage Scores',
+        to: '/manage-scores',
       },
       {
         component: CNavItem,
@@ -296,7 +301,7 @@ const _nav = [
     component: CNavGroup,
     name: 'Bonus Cards',
     to: '/',
-    icon: <CIcon icon={cilShieldAlt} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilBolt} customClassName="nav-icon" />,
     items: [
       {
         component: CNavItem,
@@ -314,7 +319,7 @@ const _nav = [
     component: CNavGroup,
     name: 'Bracket Battle',
     to: '/',
-    icon: <CIcon icon={cilShieldAlt} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilBolt} customClassName="nav-icon" />,
     items: [
       {
         component: CNavItem,
@@ -342,7 +347,7 @@ const _nav = [
     component: CNavGroup,
     name: 'Feedback Fantasy',
     to: '/',
-    icon: <CIcon icon={cilShieldAlt} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilBolt} customClassName="nav-icon" />,
     items: [
       {
         component: CNavItem,
@@ -392,7 +397,7 @@ const _nav = [
     component: CNavGroup,
     name: 'Team of the Round',
     to: '/',
-    icon: <CIcon icon={cilShieldAlt} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilBolt} customClassName="nav-icon" />,
     items: [
       {
         component: CNavItem,
@@ -410,7 +415,7 @@ const _nav = [
     component: CNavGroup,
     name: 'Votes',
     to: '/fixture-votes',
-    icon: <CIcon icon={cilShieldAlt} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilBolt} customClassName="nav-icon" />,
     items: [
       {
         component: CNavItem,
@@ -442,31 +447,31 @@ const _nav = [
     component: CNavItem,
     name: 'Help & Support',
     to: '/',
-    icon: <CIcon icon={cilGrid} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilBook} customClassName="nav-icon" />,
   },
   {
     component: CNavItem,
     name: 'Book Intro Session',
     to: '/',
-    icon: <CIcon icon={cilLayers} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilCalendarCheck} customClassName="nav-icon" />,
   },
   {
     component: CNavItem,
     name: 'Community',
     to: '/',
-    icon: <CIcon icon={cilNotes} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilGroup} customClassName="nav-icon" />,
   },
   {
     component: CNavItem,
-    name: 'Roadmap / Feature Requests',
+    name: 'Roadmap/Features',
     to: '/',
-    icon: <CIcon icon={cilSpreadsheet} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilMap} customClassName="nav-icon" />,
   },
   {
     component: CNavItem,
     name: 'Share Feedback',
     to: '/',
-    icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilThumbUp} customClassName="nav-icon" />,
   },
 
   // {

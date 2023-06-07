@@ -6,45 +6,62 @@ import {
   CFormLabel,
   CLoadingButton,
 } from '@coreui/react-pro'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import SponsorService from 'src/service/SponsorService'
 import ToastComponent from 'src/components/common/TaostComponent'
 import PreviewImage from '../PreviewImage'
-import { EditorState, convertToRaw, ContentState, convertFromHTML } from 'draft-js'
-import draftToHtml from 'draftjs-to-html'
-import { Editor } from 'react-draft-wysiwyg'
+import ReactQuill from 'react-quill'
+import 'react-quill/dist/quill.snow.css'
 const EditForm = (props) => {
-  console.log('calling', props.sponsorId)
-  const aboutText = props.sponsorDetail?.about ?? '<p>asdasad</p>'
-  const [description, setDescription] = useState({
-    htmlValue: aboutText,
-    editorState: EditorState.createWithContent(
-      ContentState.createFromBlockArray(convertFromHTML(aboutText)),
-    ),
-  })
+  const [sponsorDetail, setSponsorDetail] = useState({})
+  const [value, setValue] = useState(props.sponsorDetail?.about)
+  console.log('selectedId', props.selectedId)
+  useEffect(() => {
+    if (props.selectedId === props.sponsorId) {
+      SponsorService.getSponsorDetail(props.sponsorId)
+        .then((res) => {
+          if (res.status === 200) {
+            setSponsorDetail(res.data)
+            setValue(res.data.about)
+          }
+        })
+        .catch((e) => {
+          console.log('Catch Block', e)
+        })
+    }
+  }, [props])
 
-  const onEditorStateChange = (editorValue) => {
-    const editorStateInHtml = draftToHtml(convertToRaw(editorValue.getCurrentContent()))
-
-    setDescription({
-      htmlValue: editorStateInHtml,
-      editorState: editorValue,
-    })
-  }
   const [loader, setLoader] = useState(false)
+  const SUPPORTED_FORMATS = ['image/jpg', 'image/png', 'image/jpeg', 'image/gif']
   const validationSchema = Yup.object().shape({
-    name: Yup.string().required('Name is required'),
+    name: Yup.string().required('Name is required').max(50, '50 Character Limit is allowed.'),
+    image: Yup.mixed()
+      .nullable(true)
+      .test('fileSize', 'File size too large, max file size is 5 Mb', (file) => {
+        if (file) {
+          return file.size <= 5500000
+        } else {
+          return true
+        }
+      })
+      .test(
+        'type',
+        'Invalid file format selection',
+        (value) =>
+          // console.log(value);
+          !value || (value && SUPPORTED_FORMATS.includes(value?.type)),
+      ),
   })
   const formik = useFormik({
     initialValues: {
-      name: props.sponsorDetail?.name,
-      website: props.sponsorDetail?.website,
-      facebook: props.sponsorDetail?.facebook,
-      twitter: props.sponsorDetail?.twitter,
-      instagram: props.sponsorDetail?.instagram,
-      about: props.sponsorDetail?.about,
+      name: sponsorDetail?.name,
+      website: sponsorDetail?.website,
+      facebook: sponsorDetail?.facebook,
+      twitter: sponsorDetail?.twitter,
+      instagram: sponsorDetail?.instagram,
+      about: sponsorDetail?.about,
       image: null,
     },
     enableReinitialize: true,
@@ -58,7 +75,7 @@ const EditForm = (props) => {
       formData.append('facebook', data.facebook)
       formData.append('twitter', data.twitter)
       formData.append('instagram', data.instagram)
-      formData.append('about', description.htmlValue)
+      formData.append('about', value)
       formData.append('image', data.image)
       setLoader(true)
       SponsorService.editSponsor(formData)
@@ -77,6 +94,88 @@ const EditForm = (props) => {
         })
     },
   })
+  const quillRef = useRef()
+  const imageHandler = (e) => {
+    const editor = quillRef.current.getEditor()
+    console.log(editor)
+    const input = document.createElement('input')
+    input.setAttribute('type', 'file')
+    input.setAttribute('accept', 'image/*')
+    input.click()
+
+    input.onchange = async () => {
+      const file = input.files[0]
+      if (/^image\//.test(file.type)) {
+        const formData = new FormData()
+        formData.append('image', file)
+        const res = await SponsorService.imageUplaod(formData) // upload data into server or aws or cloudinary
+        const url = res?.url
+        editor.insertEmbed(editor.getSelection(), 'image', url)
+      } else {
+        ToastComponent('You could only upload images.', 'error')
+      }
+    }
+  }
+  const modules = useMemo(
+    () => ({
+      toolbar: {
+        container: [
+          [{ header: [1, 2, 3, 4, 5, 6, false] }],
+          ['bold', 'italic', 'underline', 'strike'],
+          [{ list: 'ordered' }, { list: 'bullet' }, { indent: '-1' }, { indent: '+1' }],
+          ['image', 'link'],
+          [
+            {
+              color: [
+                '#000000',
+                '#e60000',
+                '#ff9900',
+                '#ffff00',
+                '#008a00',
+                '#0066cc',
+                '#9933ff',
+                '#ffffff',
+                '#facccc',
+                '#ffebcc',
+                '#ffffcc',
+                '#cce8cc',
+                '#cce0f5',
+                '#ebd6ff',
+                '#bbbbbb',
+                '#f06666',
+                '#ffc266',
+                '#ffff66',
+                '#66b966',
+                '#66a3e0',
+                '#c285ff',
+                '#888888',
+                '#a10000',
+                '#b26b00',
+                '#b2b200',
+                '#006100',
+                '#0047b2',
+                '#6b24b2',
+                '#444444',
+                '#5c0000',
+                '#663d00',
+                '#666600',
+                '#003700',
+                '#002966',
+                '#3d1466',
+              ],
+            },
+          ],
+        ],
+        handlers: {
+          image: imageHandler,
+        },
+      },
+    }),
+    [],
+  )
+  const handleSetValue = (e) => {
+    props.setValue()
+  }
   return (
     <>
       <CForm className="row g-3" onSubmit={formik.handleSubmit}>
@@ -205,14 +304,16 @@ const EditForm = (props) => {
         </CCol>
         <CCol md={8}>
           <CFormLabel htmlFor="Entry Fee Info">About</CFormLabel>
-          <Editor
-            toolbarHidden={false}
-            editorState={description.editorState}
-            onEditorStateChange={onEditorStateChange}
-            editorStyle={{ border: '1px solid', height: '150px' }}
+          <ReactQuill
+            theme="snow"
+            ref={quillRef}
+            value={value}
+            onChange={setValue}
+            modules={modules}
+            style={{ border: '1px solid' }}
           />
         </CCol>
-        <CCol md={6}>
+        <CCol md={6} className="mt-3">
           <CLoadingButton type="submit" color="success" variant="outline" loading={loader}>
             Submit
           </CLoadingButton>

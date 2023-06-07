@@ -4,6 +4,7 @@ import {
   CFormFeedback,
   CFormInput,
   CFormLabel,
+  CFormTextarea,
   CLoadingButton,
 } from '@coreui/react-pro'
 import React, { useState } from 'react'
@@ -19,7 +20,9 @@ const AddForm = (props) => {
   const [loader, setLoader] = useState(false)
   const validationSchema = Yup.object().shape({
     title: Yup.string().required('Name is required'),
-    // message: Yup.string().required('Message is required'),
+    message: Yup.string()
+      .required('Message is required')
+      .max(30, 'Description should not be more then 30 characters.'),
   })
   const formik = useFormik({
     initialValues: {
@@ -29,7 +32,6 @@ const AddForm = (props) => {
     enableReinitialize: true,
     validationSchema,
     onSubmit: (data) => {
-      data.message = description.htmlValue
       setLoader(true)
       FeedbackFantasyService.saveCategory(data)
         .then((res) => {
@@ -67,7 +69,9 @@ const AddForm = (props) => {
     <>
       <CForm className="row g-3" onSubmit={formik.handleSubmit}>
         <CCol md={12}>
-          <CFormLabel htmlFor="title">Category Name</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="title">
+            Category Name
+          </CFormLabel>
           <CFormInput
             placeholder="Category Name"
             className={
@@ -83,15 +87,23 @@ const AddForm = (props) => {
           )}
         </CCol>
         <CCol md={12}>
-          <CFormLabel htmlFor="message">Category Description</CFormLabel>
-          <Editor
-            toolbarHidden={false}
-            editorState={description.editorState}
-            onEditorStateChange={onEditorStateChange}
-            editorStyle={{ border: '1px solid', height: '150px' }}
-          />
-          {formik.errors.description && formik.touched.description && (
-            <CFormFeedback invalid>{formik.errors.description}</CFormFeedback>
+          <CFormLabel className="fw-bold" htmlFor="message">
+            Category Description
+          </CFormLabel>
+          <CFormTextarea
+            rows="2"
+            placeholder="Category Description"
+            className={
+              'form-control' +
+              (formik.errors.message && formik.touched.message ? ' is-invalid' : '')
+            }
+            defaultValue={formik.values.message}
+            onChange={formik.handleChange}
+            aria-label="message"
+            id="message"
+          ></CFormTextarea>
+          {formik.errors.message && formik.touched.message && (
+            <CFormFeedback invalid>{formik.errors.message}</CFormFeedback>
           )}
         </CCol>
         <CCol md={6}>

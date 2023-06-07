@@ -20,7 +20,7 @@ const Round = () => {
   const [roundNumber, setRoundNumber] = useState()
   return (
     <CRow>
-      <CAccordion activeItemKey={2}>
+      <CAccordion activeItemKey={1} alwaysOpen>
         <CAccordionItem itemKey={1}>
           <CAccordionHeader>
             {' '}
@@ -30,7 +30,9 @@ const Round = () => {
             <AddForm roundNumber={roundNumber} setUsers={setUsers} />
           </CAccordionBody>
         </CAccordionItem>
-        <CAccordionItem itemKey={2}>
+      </CAccordion>
+      <CAccordion activeItemKey={1}>
+        <CAccordionItem itemKey={1}>
           <CAccordionHeader>
             {' '}
             <strong>Manage Rounds</strong>

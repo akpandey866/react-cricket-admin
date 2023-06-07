@@ -62,7 +62,9 @@ const AddForm = (props) => {
     <>
       <CForm className="row g-3" onSubmit={formik.handleSubmit}>
         <CCol md={6}>
-          <CFormLabel htmlFor="manager">Manager</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="manager">
+            Manager
+          </CFormLabel>
           <CFormSelect
             aria-label="manager"
             name="user"
@@ -92,7 +94,9 @@ const AddForm = (props) => {
           )}
         </CCol>
         <CCol md={6}>
-          <CFormLabel htmlFor="description">Teams</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="description">
+            Teams
+          </CFormLabel>
           <CMultiSelect
             options={props.options}
             selectionType="tags"

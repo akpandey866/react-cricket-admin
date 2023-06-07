@@ -30,7 +30,6 @@ const Table = (props) => {
     {
       key: 'title',
     },
-    { key: 'date' },
     { label: 'Status', filter: false, key: 'is_active', _style: { width: '20%' } },
     { label: 'Created On', key: 'created_at', _style: { width: '20%' } },
     {
@@ -120,7 +119,23 @@ const Table = (props) => {
         setLoading(false)
       })
   }, [activePage, columnFilter, columnSorter, itemsPerPage, props])
-
+  const handleStatus = (id, status) => {
+    ArticleService.updateStatus(id, status)
+      .then((res) => {
+        if (res.status === 200) {
+          ArticleService.getArticle()
+            // .then((response) => response.json())
+            .then((result) => {
+              setUsers(result.data)
+              setLoading(false)
+            })
+          ToastComponent(res.message, 'success')
+        }
+      })
+      .catch((e) => {
+        console.log('Catch Block', e)
+      })
+  }
   return (
     <>
       <CSmartTable
@@ -183,6 +198,25 @@ const Table = (props) => {
                   >
                     Delete
                   </CButton>
+                  {item.is_active === 1 ? (
+                    <CButton
+                      size="sm"
+                      color="dark"
+                      className="ml-1"
+                      onClick={() => handleStatus(item.id, 0)}
+                    >
+                      Deactivate
+                    </CButton>
+                  ) : (
+                    <CButton
+                      size="sm"
+                      color="dark"
+                      className="ml-1"
+                      onClick={() => handleStatus(item.id, 1)}
+                    >
+                      Activate
+                    </CButton>
+                  )}
                   <CCollapse id="collapseEdit" horizontal visible={visibleHorizontal}>
                     <CCard className="mb-4">
                       <CCardHeader>

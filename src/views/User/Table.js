@@ -34,10 +34,10 @@ const Table = (props) => {
       key: 'full_name',
     },
     { key: 'email' },
-    { label: 'Team Name', key: 'my_team_name' },
+    // { label: 'Team Name', key: 'my_team_name' },
     { label: 'Phone', key: 'phone' },
+    { label: 'Registered', key: 'created_at' },
     { label: 'Status', filter: false, key: 'is_active' },
-    { label: 'Created On', key: 'created_at' },
     // {
     //   key: 'show_details',
     //   label: '',

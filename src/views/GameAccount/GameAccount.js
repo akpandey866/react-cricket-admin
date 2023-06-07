@@ -1,4 +1,12 @@
-import { cilBell, cilInfo, cilMoon, cilPlus, cilSettings, cilUser } from '@coreui/icons'
+import {
+  cilBell,
+  cilExternalLink,
+  cilInfo,
+  cilMoon,
+  cilPlus,
+  cilSettings,
+  cilUser,
+} from '@coreui/icons'
 import CIcon from '@coreui/icons-react'
 import {
   CButton,
@@ -19,6 +27,8 @@ import {
   CBadge,
   CSmartTable,
   CContainer,
+  CHeaderNav,
+  CButtonGroup,
 } from '@coreui/react-pro'
 import { cilPeople } from '@coreui/icons'
 import React, { useEffect, useState } from 'react'
@@ -196,7 +206,7 @@ const GameAccount = (props) => {
               <CCard className="mb-4">
                 <CCardHeader>
                   <strong>Club Games</strong>
-                  &nbsp;
+                  {/* &nbsp;
                   <CButton
                     color={'success'}
                     active={false}
@@ -209,7 +219,19 @@ const GameAccount = (props) => {
                   &nbsp;
                   <CButton color={'primary'} active={true} className="float-end text-center">
                     <CIcon icon={cilInfo} className="me-2" />
-                  </CButton>
+                  </CButton> */}
+                  <CHeaderNav className="float-end">
+                    <CButtonGroup aria-label="Theme switch">
+                      {/*  'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'dark' | 'light' | string */}
+
+                      <CButton color={'warning'}>
+                        <CIcon icon={cilInfo} />
+                      </CButton>
+                      <CButton color={'success'}>
+                        <CIcon icon={cilPlus} />
+                      </CButton>
+                    </CButtonGroup>
+                  </CHeaderNav>
                 </CCardHeader>
                 <CCardBody>
                   <CNav component="nav" variant="pills" className="flex-column flex-sm-row">

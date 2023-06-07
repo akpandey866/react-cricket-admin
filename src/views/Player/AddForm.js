@@ -20,24 +20,69 @@ const AddForm = (props) => {
 
   const [position, setPosition] = useState()
   const [team, setTeam] = useState()
-  const [playerValue, setPlayerValue] = useState()
+  const defaultPlayerPrice = [
+    { id: '15.00', price_name: '$15.00m' },
+    { id: '14.50', price_name: '$14.5m' },
+    { id: '14.00', price_name: '$14.00m' },
+    { id: '13.50', price_name: '$13.5m' },
+    { id: '13.00', price_name: '$13.00m' },
+    { id: '12.50', price_name: '$12.50m' },
+    { id: '12.00', price_name: '$12.00m' },
+    { id: '11.50', price_name: '$11.50m' },
+    { id: '11.00', price_name: '$11.00m' },
+    { id: '10.50', price_name: '$10.50m' },
+    { id: '10.00', price_name: '$10.00m' },
+    { id: '9.50', price_name: '$9.50m' },
+    { id: '9.00', price_name: '$9.00m' },
+    { id: '8.50', price_name: '$8.50m' },
+    { id: '8.00', price_name: '$8.00m' },
+    { id: '7.50', price_name: '$7.50m' },
+    { id: '7.00', price_name: '$7.00m' },
+  ]
+  const [playerValue, setPlayerValue] = useState(defaultPlayerPrice)
   const [batStyle, setBatStyle] = useState()
   const [bowlStyle, setBowlStyle] = useState()
-
+  const [playerExists, setPlayerExists] = useState()
+  const SUPPORTED_FORMATS = ['image/jpg', 'image/png', 'image/jpeg', 'image/gif']
   useEffect(() => {
     PlayerService.getTeamPositionValueBatBowlStyle().then((result) => {
       setPosition(result.position)
       setTeam(result.teamList)
-      setPlayerValue(result.value)
       setBatStyle(result.batStyle)
       setBowlStyle(result.bowlStyle)
+      setPlayerExists(result.player_exists)
+      if (result.player_price_type === 2) {
+        setPlayerValue(result.value)
+      }
     })
   }, [])
+
+  console.log('playerExists', playerExists)
   const validationSchema = Yup.object().shape({
-    first_name: Yup.string().required('First is required'),
-    last_name: Yup.string().required('Last Name is required'),
+    first_name: Yup.string()
+      .required('First is required')
+      .max(50, '50 Character Limit is allowed.'),
+    last_name: Yup.string()
+      .required('Last Name is required')
+      .max(50, '50 Character Limit is allowed.'),
     position: Yup.string().required('Position is required'),
     value: Yup.string().required('Value is required'),
+    image: Yup.mixed()
+      .nullable(true)
+      .test('fileSize', 'File size too large, max file size is 5 Mb', (file) => {
+        if (file) {
+          return file.size <= 5500000
+        } else {
+          return true
+        }
+      })
+      .test(
+        'type',
+        'Invalid file format selection',
+        (value) =>
+          // console.log(value);
+          !value || (value && SUPPORTED_FORMATS.includes(value?.type)),
+      ),
   })
   const formik = useFormik({
     initialValues: {
@@ -81,7 +126,9 @@ const AddForm = (props) => {
     <>
       <CForm className="row g-3" onSubmit={formik.handleSubmit}>
         <CCol md={3}>
-          <CFormLabel htmlFor="grade">First Name *</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="grade">
+            First Name *
+          </CFormLabel>
           <CFormInput
             placeholder="First Name"
             className={
@@ -98,7 +145,9 @@ const AddForm = (props) => {
           )}
         </CCol>
         <CCol md={3}>
-          <CFormLabel htmlFor="last_name">Last Name *</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="last_name">
+            Last Name *
+          </CFormLabel>
           <CFormInput
             placeholder="Last Name"
             className={
@@ -115,7 +164,9 @@ const AddForm = (props) => {
           )}
         </CCol>
         <CCol md={3}>
-          <CFormLabel htmlFor="position">Position *</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="position">
+            Position *
+          </CFormLabel>
           <CFormSelect
             aria-label="select position"
             name="position"
@@ -140,7 +191,9 @@ const AddForm = (props) => {
           )}
         </CCol>
         <CCol md={3}>
-          <CFormLabel htmlFor="Value">Value *</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="Value">
+            Value *
+          </CFormLabel>
           <CFormSelect
             aria-label="Select Team"
             name="value"
@@ -164,7 +217,9 @@ const AddForm = (props) => {
           )}
         </CCol>
         <CCol md={3}>
-          <CFormLabel htmlFor="Team">Team</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="Team">
+            Team
+          </CFormLabel>
           <CFormSelect
             aria-label="Select Team"
             name="team"
@@ -189,7 +244,9 @@ const AddForm = (props) => {
         </CCol>
 
         <CCol md={3}>
-          <CFormLabel htmlFor="bat Style">Bat Style</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="bat Style">
+            Bat Style
+          </CFormLabel>
           <CFormSelect
             aria-label="Select Bat Style"
             name="bat_style"
@@ -214,7 +271,9 @@ const AddForm = (props) => {
           )}
         </CCol>
         <CCol md={3}>
-          <CFormLabel htmlFor="Bowl Style">Bowl Style</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="Bowl Style">
+            Bowl Style
+          </CFormLabel>
           <CFormSelect
             aria-label="Select Bowl Style"
             name="bowl_style"
@@ -239,7 +298,9 @@ const AddForm = (props) => {
           )}
         </CCol>
         <CCol md={3}>
-          <CFormLabel htmlFor="image">Image</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="image">
+            Player Photo
+          </CFormLabel>
           <CFormInput
             type="file"
             id="formFile"
@@ -273,11 +334,13 @@ const AddForm = (props) => {
           ) : null}
         </CCol>
 
-        <CCol md={6}>
-          <CLoadingButton type="submit" color="success" variant="outline" loading={loader}>
-            Submit
-          </CLoadingButton>
-        </CCol>
+        {playerExists && (
+          <CCol md={6}>
+            <CLoadingButton type="submit" color="success" variant="outline" loading={loader}>
+              Save
+            </CLoadingButton>
+          </CCol>
+        )}
       </CForm>
     </>
   )

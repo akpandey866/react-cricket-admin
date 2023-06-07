@@ -17,6 +17,7 @@ import ClubService from 'src/service/ClubService'
 import { useEffect } from 'react'
 import PreviewImage from '../PreviewImage'
 const BasicSetting = (props) => {
+  const SUPPORTED_FORMATS = ['image/jpg', 'image/png', 'image/jpeg', 'image/gif']
   const [loader, setLoader] = useState(false)
   const [userDetail, setUserDetail] = useState({})
   useEffect(() => {
@@ -33,7 +34,25 @@ const BasicSetting = (props) => {
       })
   }, [])
   const validationSchema = Yup.object().shape({
-    game_name: Yup.string().required('Game Name is required'),
+    game_name: Yup.string()
+      .required('Game Name is required')
+      .max(50, '50 Character Limit is allowed.'),
+    image: Yup.mixed()
+      .nullable(true)
+      .test('fileSize', 'File size too large, max file size is 5 Mb', (file) => {
+        if (file) {
+          return file.size <= 5500000
+        } else {
+          return true
+        }
+      })
+      .test(
+        'type',
+        'Invalid file format selection',
+        (value) =>
+          // console.log(value);
+          !value || (value && SUPPORTED_FORMATS.includes(value?.type)),
+      ),
   })
   const formik = useFormik({
     initialValues: {
@@ -72,11 +91,11 @@ const BasicSetting = (props) => {
   return (
     <CForm className="row g-3" onSubmit={formik.handleSubmit}>
       {/* <CCol md={6}>
-            <CFormLabel htmlFor="Facebook">Game Mode</CFormLabel>
+            <CFormLabel className="fw-bold" htmlFor="Facebook">Game Mode</CFormLabel>
             <CFormInput id="game_mode" defaultValue={'Club Mode'} name="game_mode" disabled />
           </CCol>
           <CCol md={6}>
-            <CFormLabel htmlFor="Twitter">Username</CFormLabel>
+            <CFormLabel className="fw-bold" htmlFor="Twitter">Username</CFormLabel>
             <CFormInput
               id="username"
               defaultValue={formik.values.username}
@@ -86,7 +105,9 @@ const BasicSetting = (props) => {
           </CCol> */}
 
       <CCol md={6}>
-        <CFormLabel htmlFor="club_name">Club/League Name*</CFormLabel>
+        <CFormLabel className="fw-bold" htmlFor="club_name">
+          Club/League Name*
+        </CFormLabel>
         <CFormInput
           id="club_name"
           defaultValue={formik.values.club_name}
@@ -95,17 +116,27 @@ const BasicSetting = (props) => {
         />
       </CCol>
       <CCol md={6}>
-        <CFormLabel htmlFor="game_name">Game Name*</CFormLabel>
+        <CFormLabel className="fw-bold" htmlFor="game_name">
+          Game Name*
+        </CFormLabel>
+
         <CFormInput
           id="game_name"
           defaultValue={formik.values.game_name}
           name="game_name"
           onChange={formik.handleChange}
+          className={
+            'form-control' +
+            (formik.errors.game_name && formik.touched.game_name ? ' is-invalid' : '')
+          }
         />
+        {formik.errors.game_name && formik.touched.game_name && (
+          <CFormFeedback invalid>{formik.errors.game_name}</CFormFeedback>
+        )}
       </CCol>
 
       {/* <CCol md={12}>
-            <CFormLabel htmlFor="game_name">Game Share Link</CFormLabel>
+            <CFormLabel className="fw-bold" htmlFor="game_name">Game Share Link</CFormLabel>
             <CInputGroup className="mb-3">
               <CInputGroupText id="shareUrl">
                 https://cricket.myclubtap.com/about-game?club_name={userDetail.string_url}
@@ -117,7 +148,9 @@ const BasicSetting = (props) => {
           </CCol> */}
       <CCol md={6}>
         <div>
-          <CFormLabel htmlFor="formFile">Logo</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="formFile">
+            Logo
+          </CFormLabel>
           <CFormInput
             type="file"
             id="formFile"

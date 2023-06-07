@@ -81,7 +81,9 @@ const FeeInfo = (props) => {
   return (
     <CForm className="row g-3" onSubmit={formik.handleSubmit}>
       <CCol md={12}>
-        <CFormLabel htmlFor="Entry Fee">Entry Fee</CFormLabel>
+        <CFormLabel className="fw-bold" htmlFor="Entry Fee">
+          Entry Fee
+        </CFormLabel>
         <CFormInput
           placeholder="Entry Price"
           className={
@@ -95,7 +97,9 @@ const FeeInfo = (props) => {
         />
       </CCol>
       <CCol md={12}>
-        <CFormLabel htmlFor="Entry Fee Info">Entry Fee Information</CFormLabel>
+        <CFormLabel className="fw-bold" htmlFor="Entry Fee Info">
+          Entry Fee Information
+        </CFormLabel>
         <Editor
           toolbarHidden={false}
           editorState={description.editorState}
@@ -104,7 +108,9 @@ const FeeInfo = (props) => {
         />
       </CCol>
       <CCol md={12}>
-        <CFormLabel htmlFor="About Game">Welcome Message For Members</CFormLabel>
+        <CFormLabel className="fw-bold" htmlFor="About Game">
+          Welcome Message For Members
+        </CFormLabel>
         <Editor
           toolbarHidden={false}
           editorState={message.editorMessageState}

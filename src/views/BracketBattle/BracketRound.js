@@ -92,7 +92,7 @@ const BracketRound = () => {
   }
   return (
     <>
-      <CAccordion activeItemKey={2}>
+      <CAccordion activeItemKey={1} alwaysOpen>
         <CAccordionItem itemKey={1}>
           <CAccordionHeader>
             {' '}
@@ -101,7 +101,9 @@ const BracketRound = () => {
           <CAccordionBody>
             <CForm className="row g-3" onSubmit={formik.handleSubmit}>
               <CCol md={6}>
-                <CFormLabel htmlFor="round">Select Round</CFormLabel>
+                <CFormLabel className="fw-bold" htmlFor="round">
+                  Select Round
+                </CFormLabel>
 
                 <CFormSelect
                   aria-label="select round"
@@ -127,7 +129,9 @@ const BracketRound = () => {
                 )}
               </CCol>
               <CCol md={6}>
-                <CFormLabel htmlFor="grade">Select Gameweeks For The Round*</CFormLabel>
+                <CFormLabel className="fw-bold" htmlFor="grade">
+                  Select Gameweeks For The Round*
+                </CFormLabel>
                 <CMultiSelect
                   options={gwData}
                   selectionType="tags"
@@ -162,7 +166,9 @@ const BracketRound = () => {
             </CForm>
           </CAccordionBody>
         </CAccordionItem>
-        <CAccordionItem itemKey={2}>
+      </CAccordion>
+      <CAccordion activeItemKey={1}>
+        <CAccordionItem itemKey={1}>
           <CAccordionHeader>
             {' '}
             <strong>Manage Bracket Rounds</strong>

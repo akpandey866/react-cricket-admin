@@ -32,6 +32,7 @@ const EditForm = (props) => {
           TeamService.getTeamListByGrade(res.data.grade).then((res) => {
             if (res.status === 200) {
               setTeamList(res.data)
+              setMatchTypeList(res.matchTypeList)
             }
           })
         })
@@ -39,29 +40,14 @@ const EditForm = (props) => {
           ToastComponent(e.response?.data?.message, 'error')
           setLoader(false)
         })
-      GradeService.gradeData()
-        .then((res) => {
-          if (res.status === 200) {
-            setLoader(false)
-            setGradeList(res.data)
-            setMatchTypeList(res.matchTypeList)
-          }
-        })
-        .catch((e) => {
-          ToastComponent(e.response?.data?.message, 'error')
-          setLoader(false)
-          ToastComponent(e.response?.data?.message, 'error')
-        })
     }
   }, [props])
-  const navigate = useNavigate()
   const [loader, setLoader] = useState(false)
   const validationSchema = Yup.object().shape({
-    grade: Yup.string().required('Grade is required'),
+    team: Yup.string().required('Team is required'),
   })
   const formik = useFormik({
     initialValues: {
-      grade: fixtureDetail?.grade,
       team: fixtureDetail?.team,
       match_type: fixtureDetail?.match_type,
       start_date: fixtureDetail?.start_date,
@@ -84,11 +70,11 @@ const EditForm = (props) => {
       FixtureService.editFixture(data)
         .then((res) => {
           if (res.status === 200) {
-            props.hideEditDiv()
-            props.toggleDetails(fixtureDetail.id)
+            // props.hideEditDiv()
+            // props.toggleDetails(fixtureDetail.id)
             ToastComponent(res.message, 'success')
             setLoader(false)
-            navigate('/fixtures')
+            // navigate('/fixtures')
           } else {
             setLoader(false)
             ToastComponent(res.message, 'error')
@@ -119,35 +105,9 @@ const EditForm = (props) => {
     <>
       <CForm className="row g-3" onSubmit={formik.handleSubmit}>
         <CCol md={3}>
-          <CFormLabel htmlFor="grade">Comp *</CFormLabel>
-          <CFormSelect
-            aria-label="Select Comp"
-            name="grade"
-            className={
-              'form-control' + (formik.errors.grade && formik.touched.grade ? ' is-invalid' : '')
-            }
-            onChange={(e) => {
-              formik.handleChange(e)
-              handleChange(e)
-            }}
-            // onChange={formik.handleChange}
-            id="grade"
-            value={formik.values.grade}
-          >
-            <option value="0">Select Comp</option>
-            {gradeList &&
-              gradeList.map((item, key) => (
-                <option value={item?.id} key={key}>
-                  {item?.grade}
-                </option>
-              ))}
-          </CFormSelect>
-          {formik.errors.grade && formik.touched.grade && (
-            <CFormFeedback invalid>{formik.errors.grade}</CFormFeedback>
-          )}
-        </CCol>
-        <CCol md={3}>
-          <CFormLabel htmlFor="team">Team *</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="team">
+            Team *
+          </CFormLabel>
           <CFormSelect
             aria-label="Select Team"
             name="team"
@@ -171,7 +131,9 @@ const EditForm = (props) => {
           )}
         </CCol>
         <CCol md={3}>
-          <CFormLabel htmlFor="team">Match Type *</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="team">
+            Match Type *
+          </CFormLabel>
           <CFormSelect
             aria-label="Select Match Type"
             name="match_type"
@@ -196,7 +158,9 @@ const EditForm = (props) => {
           )}
         </CCol>
         <CCol md={3}>
-          <CFormLabel htmlFor="Start Date">Start Date *</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="Start Date">
+            Start Date *
+          </CFormLabel>
           <CDatePicker
             locale="en-US"
             name="start_date"
@@ -213,7 +177,9 @@ const EditForm = (props) => {
           )}
         </CCol>
         <CCol md={3}>
-          <CFormLabel htmlFor="End Date">End Date *</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="End Date">
+            End Date *
+          </CFormLabel>
           <CDatePicker
             locale="en-US"
             name="end_date"
@@ -228,7 +194,9 @@ const EditForm = (props) => {
           )}
         </CCol>
         <CCol md={3}>
-          <CFormLabel htmlFor="End Date">Start Time *</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="End Date">
+            Start Time *
+          </CFormLabel>
           <CTimePicker
             locale="en-US"
             name="start_time"
@@ -245,7 +213,9 @@ const EditForm = (props) => {
           )}
         </CCol>
         <CCol md={3}>
-          <CFormLabel htmlFor="End Date">End Time *</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="End Date">
+            End Time *
+          </CFormLabel>
           <CTimePicker
             locale="en-US"
             value="02:17:35 PM"
@@ -262,7 +232,9 @@ const EditForm = (props) => {
           )}
         </CCol>
         <CCol md={3}>
-          <CFormLabel htmlFor="alast_name">Venue</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="alast_name">
+            Venue
+          </CFormLabel>
           <input
             type="text"
             name="vanue"
@@ -279,7 +251,9 @@ const EditForm = (props) => {
           )}
         </CCol>
         <CCol md={3}>
-          <CFormLabel htmlFor="alast_name">Opponent</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="alast_name">
+            Opponent
+          </CFormLabel>
           <input
             type="text"
             name="opposition_club"
@@ -296,7 +270,6 @@ const EditForm = (props) => {
             <CFormFeedback invalid>{formik.errors.opposition_club}</CFormFeedback>
           )}
         </CCol>
-        <CCol md={6}></CCol>
         <CCol md={6}>
           <CLoadingButton type="submit" color="success" variant="outline" loading={loader}>
             Submit

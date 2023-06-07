@@ -39,8 +39,26 @@ const Branding = () => {
 
   const SUPPORTED_FORMATS = ['image/jpg', 'image/png', 'image/jpeg', 'image/gif']
   const validationSchema = Yup.object().shape({
-    name: Yup.string().required('name is required'),
+    name: Yup.string().required('name is required').max(50, '50 Character Limit is allowed.'),
     url: Yup.string().required('Website URL is required'),
+    image: Yup.mixed()
+      .nullable(true)
+      .test(
+        'fileSize',
+        'File size too large, max file size is 5 Mb or resolution is not 90 px x 90 px',
+        (file) => {
+          if (file) {
+            return file.size <= 90 * 90
+          } else {
+            return true
+          }
+        },
+      )
+      .test(
+        'type',
+        'Invalid file format selection',
+        (value) => !value || (value && SUPPORTED_FORMATS.includes(value?.type)),
+      ),
   })
   const formik = useFormik({
     initialValues: {
@@ -83,7 +101,9 @@ const Branding = () => {
           <CAccordionBody>
             <CForm className="row g-3" onSubmit={formik.handleSubmit}>
               <CCol md={6}>
-                <CFormLabel htmlFor="name">Name *</CFormLabel>
+                <CFormLabel className="fw-bold" htmlFor="name">
+                  Name *
+                </CFormLabel>
                 <CFormInput
                   className={
                     'form-control' +
@@ -99,7 +119,9 @@ const Branding = () => {
                 )}
               </CCol>
               <CCol md={6}>
-                <CFormLabel htmlFor="youtube2">Website URL *</CFormLabel>
+                <CFormLabel className="fw-bold" htmlFor="youtube2">
+                  Website URL *
+                </CFormLabel>
                 <CFormInput
                   id="url"
                   className={
@@ -114,7 +136,9 @@ const Branding = () => {
                 )}
               </CCol>
               <CCol md={6}>
-                <CFormLabel htmlFor="image">Brand Logo (Dimesion: 90 px x 90 px)</CFormLabel>
+                <CFormLabel className="fw-bold" htmlFor="image">
+                  Brand Logo (Dimesion: 90 px x 90 px)
+                </CFormLabel>
                 <CFormInput
                   type="file"
                   id="formFile"

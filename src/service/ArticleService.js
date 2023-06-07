@@ -1,6 +1,6 @@
 import { agent } from '../utils/agent'
 const API_URL = process.env.REACT_APP_API_URL
-const getArticle = async (offset, itemsPerPage, activePage, params) => {
+const getArticle = async (offset = 0, itemsPerPage = 0, activePage = 0, params = []) => {
   const response = await agent.get(
     `${API_URL}articles/listing?offset=${offset}&limit=${itemsPerPage}&page=${activePage}&${params}`,
   )
@@ -27,6 +27,10 @@ const ArticleData = async (data) => {
   const response = await agent.get(`${API_URL}articles/article-data`)
   return response.data
 }
+const updateStatus = async (id, status) => {
+  const response = await agent.get(`${API_URL}articles/update-status/${id}/${status}`)
+  return response.data
+}
 const ArticleService = {
   getArticle,
   saveArticle,
@@ -34,6 +38,7 @@ const ArticleService = {
   getArticleDetail,
   editArticle,
   ArticleData,
+  updateStatus,
 }
 
 export default ArticleService

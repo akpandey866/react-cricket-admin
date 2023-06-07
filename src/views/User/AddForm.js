@@ -16,12 +16,14 @@ const AddForm = (props) => {
   const validationSchema = Yup.object().shape({
     first_name: Yup.string().required('First Name is required'),
     last_name: Yup.string().required('Last Name is required'),
+    phone: Yup.number().required('Phone is required'),
     email: Yup.string().required('Email is required').email('Email is invalid'),
   })
   const formik = useFormik({
     initialValues: {
       first_name: '',
       last_name: '',
+      phone: '',
       email: '',
     },
     enableReinitialize: true,
@@ -53,7 +55,9 @@ const AddForm = (props) => {
     <>
       <CForm className="row g-3" onSubmit={formik.handleSubmit}>
         <CCol md={6}>
-          <CFormLabel htmlFor="first_name">First Name</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="first_name">
+            First Name *
+          </CFormLabel>
           <CFormInput
             placeholder="First Name"
             className={
@@ -70,7 +74,9 @@ const AddForm = (props) => {
           )}
         </CCol>
         <CCol md={6}>
-          <CFormLabel htmlFor="last_name">Last Name</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="last_name">
+            Last Name *
+          </CFormLabel>
           <CFormInput
             placeholder="Last Name"
             className={
@@ -87,7 +93,9 @@ const AddForm = (props) => {
           )}
         </CCol>
         <CCol md={6}>
-          <CFormLabel htmlFor="email">Email</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="email">
+            Email *
+          </CFormLabel>
           <CFormInput
             placeholder="Email"
             className={
@@ -102,8 +110,25 @@ const AddForm = (props) => {
             <CFormFeedback invalid>{formik.errors.email}</CFormFeedback>
           )}
         </CCol>
+        <CCol md={6}>
+          <CFormLabel className="fw-bold" htmlFor="first_name">
+            Phone *
+          </CFormLabel>
+          <CFormInput
+            placeholder="Phone"
+            className={
+              'form-control' + (formik.errors.phone && formik.touched.phone ? ' is-invalid' : '')
+            }
+            value={formik.values.phone}
+            onChange={formik.handleChange}
+            aria-label="phone"
+            id="phone"
+          />
+          {formik.errors.phone && formik.touched.phone && (
+            <CFormFeedback invalid>{formik.errors.phone}</CFormFeedback>
+          )}
+        </CCol>
 
-        <CCol md={6}></CCol>
         <CCol md={6}>
           <CLoadingButton
             type="submit"

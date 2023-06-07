@@ -1,4 +1,11 @@
-import { CCol, CForm, CFormFeedback, CFormLabel, CLoadingButton } from '@coreui/react-pro'
+import {
+  CCol,
+  CForm,
+  CFormFeedback,
+  CFormLabel,
+  CFormTextarea,
+  CLoadingButton,
+} from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
@@ -38,7 +45,6 @@ const EditForm = (props) => {
     validationSchema,
     onSubmit: (data, actions) => {
       data.categoryId = props.categoryId
-      data.message = description.htmlValue
       setLoader(true)
       FeedbackFantasyService.editCategory(data)
         .then((res) => {
@@ -74,7 +80,7 @@ const EditForm = (props) => {
   return (
     <>
       <CForm className="row g-3" onSubmit={formik.handleSubmit}>
-        <CCol md={6}>
+        <CCol md={12}>
           <CFormLabel htmlFor="title">Name</CFormLabel>
           <input
             type="text"
@@ -92,15 +98,20 @@ const EditForm = (props) => {
             <CFormFeedback invalid>{formik.errors.title}</CFormFeedback>
           )}
         </CCol>
-        <CCol md={6}>
-          <CFormLabel htmlFor="Entry Fee Info">Entry Fee Info</CFormLabel>
-          <Editor
-            toolbarHidden={false}
-            defaultValue={'asdasdasdasd'}
-            editorState={description.editorState}
-            onEditorStateChange={onEditorStateChange}
-            editorStyle={{ border: '1px solid', height: '150px' }}
-          />
+        <CCol md={12}>
+          <CFormLabel htmlFor="Category Description">Category Description</CFormLabel>
+          <CFormTextarea
+            rows="2"
+            placeholder="Category Description"
+            className={
+              'form-control' +
+              (formik.errors.message && formik.touched.message ? ' is-invalid' : '')
+            }
+            defaultValue={categoryDetail?.description}
+            onChange={formik.handleChange}
+            aria-label="message"
+            id="message"
+          ></CFormTextarea>
         </CCol>
         <CCol md={6}>
           <CLoadingButton type="submit" color="success" variant="outline" loading={loader}>

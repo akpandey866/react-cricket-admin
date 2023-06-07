@@ -8,6 +8,7 @@ import {
   CFormLabel,
   CLoadingButton,
   CForm,
+  CFormFeedback,
 } from '@coreui/react-pro'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
@@ -15,6 +16,42 @@ import ToastComponent from 'src/components/common/TaostComponent'
 import ClubService from 'src/service/ClubService'
 const GameIntro = (props) => {
   const [loading, setLoading] = useState(false)
+  const SUPPORTED_FORMATS = ['image/jpg', 'image/png', 'image/jpeg', 'image/gif']
+  const VIDEO__SUPPORTED__FORMATS = ['video/mp4', 'video/x-m4v', 'video/*']
+  const validationSchema = Yup.object().shape({
+    image: Yup.mixed()
+      .nullable(true)
+      .test('fileSize', 'File size too large, max file size is 5 Mb', (file) => {
+        if (file) {
+          return file.size <= 5500000
+        } else {
+          return true
+        }
+      })
+      .test(
+        'type',
+        'Invalid file format selection',
+        (value) =>
+          // console.log(value);
+          !value || (value && SUPPORTED_FORMATS.includes(value?.type)),
+      ),
+    video: Yup.mixed()
+      .nullable(true)
+      .test('fileSize', 'File size too large, max file size is 5 Mb', (file) => {
+        if (file) {
+          return file.size <= 5500000
+        } else {
+          return true
+        }
+      })
+      .test(
+        'type',
+        'Invalid file format selection',
+        (value) =>
+          // console.log(value);
+          !value || (value && VIDEO__SUPPORTED__FORMATS.includes(value?.type)),
+      ),
+  })
   const formik = useFormik({
     initialValues: {
       youtube_video1: props.userFile.youtube_video1,
@@ -23,7 +60,7 @@ const GameIntro = (props) => {
       youtube_video4: props.userFile.youtube_video4,
     },
     enableReinitialize: true,
-    // validationSchema,
+    validationSchema,
     onSubmit: (data) => {
       var formData = new FormData()
       formData.append('youtube_video1', data.youtube_video1)
@@ -54,7 +91,9 @@ const GameIntro = (props) => {
   return (
     <CForm className="row g-3" onSubmit={formik.handleSubmit}>
       <CCol md={6}>
-        <CFormLabel htmlFor="youtube_video1">Insert Youtube Embed Code (Video 1)</CFormLabel>
+        <CFormLabel className="fw-bold" htmlFor="youtube_video1">
+          Insert Youtube Embed Code (Video 1)
+        </CFormLabel>
         <CFormInput
           id="youtube_video1"
           defaultValue={formik.values.youtube_video1}
@@ -63,7 +102,9 @@ const GameIntro = (props) => {
         />
       </CCol>
       <CCol md={6}>
-        <CFormLabel htmlFor="youtube2">Insert Youtube Embed Code (Video 2)</CFormLabel>
+        <CFormLabel className="fw-bold" htmlFor="youtube2">
+          Insert Youtube Embed Code (Video 2)
+        </CFormLabel>
         <CFormInput
           id="youtube_video2"
           defaultValue={formik.values.youtube_video2}
@@ -73,7 +114,9 @@ const GameIntro = (props) => {
       </CCol>
 
       <CCol md={6}>
-        <CFormLabel htmlFor="youtube_video3">Insert Youtube Embed Code (Video 3)</CFormLabel>
+        <CFormLabel className="fw-bold" htmlFor="youtube_video3">
+          Insert Youtube Embed Code (Video 3)
+        </CFormLabel>
         <CFormInput
           id="youtube_video3"
           defaultValue={formik.values.youtube_video3}
@@ -82,7 +125,9 @@ const GameIntro = (props) => {
         />
       </CCol>
       <CCol md={6}>
-        <CFormLabel htmlFor="youtube4">Insert Youtube Embed Code (Video 4)</CFormLabel>
+        <CFormLabel className="fw-bold" htmlFor="youtube4">
+          Insert Youtube Embed Code (Video 4)
+        </CFormLabel>
         <CFormInput
           id="youtube_video4"
           defaultValue={formik.values.youtube_video4}
@@ -92,7 +137,9 @@ const GameIntro = (props) => {
       </CCol>
       <CCol md={6}>
         <div className="mb-3">
-          <CFormLabel htmlFor="video">Uplaod a Video (Max File Size Allowed = 10MB)</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="video">
+            Uplaod a Video (Max File Size Allowed = 5MB)
+          </CFormLabel>
           <CFormInput
             type="file"
             id="video"
@@ -112,11 +159,16 @@ const GameIntro = (props) => {
               formik.setFieldValue('video', event.target.files[0])
             }}
           />
+          {formik.touched.video && formik.errors.video ? (
+            <CFormFeedback invalid>{formik.errors.video}</CFormFeedback>
+          ) : null}
         </div>
       </CCol>
       <CCol md={6}>
         <div className="mb-3">
-          <CFormLabel htmlFor="image">Image (Dimesion: 540 px x 310 px)</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="image">
+            Image (Dimesion: 540 px x 310 px)
+          </CFormLabel>
           <CFormInput
             type="file"
             id="image"
@@ -136,6 +188,9 @@ const GameIntro = (props) => {
               formik.setFieldValue('image', event.target.files[0])
             }}
           />
+          {formik.touched.image && formik.errors.image ? (
+            <CFormFeedback invalid>{formik.errors.image}</CFormFeedback>
+          ) : null}
         </div>
       </CCol>
       <CCol md={6}>

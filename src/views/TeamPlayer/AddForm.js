@@ -17,6 +17,7 @@ const AddForm = (props) => {
   const validationSchema = Yup.object().shape({
     //player: Yup.string().required('Player is required'),
   })
+  const navigate = useNavigate()
   const urlParams = useParams()
   const formik = useFormik({
     initialValues: {
@@ -25,6 +26,7 @@ const AddForm = (props) => {
     enableReinitialize: true,
     validationSchema,
     onSubmit: (data, actions) => {
+      setOptions([])
       actions.resetForm({
         values: {
           player: '',
@@ -38,6 +40,7 @@ const AddForm = (props) => {
           if (res.status === 200) {
             ToastComponent(res.message, 'success')
             setLoader(false)
+            setOptions(res.data)
             props.setPickedPlayer(data.picked_player)
           } else {
             setLoader(false)
@@ -45,18 +48,17 @@ const AddForm = (props) => {
           }
         })
         .catch((e) => {
-          ToastComponent(e.response?.data?.message, 'error')
+          ToastComponent('Something went wrong.Please try again.', 'error')
           setLoader(false)
-          ToastComponent(e.response?.data?.message, 'error')
         })
     },
   })
   const [options, setOptions] = useState([])
   useEffect(() => {
-    TeamPlayerService.teamPlayerListing().then((result) => {
+    TeamPlayerService.teamPlayerListing(urlParams.fixtureId).then((result) => {
       setOptions(result.data)
     })
-  }, [])
+  }, [urlParams.fixtureId])
   const [selectedValue, setSelectedValue] = useState([])
   const handleChange = (e) => {
     setSelectedValue(Array.isArray(e) ? e.map((x) => x.value) : [])

@@ -18,7 +18,7 @@ const AddForm = (props) => {
     onSubmit: (data, actions) => {
       actions.resetForm({
         values: {
-          playe_id: '',
+          user_id: '',
         },
       })
       setLoader(true)

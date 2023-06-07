@@ -35,7 +35,7 @@ const Table = (props) => {
       label: 'Team Name',
       key: 'team_name',
     },
-    { label: 'Type', key: 'match_type' },
+    { label: 'Type', key: 'match_type', filter: false, sorter: false },
     { label: 'Start Date', filter: false, key: 'start_date' },
     { label: 'End Date', filter: false, key: 'end_date' },
     { label: 'Status', filter: false, key: 'status' },
@@ -89,7 +89,7 @@ const Table = (props) => {
         setUsers(res.data)
         ToastComponent(res.message, 'success')
         setLoading(false)
-        navigate('/fixtures')
+        navigate('/create-fixtures')
       }
     })
   }
@@ -122,7 +122,6 @@ const Table = (props) => {
     if (position !== -1) {
       newDetails.splice(position, 1)
     } else {
-      console.log('new data wukk add here')
       newDetails = [...props.displayDetails, itemId]
     }
 
@@ -138,7 +137,6 @@ const Table = (props) => {
       }
     })
   }
-  console.log(props.displayDetails)
   return (
     <>
       <CSmartTable

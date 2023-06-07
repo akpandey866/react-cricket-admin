@@ -88,8 +88,8 @@ const PlayerStructure = (props) => {
     <CCol xs={12}>
       <CForm className="row g-3" onSubmit={formik.handleSubmit}>
         <p className="text-medium-emphasis small">
-          You can set Player structure here. Here Price and Player allowed will show from Game set
-          up section.
+          You can set your own player selection limits for each position here. If no change is
+          required, you can leave the default limits as currently set below.
         </p>
 
         <CInputGroup className="mb-3 fw-bold">

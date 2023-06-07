@@ -17,7 +17,11 @@ import {
   CAccordionItem,
   CAccordionBody,
   CAccordion,
+  CTooltip,
+  CButton,
+  CCollapse,
 } from '@coreui/react-pro'
+import { cilInfo } from '@coreui/icons'
 import { DocsExample } from 'src/components'
 import ClubService from 'src/service/ClubService'
 import { useFormik } from 'formik'
@@ -30,6 +34,7 @@ import GameIntro from './GameIntro'
 import AboutGame from './AboutGame'
 import FeeInfo from './FeeInfo'
 import BasicSetting from './BasicSetting'
+import CIcon from '@coreui/icons-react'
 
 const ClubAboutGame = () => {
   const [isLoading, setLoading] = useState(true)
@@ -82,18 +87,18 @@ const ClubAboutGame = () => {
   const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/gif', 'image/png']
   const validationSchema = Yup.object().shape({
     email: Yup.string().required('Email is required').email('Email is invalid'),
-    first_name: Yup.string().required('First Name is required'),
-    last_name: Yup.string().required('Last Name is required'),
+    first_name: Yup.string().required('First Name is required').max(50),
+    last_name: Yup.string().required('Last Name is required').max(50),
     dob: Yup.string().required('DOB is required'),
     phone: Yup.string().required('Phone is required'),
-    image: Yup.mixed()
-      .required('A file is required')
-      .test('fileSize', 'File too large', (value) => value && value.size <= FILE_SIZE)
-      .test(
-        'fileFormat',
-        'Unsupported Format',
-        (value) => value && SUPPORTED_FORMATS.includes(value.type),
-      ),
+    // image: Yup.mixed()
+    //   .required('A file is required')
+    //   .test('fileSize', 'File too large', (value) => value && value.size <= FILE_SIZE)
+    //   .test(
+    //     'fileFormat',
+    //     'Unsupported Format',
+    //     (value) => value && SUPPORTED_FORMATS.includes(value.type),
+    //   ),
   })
 
   const formik = useFormik({
@@ -114,7 +119,7 @@ const ClubAboutGame = () => {
         .then((res) => {
           if (res.status === 200) {
             setLoader(false)
-            navigate('/club-about-game')
+            ToastComponent(res.message, 'success')
           } else {
             setLoader(false)
             ToastComponent(res.message, 'error')
@@ -152,21 +157,32 @@ const ClubAboutGame = () => {
   const handleOtherChange = (event) => {
     setShowOtherGender(event.target.value)
   }
+
+  const handleOpenModal = () => {
+    alert('opened')
+  }
+  const [visible, setVisible] = useState(false)
   return isLoading ? (
     <Loader />
   ) : (
     <CRow>
-      <CAccordion alwaysOpen>
+      <CAccordion alwaysOpen activeItemKey={1}>
         <CAccordionItem itemKey={1}>
           <CAccordionHeader>
-            {' '}
-            <strong>Game Details</strong>
+            <CTooltip
+              content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."
+              placement="top"
+            >
+              <strong>Game Details</strong>
+            </CTooltip>
           </CAccordionHeader>
           <CAccordionBody>
             <BasicSetting />
           </CAccordionBody>
         </CAccordionItem>
-        <CAccordionItem itemKey={2}>
+      </CAccordion>
+      <CAccordion alwaysOpen activeItemKey={1}>
+        <CAccordionItem itemKey={1}>
           <CAccordionHeader>
             {' '}
             <strong>Timezone & Location</strong>
@@ -180,7 +196,9 @@ const ClubAboutGame = () => {
             />
           </CAccordionBody>
         </CAccordionItem>
-        <CAccordionItem itemKey={3}>
+      </CAccordion>
+      <CAccordion alwaysOpen activeItemKey={1}>
+        <CAccordionItem itemKey={1}>
           <CAccordionHeader>
             <strong>Entry Fees & Welcome Message</strong>
           </CAccordionHeader>
@@ -188,14 +206,18 @@ const ClubAboutGame = () => {
             <FeeInfo userDetail={userDetail} />
           </CAccordionBody>
         </CAccordionItem>
-        <CAccordionItem itemKey={4}>
+      </CAccordion>
+      <CAccordion alwaysOpen activeItemKey={1}>
+        <CAccordionItem itemKey={1}>
           <CAccordionHeader>
             <strong>Game Admin</strong>
           </CAccordionHeader>
           <CAccordionBody>
             <form className="row g-3" onSubmit={formik.handleSubmit}>
               <CCol md={6}>
-                <CFormLabel htmlFor="first_name">First Name *</CFormLabel>
+                <CFormLabel className="fw-bold" htmlFor="first_name">
+                  First Name *
+                </CFormLabel>
                 <CInputGroup className="mb-3">
                   <CInputGroupText>
                     <input
@@ -224,7 +246,9 @@ const ClubAboutGame = () => {
                 </CInputGroup>
               </CCol>
               <CCol md={6}>
-                <CFormLabel htmlFor="alast_name">Last Name *</CFormLabel>
+                <CFormLabel className="fw-bold" htmlFor="alast_name">
+                  Last Name *
+                </CFormLabel>
                 <input
                   type="text"
                   name="last_name"
@@ -243,7 +267,9 @@ const ClubAboutGame = () => {
               </CCol>
 
               <CCol md={6}>
-                <CFormLabel htmlFor="phone">Email *</CFormLabel>
+                <CFormLabel className="fw-bold" htmlFor="phone">
+                  Email *
+                </CFormLabel>
                 <CInputGroup className="mb-3">
                   <CInputGroupText>
                     <input
@@ -272,7 +298,9 @@ const ClubAboutGame = () => {
                 </CInputGroup>
               </CCol>
               <CCol md={6}>
-                <CFormLabel htmlFor="phone">Phone *</CFormLabel>
+                <CFormLabel className="fw-bold" htmlFor="phone">
+                  Phone *
+                </CFormLabel>
                 <input
                   type="text"
                   name="phone"
@@ -291,7 +319,7 @@ const ClubAboutGame = () => {
               </CCol>
 
               {/* <CCol md={6}>
-                <CFormLabel htmlFor="new_password">New Password</CFormLabel>
+                <CFormLabel className='fw-bold' htmlFor="new_password">New Password</CFormLabel>
                 <CFormInput
                   type="password"
                   name="password"
@@ -300,7 +328,7 @@ const ClubAboutGame = () => {
                 />
               </CCol>
               <CCol md={6}>
-                <CFormLabel htmlFor="confirm password">Confirm Password</CFormLabel>
+                <CFormLabel className='fw-bold' htmlFor="confirm password">Confirm Password</CFormLabel>
                 <CFormInput
                   type="password"
                   name="confirm_password"
@@ -310,7 +338,9 @@ const ClubAboutGame = () => {
               </CCol> */}
 
               <CCol md={6}>
-                <CFormLabel htmlFor="Date of Birth">Date of Birth *</CFormLabel>
+                <CFormLabel className="fw-bold" htmlFor="Date of Birth">
+                  Date of Birth *
+                </CFormLabel>
                 <CDatePicker
                   date={userDetail?.dob}
                   locale="en-US"
@@ -323,7 +353,10 @@ const ClubAboutGame = () => {
                 )}
               </CCol>
               <CCol md={6} xs={12}>
-                <CFormLabel htmlFor="Date of Birth">Gender *</CFormLabel> <br />
+                <CFormLabel className="fw-bold" htmlFor="Date of Birth">
+                  Gender *
+                </CFormLabel>{' '}
+                <br />
                 <CFormCheck
                   inline
                   type="radio"
@@ -358,7 +391,7 @@ const ClubAboutGame = () => {
               {/*
               <CCol md={6}>
                 <div className="mb-3">
-                  <CFormLabel htmlFor="formFile">Profile Image</CFormLabel>
+                  <CFormLabel className='fw-bold' htmlFor="formFile">Profile Image</CFormLabel>
                   <CFormInput type="file" id="formFile" name="image" />
                   {formik.errors.image && formik.touched.image && (
                     <CFormFeedback invalid>{formik.errors.image}</CFormFeedback>
@@ -374,7 +407,9 @@ const ClubAboutGame = () => {
             </form>
           </CAccordionBody>
         </CAccordionItem>
-        <CAccordionItem itemKey={5}>
+      </CAccordion>
+      <CAccordion alwaysOpen activeItemKey={1}>
+        <CAccordionItem itemKey={1}>
           <CAccordionHeader>
             <strong>Game Social Links</strong>
           </CAccordionHeader>
@@ -382,7 +417,9 @@ const ClubAboutGame = () => {
             <GameSocial userDetail={userDetail} />
           </CAccordionBody>
         </CAccordionItem>
-        <CAccordionItem itemKey={6}>
+      </CAccordion>
+      <CAccordion alwaysOpen activeItemKey={1}>
+        <CAccordionItem itemKey={1}>
           <CAccordionHeader>
             <strong>Game Videos & Photos</strong>
           </CAccordionHeader>

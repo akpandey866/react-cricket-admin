@@ -83,8 +83,9 @@ const BonusTable = (props) => {
                   <CButton onClick={() => openFromParent(item.round)} color={'success'}>
                     Set Up
                   </CButton>
+                  &nbsp;
                   <CButton
-                    className="mx-2"
+                    className=""
                     color="success"
                     onClick={() => openFromParentForPlayer(item.team_power_id, item.round)}
                   >

@@ -131,13 +131,13 @@ const routes = [
   { path: '/bonus-cards', name: 'Bonus Cards', element: BonusCard },
   { path: '/team-of-the-round', name: 'Team of the Round', element: TeamOfTheWeek },
   { path: '/add-more-demo', name: 'TeamOfTheRound', element: AddMoreDemo },
-  { path: '/fixtures', name: 'Fixtures List', element: Fixture },
-  { path: '/manage-fixtures', name: 'Manage Fixtures', element: ManageFixture },
+  { path: '/create-fixtures', name: 'Create Fixtures', element: Fixture },
+  { path: '/manage-scores', name: 'Manage Scores', element: ManageFixture },
   { path: '/completed-fixtures', name: 'Completed Fixture', element: CompletedFixture },
-  { path: '/manage-fixtures/team-players/:fixtureId', name: 'Team Players', element: TeamPlayer },
+  { path: '/manage-scores/team-players/:fixtureId', name: 'Team Players', element: TeamPlayer },
   {
-    path: '/assign-feedback-mnager/:fixtureId',
-    name: 'Assign Feedback Manager',
+    path: 'manage-scores/assign-feedback-manager/:fixtureId',
+    name: 'Manage Scores',
     element: AssignFeedbackManager,
   },
   {

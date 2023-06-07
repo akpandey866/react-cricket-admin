@@ -27,7 +27,7 @@ const EditForm = (props) => {
 
   const [loader, setLoader] = useState(false)
   const validationSchema = Yup.object().shape({
-    title: Yup.string().required('Title is required'),
+    title: Yup.string().required('Title is required').max(50, '50 Character Limit is allowed.'),
   })
   const formik = useFormik({
     initialValues: {
@@ -75,7 +75,9 @@ const EditForm = (props) => {
     <>
       <CForm className="row g-3" onSubmit={formik.handleSubmit}>
         <CCol md={12}>
-          <CFormLabel htmlFor="title">Title</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="title">
+            Title
+          </CFormLabel>
           <input
             type="text"
             name="title"
@@ -92,7 +94,9 @@ const EditForm = (props) => {
           )}
         </CCol>
         <CCol md={12}>
-          <CFormLabel htmlFor="Entry Fee Info">Message</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="Entry Fee Info">
+            Message
+          </CFormLabel>
           <Editor
             toolbarHidden={false}
             editorState={description.editorState}

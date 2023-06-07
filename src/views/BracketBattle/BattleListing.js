@@ -147,6 +147,9 @@ const BattleListing = () => {
                                 {formik.errors?.data[key]?.first_opponent}
                               </CFormFeedback>
                             )} */}
+                          {formik.errors?.data?.[key]?.first_opponent && (
+                            <p>{formik.errors?.data?.[key]?.first_opponent.message}</p>
+                          )}
                         </td>
                         <td>
                           <CFormSelect

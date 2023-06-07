@@ -19,8 +19,8 @@ const getTeamDetail = async (id) => {
   return response.data
 }
 
-const getTeamListByGrade = async (gradeid) => {
-  const response = await agent.get(`${API_URL}teams/team-list-by-grade/${gradeid}`)
+const getTeamListByGrade = async () => {
+  const response = await agent.get(`${API_URL}teams/team-list-by-grade`)
   return response.data
 }
 const deleteTeam = async (data) => {

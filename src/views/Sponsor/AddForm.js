@@ -34,13 +34,13 @@ const AddForm = (props) => {
   const [loader, setLoader] = useState(false)
   const SUPPORTED_FORMATS = ['image/jpg', 'image/png', 'image/jpeg', 'image/gif']
   const validationSchema = Yup.object().shape({
-    name: Yup.string().required('Grade is required'),
+    name: Yup.string().required('Name is required').max(50, '50 Character Limit is allowed.'),
     image: Yup.mixed()
       .nullable()
       .required('Required Field')
       .test(
         'size',
-        'File size is too big',
+        'File size too large, max file size is 5 Mb',
         (value) => value && value.size <= 1024 * 1024, // 5MB
       )
       .test(
@@ -85,9 +85,8 @@ const AddForm = (props) => {
           }
         })
         .catch((e) => {
-          ToastComponent(e.response?.data?.message, 'error')
+          console.log('error', e)
           setLoader(false)
-          ToastComponent(e.response?.data?.message, 'error')
         })
     },
   })
@@ -95,7 +94,9 @@ const AddForm = (props) => {
     <>
       <CForm className="row g-3" onSubmit={formik.handleSubmit}>
         <CCol md={4}>
-          <CFormLabel htmlFor="name">Name</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="name">
+            Name
+          </CFormLabel>
           <CFormInput
             placeholder="Name"
             className={
@@ -111,7 +112,9 @@ const AddForm = (props) => {
           )}
         </CCol>
         <CCol md={4}>
-          <CFormLabel htmlFor="website">Website</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="website">
+            Website
+          </CFormLabel>
           <CFormInput
             placeholder="Website"
             classwebsite={
@@ -128,9 +131,11 @@ const AddForm = (props) => {
           )}
         </CCol>
         <CCol md={4}>
-          <CFormLabel htmlFor="facebook">Facebook URL</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="facebook">
+            Facebook URL
+          </CFormLabel>
           <CFormInput
-            placeholder="facebook URL"
+            placeholder="Facebook URL"
             classfacebook={
               'form-control' +
               (formik.errors.facebook && formik.touched.facebook ? ' is-invalid' : '')
@@ -145,7 +150,9 @@ const AddForm = (props) => {
           )}
         </CCol>
         <CCol md={4}>
-          <CFormLabel htmlFor="facebook">Twitter URL</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="facebook">
+            Twitter URL
+          </CFormLabel>
           <CFormInput
             placeholder="Twitter URL"
             classtwitter={
@@ -162,7 +169,9 @@ const AddForm = (props) => {
           )}
         </CCol>
         <CCol md={4}>
-          <CFormLabel htmlFor="facebook">Instagram URL</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="facebook">
+            Instagram URL
+          </CFormLabel>
           <CFormInput
             placeholder="Instagram URL"
             classinstagram={
@@ -180,7 +189,9 @@ const AddForm = (props) => {
         </CCol>
         <CCol md={4}></CCol>
         <CCol md={4}>
-          <CFormLabel htmlFor="formFile">Sponsor Logo</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="formFile">
+            Sponsor Logo
+          </CFormLabel>
           <CFormInput
             type="file"
             id="formFile"
@@ -214,7 +225,9 @@ const AddForm = (props) => {
           ) : null}
         </CCol>
         <CCol md={12}>
-          <CFormLabel htmlFor="Entry Fee Info">About</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="Entry Fee Info">
+            About
+          </CFormLabel>
           <Editor
             toolbarHidden={false}
             editorState={description.editorState}

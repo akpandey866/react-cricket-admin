@@ -36,7 +36,7 @@ const EditForm = (props) => {
 
   const [loader, setLoader] = useState(false)
   const validationSchema = Yup.object().shape({
-    name: Yup.string().required('Name is required'),
+    name: Yup.string().required('Name is required').max(50, '50 Character Limit is allowed.'),
   })
   const formik = useFormik({
     initialValues: {
@@ -89,7 +89,9 @@ const EditForm = (props) => {
     <>
       <CForm className="row g-3" onSubmit={formik.handleSubmit}>
         <CCol md={3}>
-          <CFormLabel htmlFor="first_name">Team Name</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="first_name">
+            Team Name
+          </CFormLabel>
           <input
             type="text"
             name="name"
@@ -106,7 +108,9 @@ const EditForm = (props) => {
           )}
         </CCol>
         <CCol md={3}>
-          <CFormLabel htmlFor="grade_name">Comp This Team Plays In *</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="grade_name">
+            Comp This Team Plays In *
+          </CFormLabel>
           <CFormSelect
             aria-label="Select Comp"
             name="grade_name"
@@ -131,7 +135,9 @@ const EditForm = (props) => {
           )}
         </CCol>
         <CCol md={3}>
-          <CFormLabel htmlFor="name">Team Type *</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="name">
+            Team Type *
+          </CFormLabel>
           <CFormSelect
             aria-label="Default select example"
             name="team_type"
@@ -155,7 +161,9 @@ const EditForm = (props) => {
           )}
         </CCol>
         <CCol md={3}>
-          <CFormLabel htmlFor="team_category">Team Category *</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="team_category">
+            Team Category *
+          </CFormLabel>
           <CFormSelect
             aria-label="Default select example"
             name="team_category"
@@ -180,7 +188,9 @@ const EditForm = (props) => {
           )}
         </CCol>
         <CCol md={3}>
-          <CFormLabel htmlFor="name">Team Sponsor Link</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="name">
+            Team Sponsor Link
+          </CFormLabel>
           <CFormInput
             placeholder="Team Sponsor Link"
             className={
@@ -197,7 +207,9 @@ const EditForm = (props) => {
           )}
         </CCol>
         <CCol md={3}>
-          <CFormLabel htmlFor="name">Team Sponsor Logo</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="name">
+            Team Sponsor Logo
+          </CFormLabel>
           <CFormInput
             type="file"
             id="formFile"

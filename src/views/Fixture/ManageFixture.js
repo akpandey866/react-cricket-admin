@@ -39,7 +39,7 @@ const ManageFixture = (props) => {
       label: 'Team Name',
       key: 'team_name',
     },
-    { label: 'Match Type', key: 'match_type' },
+    { label: 'Match Type', key: 'match_type', filter: false, sorter: false },
     { label: 'Start Date', filter: false, key: 'start_date' },
     { label: 'End Date', filter: false, key: 'end_date' },
     { label: 'Status', filter: false, key: 'status' },
@@ -121,7 +121,7 @@ const ManageFixture = (props) => {
           <CAccordionItem itemKey={1}>
             <CAccordionHeader>
               {' '}
-              <strong>Manage Fixtures</strong>
+              <strong>Manage Scores</strong>
             </CAccordionHeader>
             <CAccordionBody>
               <CSmartTable
@@ -137,9 +137,7 @@ const ManageFixture = (props) => {
                     <td>
                       <CBadge color={getBadge(item.status)}>
                         {item.status === 0
-                          ? 'Not yet started'
-                          : item.status === 1
-                          ? 'Up-Comming'
+                          ? 'Not Started'
                           : item.status === 2
                           ? 'In-Progress'
                           : 'Completed'}
@@ -176,7 +174,7 @@ const ManageFixture = (props) => {
                             size="sm"
                             color="danger"
                             className="btn btn-success btn-sm ms-1"
-                            to={`/manage-fixtures/team-players/${item.id}`}
+                            to={`/manage-scores/team-players/${item.id}`}
                           >
                             1. Create Squad
                           </Link>
@@ -192,7 +190,7 @@ const ManageFixture = (props) => {
                             size="sm"
                             color="danger"
                             className="btn btn-success btn-sm ms-1"
-                            to={`/assign-feedback-mnager/${item.id}`}
+                            to={`/manage-scores/assign-feedback-manager/${item.id}`}
                           >
                             3. Assign Feedback Manager
                           </Link>

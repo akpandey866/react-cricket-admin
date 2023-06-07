@@ -36,6 +36,10 @@ const updateStatus = async (id, status) => {
   return response.data
 }
 
+const imageUplaod = async (formData) => {
+  const response = await agent.post(`${API_URL}sponsors/imageUpload`, formData)
+  return response.data
+}
 const SponsorService = {
   getSponsor,
   saveSponsor,
@@ -44,6 +48,7 @@ const SponsorService = {
   editSponsor,
   updateFeatured,
   updateStatus,
+  imageUplaod,
 }
 
 export default SponsorService

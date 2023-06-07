@@ -41,10 +41,47 @@ const EditForm = (props) => {
     }
   }, [props])
 
+  const SUPPORTED_FORMATS = ['image/jpg', 'image/png', 'image/jpeg', 'image/gif']
   const [loader, setLoader] = useState(false)
   const validationSchema = Yup.object().shape({
-    first_name: Yup.string().required('First Name is required'),
-    last_name: Yup.string().required('Last Name is required'),
+    first_name: Yup.string()
+      .required('First Name is required')
+      .max(50, '50 Character Limit is allowed.'),
+    last_name: Yup.string()
+      .required('Last Name is required')
+      .max(50, '50 Character Limit is allowed.'),
+    image: Yup.mixed()
+      .nullable(true)
+      .test('fileSize', 'File size too large, max file size is 5 Mb', (file) => {
+        if (file) {
+          return file.size <= 5500000
+        } else {
+          return true
+        }
+      })
+      .test(
+        'type',
+        'Invalid file format selection',
+        (value) =>
+          // console.log(value);
+          !value || (value && SUPPORTED_FORMATS.includes(value?.type)),
+      ),
+    sponsor_image: Yup.mixed()
+      .nullable(true)
+      .test('fileSize', 'File size too large, max file size is 5 Mb', (file) => {
+        if (file) {
+          return file.size <= 5500000
+        } else {
+          return true
+        }
+      })
+      .test(
+        'type',
+        'Invalid file format selection',
+        (value) =>
+          // console.log(value);
+          !value || (value && SUPPORTED_FORMATS.includes(value?.type)),
+      ),
   })
   const formik = useFormik({
     initialValues: {
@@ -55,7 +92,12 @@ const EditForm = (props) => {
       team: playerDetail?.team_id,
       bowl_style: playerDetail?.bowl_style,
       bat_style: playerDetail?.bat_style,
+      sponsor_link: playerDetail?.sponsor_link,
+      external_profile_label: playerDetail?.external_profile_label,
+      external_profile_link: playerDetail?.external_profile_link,
+      description: playerDetail?.description,
       image: null,
+      sponsor_image: null,
     },
     enableReinitialize: true,
     validationSchema,
@@ -71,6 +113,11 @@ const EditForm = (props) => {
       formData.append('team', data.team)
       formData.append('value', data.svalue)
       formData.append('image', data.image)
+      formData.append('sponsor_image', data.sponsor_image)
+      formData.append('sponsor_link', data.sponsor_link)
+      formData.append('description', data.description)
+      formData.append('external_profile_label', data.external_profile_label)
+      formData.append('external_profile_link', data.external_profile_link)
       setLoader(true)
       PlayerService.editPlayer(formData)
         .then((res) => {
@@ -94,7 +141,9 @@ const EditForm = (props) => {
     <>
       <CForm className="row g-3" onSubmit={formik.handleSubmit}>
         <CCol md={3}>
-          <CFormLabel htmlFor="grade">First Name *</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="grade">
+            First Name *
+          </CFormLabel>
           <CFormInput
             placeholder="First Name"
             className={
@@ -111,7 +160,9 @@ const EditForm = (props) => {
           )}
         </CCol>
         <CCol md={3}>
-          <CFormLabel htmlFor="last_name">Last Name *</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="last_name">
+            Last Name *
+          </CFormLabel>
           <CFormInput
             placeholder="Last Name"
             className={
@@ -128,7 +179,9 @@ const EditForm = (props) => {
           )}
         </CCol>
         <CCol md={3}>
-          <CFormLabel htmlFor="position">Position *</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="position">
+            Position *
+          </CFormLabel>
           <CFormSelect
             aria-label="select position"
             name="position"
@@ -153,7 +206,9 @@ const EditForm = (props) => {
           )}
         </CCol>
         <CCol md={3}>
-          <CFormLabel htmlFor="Value">Value *</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="Value">
+            Value *
+          </CFormLabel>
           <CFormSelect
             aria-label="Select Team"
             name="value"
@@ -177,7 +232,9 @@ const EditForm = (props) => {
           )}
         </CCol>
         <CCol md={3}>
-          <CFormLabel htmlFor="Team">Team</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="Team">
+            Team
+          </CFormLabel>
           <CFormSelect
             aria-label="Select Team"
             name="team"
@@ -202,7 +259,9 @@ const EditForm = (props) => {
         </CCol>
 
         <CCol md={3}>
-          <CFormLabel htmlFor="bat Style">Bat Style</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="bat Style">
+            Bat Style
+          </CFormLabel>
           <CFormSelect
             aria-label="Select Bat Style"
             name="bat_style"
@@ -227,7 +286,9 @@ const EditForm = (props) => {
           )}
         </CCol>
         <CCol md={3}>
-          <CFormLabel htmlFor="Bowl Style">Bowl Style</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="Bowl Style">
+            Bowl Style
+          </CFormLabel>
           <CFormSelect
             aria-label="Select Bowl Style"
             name="bowl_style"
@@ -252,7 +313,64 @@ const EditForm = (props) => {
           )}
         </CCol>
         <CCol md={3}>
-          <CFormLabel htmlFor="image">Image</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="grade">
+            Player Sponsor Link
+          </CFormLabel>
+          <CFormInput
+            placeholder="Sponsor Link"
+            className={
+              'form-control' +
+              (formik.errors.sponsor_link && formik.touched.sponsor_link ? ' is-invalid' : '')
+            }
+            defaultValue={formik.values.sponsor_link}
+            onChange={formik.handleChange}
+            aria-label="sponsor_link"
+            id="sponsor_link"
+          />
+          {formik.errors.sponsor_link && formik.touched.sponsor_link && (
+            <CFormFeedback invalid>{formik.errors.sponsor_link}</CFormFeedback>
+          )}
+        </CCol>
+        <CCol md={3}>
+          <CFormLabel className="fw-bold" htmlFor="logo">
+            Player Sponsor Logo{' '}
+          </CFormLabel>
+          <CFormInput
+            type="file"
+            id="formFile"
+            name="sponsor_image"
+            className={
+              formik.touched.sponsor_image
+                ? formik.errors.sponsor_image
+                  ? 'form-control input_user is-invalid'
+                  : 'form-control input_user is-valid'
+                : 'form-control'
+            }
+            onChange={(event) => {
+              formik.setTouched({
+                ...formik.touched,
+                sponsor_image: true,
+              })
+              formik.setFieldValue('sponsor_image', event.target.files[0])
+            }}
+          />
+          <br></br>
+          {formik.values.sponsor_image ? (
+            <PreviewImage
+              className={{ margin: 'auto' }}
+              width={100}
+              height={100}
+              file={formik.values.sponsor_image}
+            />
+          ) : null}
+          {formik.touched.sponsor_image && formik.errors.sponsor_image ? (
+            <CFormFeedback invalid>{formik.errors.sponsor_image}</CFormFeedback>
+          ) : null}
+        </CCol>
+        <CCol md={3}>
+          <CFormLabel className="fw-bold" htmlFor="image">
+            Player Photo
+          </CFormLabel>
           <CFormInput
             type="file"
             id="formFile"
@@ -284,6 +402,49 @@ const EditForm = (props) => {
           {formik.touched.image && formik.errors.image ? (
             <CFormFeedback invalid>{formik.errors.image}</CFormFeedback>
           ) : null}
+        </CCol>
+        <CCol md={3}>
+          <CFormLabel className="fw-bold" htmlFor="grade">
+            External Profile Label
+          </CFormLabel>
+          <CFormInput
+            placeholder="External Profile Label"
+            className={
+              'form-control' +
+              (formik.errors.external_profile_label && formik.touched.external_profile_label
+                ? ' is-invalid'
+                : '')
+            }
+            defaultValue={formik.values.external_profile_label}
+            onChange={formik.handleChange}
+            aria-label="external_profile_label"
+            id="external_profile_label"
+          />
+          {formik.errors.external_profile_label && formik.touched.external_profile_label && (
+            <CFormFeedback invalid>{formik.errors.external_profile_label}</CFormFeedback>
+          )}
+        </CCol>
+        <CCol md={3}>
+          <CFormLabel className="fw-bold" htmlFor="grade">
+            External Profile Link
+          </CFormLabel>
+          <CFormInput
+            placeholder="External Profile Link
+"
+            className={
+              'form-control' +
+              (formik.errors.external_profile_link && formik.touched.external_profile_link
+                ? ' is-invalid'
+                : '')
+            }
+            defaultValue={formik.values.external_profile_link}
+            onChange={formik.handleChange}
+            aria-label="external_profile_link"
+            id="external_profile_link"
+          />
+          {formik.errors.external_profile_label && formik.touched.external_profile_label && (
+            <CFormFeedback invalid>{formik.errors.external_profile_label}</CFormFeedback>
+          )}
         </CCol>
         <CCol md={6}>
           <CLoadingButton type="submit" color="success" variant="outline" loading={loader}>

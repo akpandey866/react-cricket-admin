@@ -16,11 +16,13 @@ import { useState } from 'react'
 import { useEffect } from 'react'
 import FixtureService from 'src/service/FixtureService'
 import { useParams } from 'react-router-dom'
+import moment from 'moment'
 const AssignFeedbackManager = () => {
   const param = useParams()
   // getFeedbackManagerList
   const [userList, setUserList] = useState([])
   const [coachListing, setCoachListing] = useState([])
+  const [fixtureDetails, setFixtureDetails] = useState({})
   useEffect(() => {
     FixtureService.getFeedbackManagerList(param.fixtureId)
       .then((res) => {
@@ -32,14 +34,34 @@ const AssignFeedbackManager = () => {
       .catch((e) => {
         console.log('Error Comes here', e)
       })
+    FixtureService.getFixtureDetail(param.fixtureId).then((res) => {
+      if (res.status === 200) {
+        setFixtureDetails(res.data)
+      }
+    })
   }, [param.fixtureId])
   return (
     <CRow>
-      <CAccordion activeItemKey={2}>
+      <CCol xs={12} md={3} className="mb-3">
+        <span>
+          <b> Team</b>: {fixtureDetails?.team_name}
+        </span>
+      </CCol>
+      <CCol xs={12} md={3}>
+        <span>
+          <b> Start Date</b>: {moment(fixtureDetails.start_date).format('D.MM.YYYY')}
+        </span>
+      </CCol>
+      <CCol xs={12} md={3}>
+        <span>
+          <b> End Date</b>: {moment(fixtureDetails.end_date).format('D.MM.YYYY')}
+        </span>
+      </CCol>
+      <CAccordion activeItemKey={1}>
         <CAccordionItem itemKey={1}>
           <CAccordionHeader>
             {' '}
-            <strong>Assign FeedbackManager</strong>
+            <strong>Assign Feedback Manager</strong>
           </CAccordionHeader>
           <CAccordionBody>
             <AddForm
@@ -50,7 +72,9 @@ const AssignFeedbackManager = () => {
             />
           </CAccordionBody>
         </CAccordionItem>
-        <CAccordionItem itemKey={2}>
+      </CAccordion>
+      <CAccordion activeItemKey={1}>
+        <CAccordionItem itemKey={1}>
           <CAccordionHeader>
             {' '}
             <strong>Manage Assigned Members</strong>

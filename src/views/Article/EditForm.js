@@ -33,16 +33,49 @@ const EditForm = (props) => {
       editorState: editorValue,
     })
   }
+  const SUPPORTED_FORMATS = ['image/jpg', 'image/png', 'image/jpeg', 'image/gif']
   const [loader, setLoader] = useState(false)
   const [date, setDate] = useState(props.date)
   const validationSchema = Yup.object().shape({
-    title: Yup.string().required('Title is required'),
+    title: Yup.string().required('Title is required').max(50, '50 Character Limit is allowed.'),
+    image: Yup.mixed()
+      .nullable(true)
+      .test('fileSize', 'File size too large, max file size is 5 Mb', (file) => {
+        if (file) {
+          return file.size <= 5500000
+        } else {
+          return true
+        }
+      })
+      .test(
+        'type',
+        'Invalid file format selection',
+        (value) =>
+          // console.log(value);
+          !value || (value && SUPPORTED_FORMATS.includes(value?.type)),
+      ),
+
+    thumb_image: Yup.mixed()
+      .nullable(true)
+      .test('fileSize', 'File size too large, max file size is 5 Mb', (file) => {
+        if (file) {
+          return file.size <= 5500000
+        } else {
+          return true
+        }
+      })
+      .test(
+        'type',
+        'Invalid file format selection',
+        (value) =>
+          // console.log(value);
+          !value || (value && SUPPORTED_FORMATS.includes(value?.type)),
+      ),
   })
   const formik = useFormik({
     initialValues: {
       title: props.articleDetail?.title,
       external_link: props.articleDetail?.link,
-      date: props.articleDetail?.date,
       description: props.articleDetail?.description,
       image: null,
     },
@@ -52,7 +85,6 @@ const EditForm = (props) => {
       var formData = new FormData()
       formData.append('articleId', props.articleId)
       formData.append('title', data.title)
-      formData.append('date', date)
       formData.append('description', description.htmlValue)
       formData.append('external_link', data.external_link)
       formData.append('image', data.image)
@@ -70,9 +102,8 @@ const EditForm = (props) => {
           }
         })
         .catch((e) => {
-          ToastComponent(e.response?.data?.message, 'error')
+          console.log('Error', e)
           setLoader(false)
-          ToastComponent(e.response?.data?.message, 'error')
         })
     },
   })
@@ -85,7 +116,9 @@ const EditForm = (props) => {
     <>
       <CForm className="row g-3" onSubmit={formik.handleSubmit}>
         <CCol md={4}>
-          <CFormLabel htmlFor="grade">Title *</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="grade">
+            Title *
+          </CFormLabel>
           <CFormInput
             placeholder="Title"
             className={
@@ -102,7 +135,9 @@ const EditForm = (props) => {
         </CCol>
         <CCol md={4}>
           <div className="mb-3">
-            <CFormLabel htmlFor="formFile">Article Header</CFormLabel>
+            <CFormLabel className="fw-bold" htmlFor="formFile">
+              Article Header
+            </CFormLabel>
             <CFormInput
               type="file"
               id="formFile"
@@ -129,7 +164,9 @@ const EditForm = (props) => {
         </CCol>
         <CCol md={4}>
           <div className="mb-3">
-            <CFormLabel htmlFor="formFile">Thumb Image</CFormLabel>
+            <CFormLabel className="fw-bold" htmlFor="formFile">
+              Thumb Image
+            </CFormLabel>
             <CFormInput
               type="file"
               id="formFile"
@@ -154,22 +191,11 @@ const EditForm = (props) => {
             ) : null}
           </div>
         </CCol>
-        <CCol md={4}>
-          <CFormLabel htmlFor="Date">Publish Date *</CFormLabel>
-          <CDatePicker
-            date={props.date}
-            locale="en-US"
-            name="date"
-            placeholder={'Date'}
-            onDateChange={handleDateChange}
-          />
 
-          {formik.errors.date && formik.touched.date && (
-            <CFormFeedback invalid>{formik.errors.date}</CFormFeedback>
-          )}
-        </CCol>
         <CCol md={4}>
-          <CFormLabel htmlFor="external link">External Link</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="external link">
+            External Link
+          </CFormLabel>
           <CFormInput
             placeholder="External Link"
             className={
@@ -187,7 +213,9 @@ const EditForm = (props) => {
         </CCol>
         <CCol md={4}></CCol>
         <CCol md={12}>
-          <CFormLabel htmlFor="description">Description</CFormLabel>
+          <CFormLabel className="fw-bold" htmlFor="description">
+            Description
+          </CFormLabel>
           <Editor
             toolbarHidden={false}
             editorState={description.editorState}

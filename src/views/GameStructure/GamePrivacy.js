@@ -20,6 +20,7 @@ import InputRange from 'react-input-range'
 import 'react-input-range/lib/css/index.css'
 const GamePrivacy = (props) => {
   const [loader, setLoader] = useState(false)
+  const [showCode, setShowCode] = useState(false)
   const formik = useFormik({
     initialValues: {
       privacy: props.gameprivacy.game_visibility,
@@ -31,6 +32,7 @@ const GamePrivacy = (props) => {
       CommonService.updateGamePrivacy(data)
         .then((res) => {
           if (res.status === 200) {
+            props.setGamePrivacy(res.data)
             ToastComponent(res.message, 'success')
             setLoader(false)
           } else {
@@ -44,15 +46,20 @@ const GamePrivacy = (props) => {
         })
     },
   })
+  const handleChange = (event) => {
+    setShowCode(event.target.value)
+  }
   return (
     <>
       <br></br>
       <CForm className="row g-3" onSubmit={formik.handleSubmit}>
-        <CRow className="mb-3">
-          <CFormLabel htmlFor="staticEmail" className="col-sm-6 col-form-label">
-            Make this private or public
-          </CFormLabel>
-          <div className="col-sm-6">
+        <CRow className="mb-10">
+          <CCol md={12} xs={12}>
+            <CFormLabel className="" htmlFor="name">
+              {
+                "Default visibility of the game is set as 'Public'. You can make the game 'Private' below. If privacy is set as 'Private', all members will be required to enter the unique game code to join the game."
+              }
+            </CFormLabel>
             <CFormSelect
               aria-label="Select Structure"
               name="structure"
@@ -69,12 +76,18 @@ const GamePrivacy = (props) => {
                   privacy: true,
                 })
                 formik.setFieldValue('privacy', event.target.value)
+                handleChange(event)
               }}
             >
               <option value="1">Public </option>
               <option value="2">Private </option>
             </CFormSelect>
-          </div>
+          </CCol>
+          <CCol md={12} xs={12} className="mt-3">
+            {props.gameprivacy.game_visibility == 2 && (
+              <span className="mt-3"> Code: {props.gameprivacy.game_accept_code}</span>
+            )}
+          </CCol>
         </CRow>
 
         <CCol md={6}>

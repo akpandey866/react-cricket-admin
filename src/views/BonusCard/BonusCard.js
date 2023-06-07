@@ -15,7 +15,7 @@ import BonusTable from './BonusTable'
 const BonusCard = () => {
   return (
     <CRow>
-      <CAccordion activeItemKey={1}>
+      <CAccordion activeItemKey={1} alwaysOpen>
         <CAccordionItem itemKey={1}>
           <CAccordionHeader>
             {' '}
