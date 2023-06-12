@@ -9,7 +9,7 @@ import {
   CTimePicker,
 } from '@coreui/react-pro'
 import moment from 'moment'
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import RoundService from 'src/service/RoundService'
@@ -25,6 +25,11 @@ const AddForm = (props) => {
     start_time: Yup.string().required('Start Time to is required'),
     end_time: Yup.string().required('End Time to is required'),
   })
+  const logoRef = useRef()
+
+  const handleReset = (values, formikBag) => {
+    logoRef.current.value = null //THIS RESETS THE FILE FIELD
+  }
   const formik = useFormik({
     initialValues: {
       round: props.roundNumber,
@@ -35,6 +40,7 @@ const AddForm = (props) => {
     },
     enableReinitialize: true,
     validationSchema,
+    handleReset: handleReset,
     onSubmit: (data, actions) => {
       actions.resetForm({
         values: {
@@ -52,7 +58,7 @@ const AddForm = (props) => {
             props.setUsers(res.data)
             ToastComponent(res.message, 'success')
             setLoader(false)
-            navigate('/rounds')
+            formik.resetForm()
           } else {
             setLoader(false)
             ToastComponent(res.message, 'error')
@@ -65,10 +71,9 @@ const AddForm = (props) => {
         })
     },
   })
+  const [formValues, setformValues] = useState(formik.initialValues)
   const [startDate, setStartDate] = useState('')
   const [minEndDate, setMinEndDate] = useState(new Date())
-
-  const [minEndTime, setMinEndTime] = useState(new Date())
   const [endDate, setEndDate] = useState('')
   const [lockoutStartTime, setLockoutStartTime] = useState('')
   const [lockoutEndTime, setLockoutEndTime] = useState('')
@@ -128,7 +133,6 @@ const AddForm = (props) => {
             locale="en-US"
             name="start_date"
             placeholder={'Start Date'}
-            // onDateChange={handleStartDate}
             onDateChange={(e) => {
               handleStartDate(e)
               formik.setTouched({

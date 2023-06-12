@@ -13,6 +13,7 @@ import { useNavigate } from 'react-router-dom'
 import ToastComponent from 'src/components/common/TaostComponent.js'
 import GameNotificationService from 'src/service/GameNotificationService'
 import EditForm from './EditForm'
+import Notify from '../Notify'
 const Table = (props) => {
   const changeText = (txt) => {
     const regex = /(<([^>]+)>)/gi
@@ -104,6 +105,26 @@ const Table = (props) => {
       })
   }, [activePage, columnFilter, columnSorter, itemsPerPage, props])
 
+  // Are you sure want modal
+  const [handleYes, setHandleYes] = useState(false)
+  const [showConfirm, setShowConfirm] = useState(false)
+  const [handleNo, setHandleNo] = useState(false)
+  const [tableId, setTableId] = useState(false)
+
+  const handleCancel = () => {
+    console.log('You clicked No!')
+    return setShowConfirm(false)
+  }
+
+  const handleConfirm = () => {
+    deleteNotification(tableId)
+    return setShowConfirm(false)
+  }
+  const areYouSureModal = (id) => {
+    setShowConfirm(true)
+    setTableId(id)
+  }
+
   return (
     <>
       <CSmartTable
@@ -162,7 +183,7 @@ const Table = (props) => {
                     size="sm"
                     color="danger"
                     className="ml-1"
-                    onClick={() => deleteNotification(item.id)}
+                    onClick={() => areYouSureModal(item.id)}
                   >
                     Delete
                   </CButton>
@@ -212,6 +233,17 @@ const Table = (props) => {
           setItemsPerPage(itemsPerPage)
         }}
         onSorterChange={(sorter) => setColumnSorter(sorter)}
+      />
+      <Notify
+        setShowConfirm={setShowConfirm}
+        showConfirm={showConfirm}
+        setHandleNo={setHandleNo}
+        handleNo={handleNo}
+        handleYes={handleYes}
+        setHandleYes={setHandleYes}
+        handleConfirm={handleConfirm}
+        handleCancel={handleCancel}
+        text="Are you sure you want to delete this?"
       />
     </>
   )

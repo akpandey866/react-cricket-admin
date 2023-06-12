@@ -160,6 +160,10 @@ const gameLogin = async (data) => {
   const response = await agent.post(API_URL + 'gameLogin', data)
   return response.data
 }
+const checkItemExists = async (data) => {
+  const response = await agent.post(`${API_URL}common/checkItemExists`, data)
+  return response.data
+}
 const CommonService = {
   roundListing,
   bonusCardPlayer,
@@ -194,6 +198,7 @@ const CommonService = {
   dashboardData,
   dashboardUser,
   gameLogin,
+  checkItemExists,
 }
 
 export default CommonService

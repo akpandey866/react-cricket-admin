@@ -73,6 +73,8 @@ const AddRemoveInputField = (props) => {
   // }
 
   const [selectedValue, setSelectedValue] = useState([])
+  const [answers, setAnswers] = useState({})
+
   const handleChange = (event, index, id) => {
     setSelectedValue((prevState) => {
       return {
@@ -90,6 +92,7 @@ const AddRemoveInputField = (props) => {
       ...newState[i],
       [name]: value,
     }
+    setAnswers({ ...answers, [name]: value })
 
     setSelectedValue(newState)
     console.log('newState', selectedValue)
@@ -126,9 +129,9 @@ const AddRemoveInputField = (props) => {
                         name={`users.${key}.price`}
                         className={
                           'form-control' +
-                          (formik.errors?.users &&
-                          formik.errors?.users[key] &&
-                          formik.touched?.users[key].price
+                          (formik?.errors?.users &&
+                          formik?.errors?.users[key].price &&
+                          formik?.touched?.users[key]?.price
                             ? ' is-invalid'
                             : '')
                         }
@@ -138,9 +141,14 @@ const AddRemoveInputField = (props) => {
 
                         // }
                         onChange={(e) => {
-                          const newUsers = [e.target.value]
                           handleChangenew(e, key)
-                          formik.setFieldValue(`users.${key}.price`, 16)
+                          formik.setFieldValue(
+                            'users',
+                            selectedValue ? selectedValue.map((x) => x.value) : null,
+                          )
+                        }}
+                        onBlur={() => {
+                          formik.setFieldTouched('users', true)
                         }}
                         id={`users.${key}.price`}
                       >
@@ -162,21 +170,33 @@ const AddRemoveInputField = (props) => {
                     <>
                       <CFormSelect
                         aria-label="Select Structure"
+                        // name={`users.${key}.price`}
+                        // name={`users.${key}.price`}
                         name={`users.${key}.price`}
                         className={
                           'form-control' +
-                          (formik.errors?.users &&
-                          formik.errors?.users[key] &&
-                          formik.touched?.users[key].price
+                          (formik?.errors?.users &&
+                          formik?.errors?.users[key].price &&
+                          formik?.touched?.users[key]?.price
                             ? ' is-invalid'
                             : '')
                         }
-                        id={`users.${key}.price`}
-                        defaultValue={0}
+                        defaultValue={item[key]}
+                        // onChange={
+                        //   ((e) => handleChangenew(e, key),
+
+                        // }
                         onChange={(e) => {
                           handleChangenew(e, key)
-                          formik.setFieldValue(`users.${key}.price`, 17)
+                          formik.setFieldValue(
+                            'users',
+                            selectedValue ? selectedValue.map((x) => x.value) : null,
+                          )
                         }}
+                        onBlur={() => {
+                          formik.setFieldTouched('users', true)
+                        }}
+                        id={`users.${key}.price`}
                       >
                         <option value={0}>Select Fantasy Value {key}</option>
                         <option value="14.50">$14.50m</option>

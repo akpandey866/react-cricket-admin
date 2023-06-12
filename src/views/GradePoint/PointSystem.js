@@ -17,9 +17,10 @@ const PointSystem = (props) => {
       data: props.gradePointData,
     },
     enableReinitialize: true,
-    onSubmit: (data) => {
+    onSubmit: (data, values, { resetForm }) => {
       data.fixtureId = props.gradeId
       setLoader(true)
+      resetForm({ values: '' })
       GradeService.updateGradePointSystem(data)
         .then((res) => {
           if (res.status === 200) {
@@ -105,7 +106,7 @@ const PointSystem = (props) => {
                     <CFormInput
                       name={`data.${key}.bowler`}
                       type={'number'}
-                      defaultValue={item.bowler}
+                      value={item.bowler}
                       onChange={formik.handleChange}
                       id="bowler"
                       step="any"
@@ -115,7 +116,7 @@ const PointSystem = (props) => {
                     <CFormInput
                       name={`data.${key}.bats`}
                       type={'number'}
-                      defaultValue={item.bats}
+                      value={item.bats}
                       onChange={formik.handleChange}
                       id="bats"
                     />
@@ -124,7 +125,7 @@ const PointSystem = (props) => {
                     <CFormInput
                       name={`data.${key}.wk`}
                       type={'number'}
-                      defaultValue={item.wk}
+                      value={item.wk}
                       onChange={formik.handleChange}
                       id="wk"
                     />
@@ -133,7 +134,7 @@ const PointSystem = (props) => {
                     <CFormInput
                       name={`data.${key}.ar`}
                       type={'number'}
-                      defaultValue={item.ar}
+                      value={item.ar}
                       onChange={formik.handleChange}
                       id="ar"
                     />

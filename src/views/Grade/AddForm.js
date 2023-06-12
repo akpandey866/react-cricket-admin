@@ -25,11 +25,7 @@ const AddForm = (props) => {
     enableReinitialize: true,
     validationSchema,
     onSubmit: (data, actions) => {
-      actions.resetForm({
-        values: {
-          grade: '',
-        },
-      })
+      actions.resetForm()
       setLoader(true)
       GradeService.saveGrade(data)
         .then((res) => {

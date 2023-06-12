@@ -67,6 +67,10 @@ const verifyPlayerRequest = async (data) => {
   const response = await agent.post(API_URL + 'players/verify-player-request', data)
   return response.data
 }
+const updateStatus = async (id, status) => {
+  const response = await agent.get(`${API_URL}players/update-status/${id}/${status}`)
+  return response.data
+}
 const PlayerService = {
   getPlayers,
   savePlayer,
@@ -82,6 +86,7 @@ const PlayerService = {
   getPlayerStructureInfo,
   playerProfileClaimListing,
   verifyPlayerRequest,
+  updateStatus,
 }
 
 export default PlayerService

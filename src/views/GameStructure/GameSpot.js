@@ -70,6 +70,7 @@ const GameSpot = (props) => {
                 Spots *
               </CFormLabel>
               <CFormInput
+                min={1}
                 type="number"
                 className={
                   'form-control' +

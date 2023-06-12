@@ -15,6 +15,7 @@ import ToastComponent from 'src/components/common/TaostComponent.js'
 import GradeService from 'src/service/GradeService'
 import EditForm from './EditForm'
 import Notify from '../Notify'
+import CommonService from 'src/service/CommonService'
 const Table = (props) => {
   const [loading, setLoading] = useState()
   const [visibleHorizontal, setVisibleHorizontal] = useState(false)
@@ -106,7 +107,6 @@ const Table = (props) => {
   const [showConfirm, setShowConfirm] = useState(false)
   const [handleNo, setHandleNo] = useState(false)
   const [tableId, setTableId] = useState(false)
-
   const handleCancel = () => {
     console.log('You clicked No!')
     return setShowConfirm(false)
@@ -116,9 +116,21 @@ const Table = (props) => {
     deleteGrade(tableId)
     return setShowConfirm(false)
   }
+
   const areYouSureModal = (id) => {
-    setShowConfirm(true)
-    setTableId(id)
+    const data = {}
+    data.id = id
+    data.type = 'grade'
+    CommonService.checkItemExists(data).then((res) => {
+      if (res.status === 200) {
+        if (res.data) {
+          ToastComponent(res.message, 'error')
+        } else {
+          setShowConfirm(true)
+          setTableId(id)
+        }
+      }
+    })
   }
   return (
     <>

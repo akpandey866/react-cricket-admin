@@ -43,15 +43,7 @@ const AddForm = (props) => {
       formData.append('sponsor_link', data.sponsor_link)
       formData.append('image', data.image)
 
-      actions.resetForm({
-        values: {
-          name: '',
-          grade_name: '',
-          team_category: '',
-          team_type: '',
-          sponsor_link: '',
-        },
-      })
+      actions.resetForm()
       setLoader(true)
       TeamService.saveTeam(formData)
         .then((res) => {
@@ -99,7 +91,7 @@ const AddForm = (props) => {
               'form-control' +
               (formik.errors.grade_name && formik.touched.grade_name ? ' is-invalid' : '')
             }
-            defaultValue={formik.values.grade_name}
+            value={formik.values.grade_name}
             onChange={formik.handleChange}
             id="grade_name"
           >
@@ -126,7 +118,7 @@ const AddForm = (props) => {
               'form-control' +
               (formik.errors.team_type && formik.touched.team_type ? ' is-invalid' : '')
             }
-            defaultValue={formik.values.team_type}
+            value={formik.values.team_type}
             onChange={formik.handleChange}
             id="team_type"
           >
@@ -152,7 +144,7 @@ const AddForm = (props) => {
               'form-control' +
               (formik.errors.team_category && formik.touched.team_category ? ' is-invalid' : '')
             }
-            defaultValue={formik.values.team_category}
+            value={formik.values.team_category}
             onChange={formik.handleChange}
             id="team_category"
           >

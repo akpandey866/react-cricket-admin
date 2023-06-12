@@ -41,7 +41,7 @@ const PlayerAvailability = () => {
             <strong>Manage Availability</strong>
           </CAccordionHeader>
           <CAccordionBody>
-            <Table users={users} multiOption={multiOption} />
+            <Table users={users} setUsers={setUsers} multiOption={multiOption} />
           </CAccordionBody>
         </CAccordionItem>
       </CAccordion>

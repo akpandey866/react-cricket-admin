@@ -16,6 +16,7 @@ import ToastComponent from 'src/components/common/TaostComponent.js'
 import TeamService from 'src/service/TeamService'
 import EditForm from './EditForm'
 import Notify from '../Notify'
+import CommonService from 'src/service/CommonService'
 const Table = (props) => {
   const [loading, setLoading] = useState()
   const [visibleHorizontal, setVisibleHorizontal] = useState(false)
@@ -120,8 +121,19 @@ const Table = (props) => {
     return setShowConfirm(false)
   }
   const areYouSureModal = (id) => {
-    setShowConfirm(true)
-    setTableId(id)
+    const data = {}
+    data.id = id
+    data.type = 'team'
+    CommonService.checkItemExists(data).then((res) => {
+      if (res.status === 200) {
+        if (res.data) {
+          ToastComponent(res.message, 'error')
+        } else {
+          setShowConfirm(true)
+          setTableId(id)
+        }
+      }
+    })
   }
 
   return (

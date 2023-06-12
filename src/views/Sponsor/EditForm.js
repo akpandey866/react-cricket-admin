@@ -16,8 +16,7 @@ import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
 const EditForm = (props) => {
   const [sponsorDetail, setSponsorDetail] = useState({})
-  const [value, setValue] = useState(props.sponsorDetail?.about)
-  console.log('selectedId', props.selectedId)
+  const [value, setValue] = useState()
   useEffect(() => {
     if (props.selectedId === props.sponsorId) {
       SponsorService.getSponsorDetail(props.sponsorId)
@@ -173,9 +172,6 @@ const EditForm = (props) => {
     }),
     [],
   )
-  const handleSetValue = (e) => {
-    props.setValue()
-  }
   return (
     <>
       <CForm className="row g-3" onSubmit={formik.handleSubmit}>
@@ -302,7 +298,7 @@ const EditForm = (props) => {
             />
           ) : null}
         </CCol>
-        <CCol md={8}>
+        <CCol md={12}>
           <CFormLabel htmlFor="Entry Fee Info">About</CFormLabel>
           <ReactQuill
             theme="snow"

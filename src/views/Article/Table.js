@@ -15,6 +15,7 @@ import { useNavigate } from 'react-router-dom'
 import ToastComponent from 'src/components/common/TaostComponent.js'
 import ArticleService from 'src/service/ArticleService'
 import EditForm from './EditForm'
+import Notify from '../Notify'
 const Table = (props) => {
   const [loading, setLoading] = useState()
   const [visibleHorizontal, setVisibleHorizontal] = useState(false)
@@ -50,10 +51,7 @@ const Table = (props) => {
         return 'primary'
     }
   }
-  const [articleDetail, setArticleDetail] = useState([])
-  const [articleId, setArticleId] = useState(0)
-  const [date, setDate] = useState()
-  const [description, setDescription] = useState('')
+
   const toggleDetails = (index) => {
     setSelectedId(index)
     const position = details.indexOf(index)
@@ -68,20 +66,8 @@ const Table = (props) => {
     //Set Article Detail Data
   }
 
-  const changeEditAction = (index) => {
-    setArticleId(index)
-    setVisibleHorizontal(true)
-    ArticleService.getArticleDetail(index)
-      .then((res) => {
-        if (res.status === 200) {
-          setDescription(res.data.description)
-          setArticleDetail(res.data)
-          setDate(res.data.date)
-        }
-      })
-      .catch((e) => {
-        ToastComponent(e.response?.data?.message, 'error')
-      })
+  const handleEdit = (id) => {
+    setSelectedId(id)
   }
   const deleteArticle = (id) => {
     setLoading(true)
@@ -136,6 +122,26 @@ const Table = (props) => {
         console.log('Catch Block', e)
       })
   }
+
+  // Are you sure want modal
+  const [handleYes, setHandleYes] = useState(false)
+  const [showConfirm, setShowConfirm] = useState(false)
+  const [handleNo, setHandleNo] = useState(false)
+  const [tableId, setTableId] = useState(false)
+
+  const handleCancel = () => {
+    console.log('You clicked No!')
+    return setShowConfirm(false)
+  }
+
+  const handleConfirm = () => {
+    deleteArticle(tableId)
+    return setShowConfirm(false)
+  }
+  const areYouSureModal = (id) => {
+    setShowConfirm(true)
+    setTableId(id)
+  }
   return (
     <>
       <CSmartTable
@@ -184,7 +190,10 @@ const Table = (props) => {
                     size="sm"
                     color="success"
                     className="ml-1"
-                    onClick={() => changeEditAction(item.id)}
+                    onClick={() => {
+                      setVisibleHorizontal(!visibleHorizontal)
+                      handleEdit(item.id)
+                    }}
                     aria-expanded={visibleHorizontal}
                     aria-controls="collapseEdit"
                   >
@@ -194,7 +203,7 @@ const Table = (props) => {
                     size="sm"
                     color="danger"
                     className="ml-1"
-                    onClick={() => deleteArticle(item.id)}
+                    onClick={() => areYouSureModal(item.id)}
                   >
                     Delete
                   </CButton>
@@ -224,15 +233,9 @@ const Table = (props) => {
                       </CCardHeader>
                       <CCardBody>
                         <EditForm
-                          articleDetail={articleDetail}
-                          setArticleDetail={setArticleDetail}
                           articleId={item.id}
                           selectedId={selectedId}
                           visibleHorizontal={visibleHorizontal}
-                          date={date}
-                          description={description}
-                          setArticleId={setArticleId}
-                          setDate={setDate}
                           setUsers={setUsers}
                         />
                       </CCardBody>
@@ -268,6 +271,17 @@ const Table = (props) => {
           setItemsPerPage(itemsPerPage)
         }}
         onSorterChange={(sorter) => setColumnSorter(sorter)}
+      />
+      <Notify
+        setShowConfirm={setShowConfirm}
+        showConfirm={showConfirm}
+        setHandleNo={setHandleNo}
+        handleNo={handleNo}
+        handleYes={handleYes}
+        setHandleYes={setHandleYes}
+        handleConfirm={handleConfirm}
+        handleCancel={handleCancel}
+        text="Are you sure you want to delete this?"
       />
     </>
   )

@@ -17,17 +17,21 @@ import TeamService from 'src/service/TeamService'
 import { useNavigate } from 'react-router-dom'
 import ToastComponent from 'src/components/common/TaostComponent'
 import GradeService from 'src/service/GradeService'
+import moment from 'moment'
 const EditForm = (props) => {
   const [fixtureDetail, setFixtureDetail] = useState()
   const [matchTypeList, setMatchTypeList] = useState()
   const [teamList, setTeamList] = useState([])
-  const [gradeList, setGradeList] = useState()
+  const [lockoutStartTime, setLockoutStartTime] = useState('')
+  const [lockoutEndTime, setLockoutEndTime] = useState('')
   useEffect(() => {
     if (props.selectedId === props.fixtureId) {
       FixtureService.getFixtureDetail(props.fixtureId)
         .then((res) => {
           if (res.status === 200) {
             setFixtureDetail(res.data)
+            setLockoutStartTime(res.data?.start_time)
+            setLockoutEndTime(res.data?.end_time)
           }
           TeamService.getTeamListByGrade(res.data.grade).then((res) => {
             if (res.status === 200) {
@@ -43,13 +47,14 @@ const EditForm = (props) => {
     }
   }, [props])
   const [loader, setLoader] = useState(false)
+
   const validationSchema = Yup.object().shape({
     team: Yup.string().required('Team is required'),
   })
   const formik = useFormik({
     initialValues: {
       team: fixtureDetail?.team,
-      match_type: fixtureDetail?.match_type,
+      match_type: fixtureDetail?.match_code,
       start_date: fixtureDetail?.start_date,
       end_date: fixtureDetail?.end_date,
       start_time: fixtureDetail?.start_time,
@@ -67,6 +72,8 @@ const EditForm = (props) => {
       //   },
       // })
       setLoader(true)
+      data.start_time = lockoutStartTime
+      data.end_time = lockoutEndTime
       FixtureService.editFixture(data)
         .then((res) => {
           if (res.status === 200) {
@@ -86,20 +93,18 @@ const EditForm = (props) => {
         })
     },
   })
-
-  const handleChange = (e) => {
-    const gradeId = e.target.value
-
-    TeamService.getTeamListByGrade(gradeId).then((res) => {
-      if (res.status === 200) {
-        setTeamList(res.data)
-      }
-    })
-  }
-
   const handleStartDate = (e) => {
     console.log('on change i scalling is here', e)
     console.log(e)
+  }
+
+  const handleLockoutStartTime = (event) => {
+    const dateFormat = moment(event, ['h:mm A']).format('HH:mm')
+    setLockoutStartTime(dateFormat)
+  }
+  const handleLockoutEndTime = (event) => {
+    const dateFormat = moment(event, ['h:mm A']).format('HH:mm')
+    setLockoutEndTime(dateFormat)
   }
   return (
     <>
@@ -169,6 +174,8 @@ const EditForm = (props) => {
             id="start_date"
             value={formik.values.start_date}
             onChange={(value) => handleStartDate(value)}
+            format={'dd/MM/yyyy'}
+            cleaner={false}
             required
           />
 
@@ -187,6 +194,8 @@ const EditForm = (props) => {
             date={formik.values.end_date}
             value={formik.values.end_date}
             onChange={formik.handleChange}
+            cleaner={false}
+            format={'dd/MM/yyyy'}
           />
 
           {formik.errors.end_date && formik.touched.end_date && (
@@ -197,19 +206,27 @@ const EditForm = (props) => {
           <CFormLabel className="fw-bold" htmlFor="End Date">
             Start Time *
           </CFormLabel>
+
           <CTimePicker
-            locale="en-US"
-            name="start_time"
+            // locale="en-US"
+            value={lockoutStartTime}
+            time={lockoutStartTime}
             seconds={false}
-            placeholder={'Start Time'}
-            defaultValue={formik.values.start_time}
-            onChange={formik.handleChange}
-            time={formik.values.start_time}
-            id="start_time"
+            cleaner={false}
+            className={formik.errors.start_time && formik.touched.start_time ? 'is-invalid' : ''}
+            onTimeChange={(e) => {
+              handleLockoutStartTime(e)
+              formik.setTouched({
+                ...formik.touched,
+                start_time: true,
+              })
+              formik.setFieldValue('start_time', moment(e).format('YYYY-MM-DD'))
+            }}
+            // ampm={false}
           />
 
-          {formik.errors.star_time && formik.touched.star_time && (
-            <CFormFeedback invalid>{formik.errors.star_time}</CFormFeedback>
+          {formik.errors.start_time && formik.touched.start_time && (
+            <CFormFeedback invalid>{formik.errors.start_time}</CFormFeedback>
           )}
         </CCol>
         <CCol md={3}>
@@ -217,14 +234,22 @@ const EditForm = (props) => {
             End Time *
           </CFormLabel>
           <CTimePicker
-            locale="en-US"
-            value="02:17:35 PM"
-            name="end_time"
-            seconds={false}
-            placeholder={'End Time'}
-            defaultValue={formik.values.end_time}
-            time={formik.values.end_time}
-            onChange={formik.handleChange}
+            // locale="en-US"
+            cleaner={false}
+            time={lockoutEndTime}
+            value={lockoutEndTime}
+            // seconds={false}
+            // onTimeChange={handleLockoutStartTime}
+            className={formik.errors.end_time && formik.touched.end_time ? 'is-invalid' : ''}
+            onTimeChange={(e) => {
+              handleLockoutEndTime(e)
+              formik.setTouched({
+                ...formik.touched,
+                end_time: true,
+              })
+              formik.setFieldValue('end_time', moment(e).format('YYYY-MM-DD'))
+            }}
+            // ampm={false}
           />
 
           {formik.errors.end_time && formik.touched.end_time && (

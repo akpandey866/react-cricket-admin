@@ -34,7 +34,7 @@ const Article = () => {
             <strong>Manage Articles</strong>
           </CAccordionHeader>
           <CAccordionBody>
-            <Table users={users} />
+            <Table users={users} setUsers={setUsers} />
           </CAccordionBody>
         </CAccordionItem>
       </CAccordion>

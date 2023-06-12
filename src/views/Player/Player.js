@@ -36,7 +36,7 @@ const Player = () => {
               <strong>Manage Players</strong>
             </CAccordionHeader>
             <CAccordionBody>
-              <Table users={users} />
+              <Table users={users} setUsers={setUsers} />
             </CAccordionBody>
           </CAccordionItem>
         </CAccordion>

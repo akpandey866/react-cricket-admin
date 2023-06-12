@@ -290,8 +290,6 @@ const Table = (props) => {
                           selectedId={selectedId}
                           visibleHorizontal={visibleHorizontal}
                           setUsers={setUsers}
-                          setValue={setValue}
-                          value={value}
                         />
                       </CCardBody>
                     </CCard>

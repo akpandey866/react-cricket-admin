@@ -17,21 +17,6 @@ import { useNavigate } from 'react-router-dom'
 import ToastComponent from 'src/components/common/TaostComponent'
 import moment from 'moment'
 const EditForm = (props) => {
-  const [availabilityData, setAvailabilityData] = useState()
-  useEffect(() => {
-    if (props.selectedId === props.avId) {
-      PlayerAvailabilityService.getAvailabilityDetail(props.avId)
-        .then((res) => {
-          if (res.status === 200) {
-            setAvailabilityData(res.data)
-          }
-        })
-        .catch((e) => {
-          ToastComponent(e.response?.data?.message, 'error')
-          setLoader(false)
-        })
-    }
-  }, [props])
   const [loader, setLoader] = useState(false)
   const validationSchema = Yup.object().shape({
     // player: Yup.array().required('Player is required'),

@@ -1,11 +1,9 @@
 import {
   CCol,
-  CDatePicker,
   CForm,
   CFormFeedback,
   CFormInput,
   CFormLabel,
-  CFormTextarea,
   CLoadingButton,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
@@ -18,24 +16,25 @@ import { EditorState, convertToRaw, ContentState, convertFromHTML } from 'draft-
 import { Editor } from 'react-draft-wysiwyg'
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 import draftToHtml from 'draftjs-to-html'
+import ReactQuill from 'react-quill'
+import { useRef } from 'react'
+import { useMemo } from 'react'
+import SponsorService from 'src/service/SponsorService'
 const EditForm = (props) => {
-  const [description, setDescription] = useState({
-    htmlValue: props.userDetail?.entry_fee_info,
-    editorState: EditorState.createWithContent(
-      ContentState.createFromBlockArray(convertFromHTML(props?.description)),
-    ),
-  })
-  const onEditorStateChange = (editorValue) => {
-    const editorStateInHtml = draftToHtml(convertToRaw(editorValue.getCurrentContent()))
-
-    setDescription({
-      htmlValue: editorStateInHtml,
-      editorState: editorValue,
-    })
-  }
+  const [articleDetail, setArticleDetail] = useState({})
+  const [value, setValue] = useState()
+  useEffect(() => {
+    if (props.selectedId === props.articleId) {
+      ArticleService.getArticleDetail(props.articleId).then((res) => {
+        if (res.status === 200) {
+          setValue(res.data.description)
+          setArticleDetail(res.data)
+        }
+      })
+    }
+  }, [props])
   const SUPPORTED_FORMATS = ['image/jpg', 'image/png', 'image/jpeg', 'image/gif']
   const [loader, setLoader] = useState(false)
-  const [date, setDate] = useState(props.date)
   const validationSchema = Yup.object().shape({
     title: Yup.string().required('Title is required').max(50, '50 Character Limit is allowed.'),
     image: Yup.mixed()
@@ -74,9 +73,9 @@ const EditForm = (props) => {
   })
   const formik = useFormik({
     initialValues: {
-      title: props.articleDetail?.title,
-      external_link: props.articleDetail?.link,
-      description: props.articleDetail?.description,
+      title: articleDetail?.title,
+      external_link: articleDetail?.link,
+      description: articleDetail?.description,
       image: null,
     },
     enableReinitialize: true,
@@ -85,7 +84,7 @@ const EditForm = (props) => {
       var formData = new FormData()
       formData.append('articleId', props.articleId)
       formData.append('title', data.title)
-      formData.append('description', description.htmlValue)
+      formData.append('description', value)
       formData.append('external_link', data.external_link)
       formData.append('image', data.image)
       formData.append('thumb_image', data.thumb_image)
@@ -107,10 +106,87 @@ const EditForm = (props) => {
         })
     },
   })
-  const handleDateChange = (event) => {
-    const dateFormat = moment(event).format('YYYY-MM-DD')
-    setDate(dateFormat)
+  // Editor code here.
+  const quillRef = useRef()
+  const imageHandler = (e) => {
+    const editor = quillRef.current.getEditor()
+    console.log(editor)
+    const input = document.createElement('input')
+    input.setAttribute('type', 'file')
+    input.setAttribute('accept', 'image/*')
+    input.click()
+
+    input.onchange = async () => {
+      const file = input.files[0]
+      if (/^image\//.test(file.type)) {
+        const formData = new FormData()
+        formData.append('image', file)
+        const res = await SponsorService.imageUplaod(formData) // upload data into server or aws or cloudinary
+        const url = res?.url
+        editor.insertEmbed(editor.getSelection(), 'image', url)
+      } else {
+        ToastComponent('You could only upload images.', 'error')
+      }
+    }
   }
+  const modules = useMemo(
+    () => ({
+      toolbar: {
+        container: [
+          [{ header: [1, 2, 3, 4, 5, 6, false] }],
+          ['bold', 'italic', 'underline', 'strike'],
+          [{ list: 'ordered' }, { list: 'bullet' }, { indent: '-1' }, { indent: '+1' }],
+          ['image', 'link'],
+          [
+            {
+              color: [
+                '#000000',
+                '#e60000',
+                '#ff9900',
+                '#ffff00',
+                '#008a00',
+                '#0066cc',
+                '#9933ff',
+                '#ffffff',
+                '#facccc',
+                '#ffebcc',
+                '#ffffcc',
+                '#cce8cc',
+                '#cce0f5',
+                '#ebd6ff',
+                '#bbbbbb',
+                '#f06666',
+                '#ffc266',
+                '#ffff66',
+                '#66b966',
+                '#66a3e0',
+                '#c285ff',
+                '#888888',
+                '#a10000',
+                '#b26b00',
+                '#b2b200',
+                '#006100',
+                '#0047b2',
+                '#6b24b2',
+                '#444444',
+                '#5c0000',
+                '#663d00',
+                '#666600',
+                '#003700',
+                '#002966',
+                '#3d1466',
+              ],
+            },
+          ],
+        ],
+        handlers: {
+          image: imageHandler,
+        },
+      },
+    }),
+    [],
+  )
+  // Finish here
 
   return (
     <>
@@ -216,15 +292,15 @@ const EditForm = (props) => {
           <CFormLabel className="fw-bold" htmlFor="description">
             Description
           </CFormLabel>
-          <Editor
-            toolbarHidden={false}
-            editorState={description.editorState}
-            onEditorStateChange={onEditorStateChange}
-            editorStyle={{ border: '1px solid', height: '150px' }}
+          <ReactQuill
+            theme="snow"
+            ref={quillRef}
+            value={value}
+            onChange={setValue}
+            modules={modules}
+            // style={{ border: '1px solid' }}
           />
         </CCol>
-        <CCol md={6}></CCol>
-
         <CCol md={4}>
           <CLoadingButton type="submit" color="success" variant="outline" loading={loader}>
             Submit

@@ -17,7 +17,7 @@ import CommonService from 'src/service/CommonService'
 import ToastComponent from 'src/components/common/TaostComponent'
 import InputRange from 'react-input-range'
 import 'react-input-range/lib/css/index.css'
-const GameSpot = () => {
+const GameSpot = (props) => {
   const [data, setData] = useState({})
   const [tradeCheck, setTradeCheck] = useState(false)
   const [userNumber, setUserNumber] = useState()
@@ -27,7 +27,9 @@ const GameSpot = () => {
       .then((res) => {
         if (res.status === 200) {
           setData(res.data)
+          setRangValue(res.data.trades)
           setTradeCheck(res.data.trades_status)
+          props.setTransfer(res.data.trades)
         }
       })
       .catch((e) => {

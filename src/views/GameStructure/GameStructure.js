@@ -6,16 +6,11 @@ import {
   CAccordionHeader,
   CAccordionBody,
   CWidgetStatsC,
-  CBadge,
 } from '@coreui/react-pro'
 import Tab from 'react-bootstrap/Tab'
 import Tabs from 'react-bootstrap/Tabs'
 import React, { useEffect, useState } from 'react'
-import { useFormik } from 'formik'
-import * as Yup from 'yup'
-import GameSpot from './GameSpot'
 import Trade from './Trade'
-import CViceCaptain from './CViceCaptain'
 import GameStrucurePage from './GameStrucurePage'
 import SalaryCapPage from './SalaryCapPage'
 import CommonService from 'src/service/CommonService'
@@ -31,15 +26,14 @@ import {
   cilStarHalf,
   cilTransfer,
 } from '@coreui/icons'
-import { useMemo } from 'react'
 
 const GameStructure = () => {
-  const [key, setKey] = useState('home')
   const [gameSpotData, setGameSpotData] = useState({})
   const [savedSalaryCap, setSavedSalaryCap] = useState('')
   const [rangeValue, setRangValue] = useState(100)
 
   const [gameStuctureData, setGameStructureData] = useState()
+  const [transfer, setTransfer] = useState()
   const [playerStructuredetails, setPlayerStructureDetails] = useState({})
   const [gameprivacy, setGamePrivacy] = useState({})
   useEffect(() => {
@@ -60,7 +54,6 @@ const GameStructure = () => {
       })
   }, [])
   var boxTeamSize = { 8: '6', 7: '7', 6: '8', 5: '9', 1: '10', 1002: '11' }
-  console.log('salary cap is here', savedSalaryCap)
   return (
     <>
       <CRow>
@@ -90,7 +83,7 @@ const GameStructure = () => {
           <CWidgetStatsC
             color="warning-gradient"
             icon={<CIcon icon={cilTransfer} height={36} />}
-            value="20"
+            value={transfer}
             title="Transfers"
             inverse
             progress={{ value: 75 }}
@@ -183,7 +176,7 @@ const GameStructure = () => {
               <strong>Transfers</strong>
             </CAccordionHeader>
             <CAccordionBody>
-              <Trade />
+              <Trade setTransfer={setTransfer} />
             </CAccordionBody>
           </CAccordionItem>
         </CAccordion>

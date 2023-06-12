@@ -15,6 +15,7 @@ import { useNavigate } from 'react-router-dom'
 import ToastComponent from 'src/components/common/TaostComponent.js'
 import PlayerAvailabilityService from 'src/service/PlayerAvailabilityService'
 import EditForm from './EditForm'
+import Notify from '../Notify'
 const Table = (props) => {
   const [loading, setLoading] = useState()
   const [visibleHorizontal, setVisibleHorizontal] = useState(false)
@@ -74,11 +75,10 @@ const Table = (props) => {
     let newDetails = details.slice()
     newDetails.splice(position, 1)
     setDetails(newDetails)
-    // setUsers((previousEmployeeData) => previousEmployeeData.data.filter((data) => data.id !== id))
-    PlayerAvailabilityService.deleteGrade(data).then((res) => {
+    PlayerAvailabilityService.deleteAvailability(data).then((res) => {
       if (res.status === 200) {
-        toast.dismiss()
-        setUsers(res.data)
+        props.setUsers((current) => current.filter((fruit) => fruit.id !== id))
+        // setUsers(res.data)
         ToastComponent(res.message, 'success')
         setLoading(false)
       }
@@ -136,6 +136,29 @@ const Table = (props) => {
       .catch((e) => {
         console.log('Catch Block', e)
       })
+  }
+
+  // Are you sure want modal
+  const [handleYes, setHandleYes] = useState(false)
+  const [showConfirm, setShowConfirm] = useState(false)
+  const [handleNo, setHandleNo] = useState(false)
+  const [tableId, setTableId] = useState(false)
+
+  const [isDelete, setIsDelete] = useState(0)
+
+  const handleCancel = () => {
+    console.log('You clicked No!')
+    return setShowConfirm(false)
+  }
+
+  const handleConfirm = () => {
+    deleteGrade(tableId)
+    return setShowConfirm(false)
+  }
+
+  const areYouSureModal = (id) => {
+    setShowConfirm(true)
+    setTableId(id)
   }
   return (
     <>
@@ -196,7 +219,7 @@ const Table = (props) => {
                     size="sm"
                     color="danger"
                     className="ml-1"
-                    onClick={() => deleteGrade(item.id)}
+                    onClick={() => areYouSureModal(item.id)}
                   >
                     Delete
                   </CButton>
@@ -270,6 +293,17 @@ const Table = (props) => {
           setItemsPerPage(itemsPerPage)
         }}
         onSorterChange={(sorter) => setColumnSorter(sorter)}
+      />
+      <Notify
+        setShowConfirm={setShowConfirm}
+        showConfirm={showConfirm}
+        setHandleNo={setHandleNo}
+        handleNo={handleNo}
+        handleYes={handleYes}
+        setHandleYes={setHandleYes}
+        handleConfirm={handleConfirm}
+        handleCancel={handleCancel}
+        text="Are you sure you want to delete this?"
       />
     </>
   )

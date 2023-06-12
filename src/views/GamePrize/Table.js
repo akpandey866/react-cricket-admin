@@ -49,7 +49,6 @@ const Table = (props) => {
     }
   }
   const toggleDetails = (index) => {
-    setSelectedId(index)
     const position = details.indexOf(index)
     let newDetails = details.slice()
     if (position !== -1) {
@@ -101,15 +100,7 @@ const Table = (props) => {
 
   const [prizeDetail, setPrizeDetail] = useState({})
   const handleEdit = (id) => {
-    GamePrizeService.getPrizeDetail(id)
-      .then((res) => {
-        if (res.status === 200) {
-          setPrizeDetail(res.data)
-        }
-      })
-      .catch((e) => {
-        console.log('Catch Block', e)
-      })
+    setSelectedId(id)
   }
   const handleFeaturedUnfeatured = (id, status) => {
     GamePrizeService.updateFeatured(id, status)
@@ -293,7 +284,6 @@ const Table = (props) => {
                           selectedId={selectedId}
                           visibleHorizontal={visibleHorizontal}
                           setUsers={setUsers}
-                          prizeDetail={prizeDetail}
                         />
                       </CCardBody>
                     </CCard>

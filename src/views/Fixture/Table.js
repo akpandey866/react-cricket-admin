@@ -16,6 +16,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import ToastComponent from 'src/components/common/TaostComponent.js'
 import FixtureService from 'src/service/FixtureService'
 import EditForm from './EditForm'
+import Notify from '../Notify'
+import CommonService from 'src/service/CommonService'
 const Table = (props) => {
   const [loading, setLoading] = useState()
   const [visibleHorizontal, setVisibleHorizontal] = useState(false)
@@ -137,6 +139,37 @@ const Table = (props) => {
       }
     })
   }
+
+  // Are you sure want modal
+  const [handleYes, setHandleYes] = useState(false)
+  const [showConfirm, setShowConfirm] = useState(false)
+  const [handleNo, setHandleNo] = useState(false)
+  const [tableId, setTableId] = useState(false)
+
+  const handleCancel = () => {
+    console.log('You clicked No!')
+    return setShowConfirm(false)
+  }
+
+  const handleConfirm = () => {
+    deleteFixture(tableId)
+    return setShowConfirm(false)
+  }
+  const areYouSureModal = (id) => {
+    const data = {}
+    data.id = id
+    data.type = 'fixture'
+    CommonService.checkItemExists(data).then((res) => {
+      if (res.status === 200) {
+        if (res.data) {
+          ToastComponent(res.message, 'error')
+        } else {
+          setShowConfirm(true)
+          setTableId(id)
+        }
+      }
+    })
+  }
   return (
     <>
       <CSmartTable
@@ -226,7 +259,7 @@ const Table = (props) => {
                     size="sm"
                     color="danger"
                     className="ms-1"
-                    onClick={() => deleteFixture(item.id)}
+                    onClick={() => areYouSureModal(item.id)}
                   >
                     Delete
                   </CButton>
@@ -275,6 +308,17 @@ const Table = (props) => {
           setItemsPerPage(itemsPerPage)
         }}
         onSorterChange={(sorter) => setColumnSorter(sorter)}
+      />
+      <Notify
+        setShowConfirm={setShowConfirm}
+        showConfirm={showConfirm}
+        setHandleNo={setHandleNo}
+        handleNo={handleNo}
+        handleYes={handleYes}
+        setHandleYes={setHandleYes}
+        handleConfirm={handleConfirm}
+        handleCancel={handleCancel}
+        text="Are you sure you want to delete this?"
       />
     </>
   )

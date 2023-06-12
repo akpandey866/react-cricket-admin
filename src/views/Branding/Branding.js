@@ -166,8 +166,9 @@ const Branding = () => {
                     <CCol md={4}>
                       {brandingDetail.logo &&
                         Helper.checkIfImageExists(
-                          `${process.env.REACT_APP_API_URL}uploads/branding/${brandingDetail?.logo}`,
+                          `${process.env.REACT_APP_API_URL}uploads/branding/${brandingDetail.logo}`,
                         )}
+
                       {formik.values.image ? (
                         <PreviewImage
                           className={{ margin: 'auto' }}

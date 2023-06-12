@@ -15,6 +15,8 @@ import { useNavigate } from 'react-router-dom'
 import ToastComponent from 'src/components/common/TaostComponent.js'
 import PlayerService from 'src/service/PlayerService'
 import EditForm from './EditForm'
+import Notify from '../Notify'
+import CommonService from 'src/service/CommonService'
 const Table = (props) => {
   const [loading, setLoading] = useState()
   const [visibleHorizontal, setVisibleHorizontal] = useState(false)
@@ -75,11 +77,9 @@ const Table = (props) => {
     // setUsers((previousEmployeeData) => previousEmployeeData.data.filter((data) => data.id !== id))
     PlayerService.deletePlayer(data).then((res) => {
       if (res.status === 200) {
-        toast.dismiss()
-        setUsers(res.data)
+        props.setUsers((current) => current.filter((fruit) => fruit.id !== id))
         ToastComponent(res.message, 'success')
         setLoading(false)
-        navigate('/players')
       }
     })
   }
@@ -87,7 +87,6 @@ const Table = (props) => {
   const getUsers = useEffect(() => {
     setLoading(true)
     const offset = itemsPerPage * activePage - itemsPerPage
-    console.log(offset)
     let params = new URLSearchParams()
     Object.keys(columnFilter).forEach((key) => {
       params.append(key, columnFilter[key])
@@ -104,6 +103,60 @@ const Table = (props) => {
       })
   }, [activePage, columnFilter, columnSorter, itemsPerPage, props])
 
+  // Are you sure want modal
+  const [handleYes, setHandleYes] = useState(false)
+  const [showConfirm, setShowConfirm] = useState(false)
+  const [handleNo, setHandleNo] = useState(false)
+  const [tableId, setTableId] = useState(false)
+
+  const handleCancel = () => {
+    console.log('You clicked No!')
+    return setShowConfirm(false)
+  }
+
+  const handleConfirm = () => {
+    deletePlayer(tableId)
+    return setShowConfirm(false)
+  }
+  const areYouSureModal = (id) => {
+    const data = {}
+    data.id = id
+    data.type = 'player'
+    CommonService.checkItemExists(data).then((res) => {
+      if (res.status === 200) {
+        if (res.data) {
+          ToastComponent(res.message, 'error')
+        } else {
+          setShowConfirm(true)
+          setTableId(id)
+        }
+      }
+    })
+  }
+
+  const handleStatus = (id, status) => {
+    PlayerService.updateStatus(id, status)
+      .then((res) => {
+        const newApiData = res.data
+        if (res.status === 200) {
+          const newState = users.data.map((obj) => {
+            // 👇️ if id equals 2, update country property
+            if (obj.id === id) {
+              return { ...obj, newApiData }
+            }
+
+            // 👇️ otherwise return the object as is
+            return obj
+          })
+
+          props.setUsers(newState)
+          ToastComponent(res.message, 'success')
+        }
+      })
+      .catch((e) => {
+        console.log('Catch Block', e)
+      })
+  }
   return (
     <>
       <CSmartTable
@@ -161,10 +214,29 @@ const Table = (props) => {
                     size="sm"
                     color="danger"
                     className="ml-1"
-                    onClick={() => deletePlayer(item.id)}
+                    onClick={() => areYouSureModal(item.id)}
                   >
                     Delete
                   </CButton>
+                  {item.is_active === 1 ? (
+                    <CButton
+                      size="sm"
+                      color="dark"
+                      className="ml-1"
+                      onClick={() => handleStatus(item.id, 0)}
+                    >
+                      Deactivate
+                    </CButton>
+                  ) : (
+                    <CButton
+                      size="sm"
+                      color="dark"
+                      className="ml-1"
+                      onClick={() => handleStatus(item.id, 1)}
+                    >
+                      Activate
+                    </CButton>
+                  )}
                   <CCollapse id="collapseEdit" horizontal visible={visibleHorizontal}>
                     <CCard className="mb-4">
                       <CCardHeader>
@@ -209,6 +281,17 @@ const Table = (props) => {
           setItemsPerPage(itemsPerPage)
         }}
         onSorterChange={(sorter) => setColumnSorter(sorter)}
+      />
+      <Notify
+        setShowConfirm={setShowConfirm}
+        showConfirm={showConfirm}
+        setHandleNo={setHandleNo}
+        handleNo={handleNo}
+        handleYes={handleYes}
+        setHandleYes={setHandleYes}
+        handleConfirm={handleConfirm}
+        handleCancel={handleCancel}
+        text="Are you sure you want to delete this?"
       />
     </>
   )

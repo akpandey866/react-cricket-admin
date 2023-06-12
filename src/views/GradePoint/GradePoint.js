@@ -41,6 +41,7 @@ const GradePoint = () => {
     },
   ]
 
+  console.log('sdfsdfsdf', gradePointData)
   const toggleDetails = (index) => {
     setLoading(true)
     const position = details.indexOf(index)

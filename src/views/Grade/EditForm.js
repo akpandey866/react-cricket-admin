@@ -33,11 +33,7 @@ const EditForm = (props) => {
     validationSchema,
     onSubmit: (data, actions) => {
       data.gradeId = props.gradeId
-      actions.resetForm({
-        values: {
-          grade: '',
-        },
-      })
+      actions.resetForm()
       setLoader(true)
       GradeService.editGrade(data)
         .then((res) => {
@@ -71,7 +67,7 @@ const EditForm = (props) => {
             }
             id="validationServer01"
             placeholder="Grade"
-            defaultValue={gradeDetail?.grade}
+            defaultValue={formik.values.grade}
             onChange={formik.handleChange}
           />
           {formik.errors.grade && formik.touched.grade && (

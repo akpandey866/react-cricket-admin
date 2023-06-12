@@ -19,6 +19,7 @@ import FixtureService from 'src/service/FixtureService'
 import ToastComponent from 'src/components/common/TaostComponent'
 const Fixture = () => {
   const [displayDetails, setDisplayDetails] = useState([])
+  const [users, setUsers] = useState([])
   useEffect(() => {
     FixtureService.getActivatedDisplay()
       .then((res) => {
@@ -39,7 +40,7 @@ const Fixture = () => {
             <strong>Create Fixtures</strong>
           </CAccordionHeader>
           <CAccordionBody>
-            <AddForm />
+            <AddForm users={users} setUsers={setUsers} />
           </CAccordionBody>
         </CAccordionItem>
       </CAccordion>

@@ -14,6 +14,10 @@ import PlayerService from 'src/service/PlayerService'
 import { useNavigate } from 'react-router-dom'
 import ToastComponent from 'src/components/common/TaostComponent'
 import PreviewImage from '../PreviewImage'
+import ReactQuill from 'react-quill'
+import { useMemo } from 'react'
+import SponsorService from 'src/service/SponsorService'
+import { useRef } from 'react'
 const EditForm = (props) => {
   const [position, setPosition] = useState()
   const [team, setTeam] = useState()
@@ -23,21 +27,17 @@ const EditForm = (props) => {
   const [playerDetail, setPlayerDetail] = useState()
   useEffect(() => {
     if (props.selectedPlayerId === props.playerId) {
-      PlayerService.getPlayerDetail(props.playerId)
-        .then((res) => {
-          if (res.status === 200) {
-            setPlayerDetail(res.player_data)
-            setPosition(res.position)
-            setTeam(res.teamList)
-            setPlayerValue(res.value)
-            setBatStyle(res.batStyle)
-            setBowlStyle(res.bowlStyle)
-          }
-        })
-        .catch((e) => {
-          ToastComponent('Something went wrong.Please try Again.', 'error')
-          setLoader(false)
-        })
+      PlayerService.getPlayerDetail(props.playerId).then((res) => {
+        if (res.status === 200) {
+          setPlayerDetail(res.player_data)
+          setPosition(res.position)
+          setTeam(res.teamList)
+          setPlayerValue(res.value)
+          setBatStyle(res.batStyle)
+          setBowlStyle(res.bowlStyle)
+          setValue(res.player_data.description)
+        }
+      })
     }
   }, [props])
 
@@ -115,7 +115,7 @@ const EditForm = (props) => {
       formData.append('image', data.image)
       formData.append('sponsor_image', data.sponsor_image)
       formData.append('sponsor_link', data.sponsor_link)
-      formData.append('description', data.description)
+      formData.append('description', value)
       formData.append('external_profile_label', data.external_profile_label)
       formData.append('external_profile_link', data.external_profile_link)
       setLoader(true)
@@ -137,6 +137,88 @@ const EditForm = (props) => {
         })
     },
   })
+
+  // Editor code here.
+  const [value, setValue] = useState(props.sponsorDetail?.about)
+  const quillRef = useRef()
+  const imageHandler = (e) => {
+    const editor = quillRef.current.getEditor()
+    const input = document.createElement('input')
+    input.setAttribute('type', 'file')
+    input.setAttribute('accept', 'image/*')
+    input.click()
+
+    input.onchange = async () => {
+      const file = input.files[0]
+      if (/^image\//.test(file.type)) {
+        const formData = new FormData()
+        formData.append('image', file)
+        const res = await SponsorService.imageUplaod(formData) // upload data into server or aws or cloudinary
+        const url = res?.url
+        editor.insertEmbed(editor.getSelection(), 'image', url)
+      } else {
+        ToastComponent('You could only upload images.', 'error')
+      }
+    }
+  }
+  const modules = useMemo(
+    () => ({
+      toolbar: {
+        container: [
+          [{ header: [1, 2, 3, 4, 5, 6, false] }],
+          ['bold', 'italic', 'underline', 'strike'],
+          [{ list: 'ordered' }, { list: 'bullet' }, { indent: '-1' }, { indent: '+1' }],
+          ['image', 'link'],
+          [
+            {
+              color: [
+                '#000000',
+                '#e60000',
+                '#ff9900',
+                '#ffff00',
+                '#008a00',
+                '#0066cc',
+                '#9933ff',
+                '#ffffff',
+                '#facccc',
+                '#ffebcc',
+                '#ffffcc',
+                '#cce8cc',
+                '#cce0f5',
+                '#ebd6ff',
+                '#bbbbbb',
+                '#f06666',
+                '#ffc266',
+                '#ffff66',
+                '#66b966',
+                '#66a3e0',
+                '#c285ff',
+                '#888888',
+                '#a10000',
+                '#b26b00',
+                '#b2b200',
+                '#006100',
+                '#0047b2',
+                '#6b24b2',
+                '#444444',
+                '#5c0000',
+                '#663d00',
+                '#666600',
+                '#003700',
+                '#002966',
+                '#3d1466',
+              ],
+            },
+          ],
+        ],
+        handlers: {
+          image: imageHandler,
+        },
+      },
+    }),
+    [],
+  )
+  // Finish here
   return (
     <>
       <CForm className="row g-3" onSubmit={formik.handleSubmit}>
@@ -445,6 +527,19 @@ const EditForm = (props) => {
           {formik.errors.external_profile_label && formik.touched.external_profile_label && (
             <CFormFeedback invalid>{formik.errors.external_profile_label}</CFormFeedback>
           )}
+        </CCol>
+        <CCol md={12}>
+          <CFormLabel className="fw-bold" htmlFor="description">
+            Description
+          </CFormLabel>
+          <ReactQuill
+            theme="snow"
+            ref={quillRef}
+            value={value}
+            onChange={setValue}
+            modules={modules}
+            // style={{ border: '1px solid' }}
+          />
         </CCol>
         <CCol md={6}>
           <CLoadingButton type="submit" color="success" variant="outline" loading={loader}>

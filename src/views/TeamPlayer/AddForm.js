@@ -14,6 +14,7 @@ import ToastComponent from 'src/components/common/TaostComponent'
 import TeamPlayerService from 'src/service/TeamPlayerService'
 const AddForm = (props) => {
   const [loader, setLoader] = useState(false)
+  const [selectCleaner, setSelectCleaner] = useState(false)
   const validationSchema = Yup.object().shape({
     //player: Yup.string().required('Player is required'),
   })
@@ -42,6 +43,7 @@ const AddForm = (props) => {
             setLoader(false)
             setOptions(res.data)
             props.setPickedPlayer(data.picked_player)
+            setSelectCleaner(true)
           } else {
             setLoader(false)
             ToastComponent(res.message, 'error')
@@ -74,6 +76,7 @@ const AddForm = (props) => {
             name="player"
             onChange={handleChange}
             value={options.filter((obj) => selectedValue.includes(obj.value))}
+            hide={selectCleaner}
           />
 
           {formik.errors.player && formik.touched.player && (

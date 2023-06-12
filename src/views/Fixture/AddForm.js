@@ -17,13 +17,10 @@ import TeamService from 'src/service/TeamService'
 import { useNavigate } from 'react-router-dom'
 import ToastComponent from 'src/components/common/TaostComponent'
 const AddForm = (props) => {
-  const navigate = useNavigate()
   const [loader, setLoader] = useState(false)
   const [matchTypeList, setMatchTypeList] = useState()
   const [startDate, setStartDate] = useState('')
   const [endDate, setEndDate] = useState('')
-  const [startTime, setStartTime] = useState('23:45')
-  const [endTime, setEndTime] = useState()
   const [teamList, setTeamList] = useState([])
 
   const validationSchema = Yup.object().shape({
@@ -63,6 +60,8 @@ const AddForm = (props) => {
     onSubmit: (data, actions) => {
       data.start_date = startDate
       data.end_date = endDate
+      data.start_time = lockoutStartTime
+      data.end_time = lockoutEndTime
       // actions.resetForm({
       //   values: {
       //     grade: '',
@@ -74,7 +73,14 @@ const AddForm = (props) => {
           if (res.status === 200) {
             ToastComponent(res.message, 'success')
             setLoader(false)
-            navigate('/create-fixtures')
+            // props.setUsers(res.data)
+
+            props.setUsers((prevState) => {
+              return {
+                ...prevState.data,
+                data: res.data,
+              }
+            })
           } else {
             setLoader(false)
             ToastComponent(res.message, 'error')
@@ -88,20 +94,31 @@ const AddForm = (props) => {
     },
   })
   const handleStartDate = (event) => {
+    setMinEndDate(event)
     const dateFormat = moment(event).format('YYYY-MM-DD')
     setStartDate(dateFormat)
+    setEndDate('')
   }
   const handleEndDate = (event) => {
     const dateFormat = moment(event).format('YYYY-MM-DD')
     setEndDate(dateFormat)
   }
-  const handleStartTime = (event) => {
-    const dateFormat = moment(event, 'hh:mm A').format('HH:mm')
-    setStartTime(dateFormat)
+
+  const [minEndDate, setMinEndDate] = useState(new Date())
+  const todayDate = new Date()
+  const lastDate = minEndDate
+  const minDate = todayDate.setDate(todayDate.getDate() - 1)
+  const minasdasDate = lastDate.setDate(lastDate.getDate())
+
+  const [lockoutStartTime, setLockoutStartTime] = useState('')
+  const [lockoutEndTime, setLockoutEndTime] = useState('')
+  const handleLockoutStartTime = (event) => {
+    const dateFormat = moment(event, ['h:mm A']).format('HH:mm')
+    setLockoutStartTime(dateFormat)
   }
-  const handleEndTime = (event) => {
-    const dateFormat = moment(event, 'hh:mm A').format('HH:mm')
-    setEndTime(dateFormat)
+  const handleLockoutEndTime = (event) => {
+    const dateFormat = moment(event, ['h:mm A']).format('HH:mm')
+    setLockoutEndTime(dateFormat)
   }
   return (
     <>
@@ -164,13 +181,23 @@ const AddForm = (props) => {
             Start Date *
           </CFormLabel>
           <CDatePicker
+            date={startDate}
+            defaultValue={startDate}
+            className={formik.errors.start_date && formik.touched.start_date ? 'is-invalid' : ''}
             locale="en-US"
             name="start_date"
             placeholder={'Start Date'}
-            defaultValue={formik.values.start_date}
-            date={startDate}
-            onDateChange={handleStartDate}
-            popper={false}
+            onDateChange={(e) => {
+              handleStartDate(e)
+              formik.setTouched({
+                ...formik.touched,
+                start_date: true,
+              })
+              formik.setFieldValue('start_date', moment(e).format('YYYY-MM-DD'))
+            }}
+            format={'dd/MM/yyyy'}
+            minDate={todayDate}
+            cleaner={false}
           />
 
           {formik.errors.start_date && formik.touched.start_date && (
@@ -182,13 +209,24 @@ const AddForm = (props) => {
             End Date *
           </CFormLabel>
           <CDatePicker
+            date={endDate}
+            defaultValue={endDate}
+            className={formik.errors.end_date && formik.touched.end_date ? 'is-invalid' : ''}
             locale="en-US"
             name="end_date"
             placeholder={'End Date'}
-            defaultValue={formik.values.end_date}
-            date={endDate}
-            onDateChange={handleEndDate}
-            popper={false}
+            // onDateChange={handleEndDate}
+            onDateChange={(e) => {
+              handleEndDate(e)
+              formik.setTouched({
+                ...formik.touched,
+                end_date: true,
+              })
+              formik.setFieldValue('end_date', moment(e).format('YYYY-MM-DD'))
+            }}
+            format={'dd/MM/yyyy'}
+            cleaner={false}
+            minDate={minEndDate}
           />
 
           {formik.errors.end_date && formik.touched.end_date && (
@@ -200,15 +238,20 @@ const AddForm = (props) => {
             Start Time *
           </CFormLabel>
           <CTimePicker
-            locale="en-US"
-            ampm={false}
-            time={startTime}
-            name="start_time"
+            // locale="en-US"
+            value={lockoutEndTime}
             seconds={false}
-            defaultValue={formik.values.start_time}
-            placeholder={'Start Time'}
-            onTimeChange={handleStartTime}
-            id="start_time"
+            // onTimeChange={handleLockoutStartTime}
+            className={formik.errors.start_time && formik.touched.start_time ? 'is-invalid' : ''}
+            onTimeChange={(e) => {
+              handleLockoutStartTime(e)
+              formik.setTouched({
+                ...formik.touched,
+                start_time: true,
+              })
+              formik.setFieldValue('start_time', moment(e).format('YYYY-MM-DD'))
+            }}
+            // ampm={false}
           />
 
           {formik.errors.star_time && formik.touched.star_time && (
@@ -220,14 +263,19 @@ const AddForm = (props) => {
             End Time *
           </CFormLabel>
           <CTimePicker
+            className={formik.errors.end_time && formik.touched.end_time ? 'is-invalid' : ''}
             locale="en-US"
-            time={endTime}
-            ampm={false}
-            name="end_time"
+            value={lockoutEndTime}
             seconds={false}
-            placeholder={'End Time'}
-            defaultValue={formik.values.end_time}
-            onTimeChange={handleEndTime}
+            onTimeChange={(e) => {
+              handleLockoutEndTime(e)
+              formik.setTouched({
+                ...formik.touched,
+                end_time: true,
+              })
+              formik.setFieldValue('end_time', moment(e).format('YYYY-MM-DD'))
+            }}
+            // ampm={false}
           />
 
           {formik.errors.end_time && formik.touched.end_time && (

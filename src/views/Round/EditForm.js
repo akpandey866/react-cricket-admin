@@ -99,6 +99,7 @@ const EditForm = (props) => {
     console.log('after sleect', dateFormat)
     setLockoutEndTime(dateFormat)
   }
+
   return (
     <>
       <CForm className="row g-3" onSubmit={formik.handleSubmit}>
@@ -191,7 +192,7 @@ const EditForm = (props) => {
             cleaner={false}
             time={lockoutEndTime}
             value={lockoutEndTime}
-            seconds={false}
+            // seconds={false}
             // onTimeChange={handleLockoutStartTime}
             className={formik.errors.end_time && formik.touched.end_time ? 'is-invalid' : ''}
             onTimeChange={(e) => {

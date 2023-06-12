@@ -11,11 +11,9 @@ import React, { useEffect, useState } from 'react'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import PlayerService from 'src/service/PlayerService'
-import { useNavigate } from 'react-router-dom'
 import ToastComponent from 'src/components/common/TaostComponent'
 import PreviewImage from '../PreviewImage'
 const AddForm = (props) => {
-  const navigate = useNavigate()
   const [loader, setLoader] = useState(false)
 
   const [position, setPosition] = useState()
@@ -57,7 +55,6 @@ const AddForm = (props) => {
     })
   }, [])
 
-  console.log('playerExists', playerExists)
   const validationSchema = Yup.object().shape({
     first_name: Yup.string()
       .required('First is required')

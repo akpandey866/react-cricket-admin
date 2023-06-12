@@ -6,15 +6,13 @@ import {
   CFormLabel,
   CLoadingButton,
 } from '@coreui/react-pro'
-import React, { useState } from 'react'
+import React, { useMemo, useRef, useState } from 'react'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import ToastComponent from 'src/components/common/TaostComponent'
-import { EditorState, convertToRaw, ContentState, convertFromHTML } from 'draft-js'
-import { Editor } from 'react-draft-wysiwyg'
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
-import draftToHtml from 'draftjs-to-html'
 import GameNotificationservice from 'src/service/GameNotificationService'
+import ReactQuill from 'react-quill'
+import SponsorService from 'src/service/SponsorService'
 const AddForm = (props) => {
   const [loader, setLoader] = useState(false)
   const validationSchema = Yup.object().shape({
@@ -29,7 +27,7 @@ const AddForm = (props) => {
     enableReinitialize: true,
     validationSchema,
     onSubmit: (data) => {
-      data.message = description.htmlValue
+      data.message = value
       setLoader(true)
       GameNotificationservice.saveNotification(data)
         .then((res) => {
@@ -49,20 +47,89 @@ const AddForm = (props) => {
         })
     },
   })
-  const [description, setDescription] = useState({
-    htmlValue: '',
-    editorState: EditorState.createWithContent(
-      ContentState.createFromBlockArray(convertFromHTML('<p></p>')),
-    ),
-  })
-  const onEditorStateChange = (editorValue) => {
-    const editorStateInHtml = draftToHtml(convertToRaw(editorValue.getCurrentContent()))
 
-    setDescription({
-      htmlValue: editorStateInHtml,
-      editorState: editorValue,
-    })
+  // Editor code here.
+  const [value, setValue] = useState()
+  const quillRef = useRef()
+  const imageHandler = (e) => {
+    const editor = quillRef.current.getEditor()
+    console.log(editor)
+    const input = document.createElement('input')
+    input.setAttribute('type', 'file')
+    input.setAttribute('accept', 'image/*')
+    input.click()
+
+    input.onchange = async () => {
+      const file = input.files[0]
+      if (/^image\//.test(file.type)) {
+        const formData = new FormData()
+        formData.append('image', file)
+        const res = await SponsorService.imageUplaod(formData) // upload data into server or aws or cloudinary
+        const url = res?.url
+        editor.insertEmbed(editor.getSelection(), 'image', url)
+      } else {
+        ToastComponent('You could only upload images.', 'error')
+      }
+    }
   }
+  const modules = useMemo(
+    () => ({
+      toolbar: {
+        container: [
+          [{ header: [1, 2, 3, 4, 5, 6, false] }],
+          ['bold', 'italic', 'underline', 'strike'],
+          [{ list: 'ordered' }, { list: 'bullet' }, { indent: '-1' }, { indent: '+1' }],
+          ['image', 'link'],
+          [
+            {
+              color: [
+                '#000000',
+                '#e60000',
+                '#ff9900',
+                '#ffff00',
+                '#008a00',
+                '#0066cc',
+                '#9933ff',
+                '#ffffff',
+                '#facccc',
+                '#ffebcc',
+                '#ffffcc',
+                '#cce8cc',
+                '#cce0f5',
+                '#ebd6ff',
+                '#bbbbbb',
+                '#f06666',
+                '#ffc266',
+                '#ffff66',
+                '#66b966',
+                '#66a3e0',
+                '#c285ff',
+                '#888888',
+                '#a10000',
+                '#b26b00',
+                '#b2b200',
+                '#006100',
+                '#0047b2',
+                '#6b24b2',
+                '#444444',
+                '#5c0000',
+                '#663d00',
+                '#666600',
+                '#003700',
+                '#002966',
+                '#3d1466',
+              ],
+            },
+          ],
+        ],
+        handlers: {
+          image: imageHandler,
+        },
+      },
+    }),
+    [],
+  )
+
   return (
     <>
       <CForm className="row g-3" onSubmit={formik.handleSubmit}>
@@ -88,11 +155,13 @@ const AddForm = (props) => {
           <CFormLabel className="fw-bold" htmlFor="message">
             Message
           </CFormLabel>
-          <Editor
-            toolbarHidden={false}
-            editorState={description.editorState}
-            onEditorStateChange={onEditorStateChange}
-            editorStyle={{ border: '1px solid', height: '150px' }}
+          <ReactQuill
+            theme="snow"
+            ref={quillRef}
+            value={value}
+            onChange={setValue}
+            modules={modules}
+            // style={{ border: '1px solid' }}
           />
           {formik.errors.title && formik.touched.title && (
             <CFormFeedback invalid>{formik.errors.title}</CFormFeedback>

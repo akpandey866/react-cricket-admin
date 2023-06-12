@@ -11,26 +11,13 @@ import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import SponsorService from 'src/service/SponsorService'
 import ToastComponent from 'src/components/common/TaostComponent'
-import { EditorState, convertToRaw, ContentState, convertFromHTML } from 'draft-js'
-import draftToHtml from 'draftjs-to-html'
-import { Editor } from 'react-draft-wysiwyg'
 import PreviewImage from '../PreviewImage'
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
-const AddForm = (props) => {
-  const [description, setDescription] = useState({
-    htmlValue: '',
-    editorState: EditorState.createWithContent(
-      ContentState.createFromBlockArray(convertFromHTML('<p></p>')),
-    ),
-  })
-  const onEditorStateChange = (editorValue) => {
-    const editorStateInHtml = draftToHtml(convertToRaw(editorValue.getCurrentContent()))
+import ReactQuill from 'react-quill'
+import 'react-quill/dist/quill.snow.css'
+import { useRef } from 'react'
+import { useMemo } from 'react'
 
-    setDescription({
-      htmlValue: editorStateInHtml,
-      editorState: editorValue,
-    })
-  }
+const AddForm = (props) => {
   const [loader, setLoader] = useState(false)
   const SUPPORTED_FORMATS = ['image/jpg', 'image/png', 'image/jpeg', 'image/gif']
   const validationSchema = Yup.object().shape({
@@ -70,7 +57,7 @@ const AddForm = (props) => {
       formData.append('facebook', data.facebook)
       formData.append('twitter', data.twitter)
       formData.append('instagram', data.instagram)
-      formData.append('about', description.htmlValue)
+      formData.append('about', value)
       formData.append('image', data.image)
       setLoader(true)
       SponsorService.saveSponsor(formData)
@@ -90,6 +77,89 @@ const AddForm = (props) => {
         })
     },
   })
+
+  // Editor code here.
+  const [value, setValue] = useState()
+  const quillRef = useRef()
+  const imageHandler = (e) => {
+    const editor = quillRef.current.getEditor()
+    console.log(editor)
+    const input = document.createElement('input')
+    input.setAttribute('type', 'file')
+    input.setAttribute('accept', 'image/*')
+    input.click()
+
+    input.onchange = async () => {
+      const file = input.files[0]
+      if (/^image\//.test(file.type)) {
+        const formData = new FormData()
+        formData.append('image', file)
+        const res = await SponsorService.imageUplaod(formData) // upload data into server or aws or cloudinary
+        const url = res?.url
+        editor.insertEmbed(editor.getSelection(), 'image', url)
+      } else {
+        ToastComponent('You could only upload images.', 'error')
+      }
+    }
+  }
+  const modules = useMemo(
+    () => ({
+      toolbar: {
+        container: [
+          [{ header: [1, 2, 3, 4, 5, 6, false] }],
+          ['bold', 'italic', 'underline', 'strike'],
+          [{ list: 'ordered' }, { list: 'bullet' }, { indent: '-1' }, { indent: '+1' }],
+          ['image', 'link'],
+          [
+            {
+              color: [
+                '#000000',
+                '#e60000',
+                '#ff9900',
+                '#ffff00',
+                '#008a00',
+                '#0066cc',
+                '#9933ff',
+                '#ffffff',
+                '#facccc',
+                '#ffebcc',
+                '#ffffcc',
+                '#cce8cc',
+                '#cce0f5',
+                '#ebd6ff',
+                '#bbbbbb',
+                '#f06666',
+                '#ffc266',
+                '#ffff66',
+                '#66b966',
+                '#66a3e0',
+                '#c285ff',
+                '#888888',
+                '#a10000',
+                '#b26b00',
+                '#b2b200',
+                '#006100',
+                '#0047b2',
+                '#6b24b2',
+                '#444444',
+                '#5c0000',
+                '#663d00',
+                '#666600',
+                '#003700',
+                '#002966',
+                '#3d1466',
+              ],
+            },
+          ],
+        ],
+        handlers: {
+          image: imageHandler,
+        },
+      },
+    }),
+    [],
+  )
+  // Finish here
   return (
     <>
       <CForm className="row g-3" onSubmit={formik.handleSubmit}>
@@ -126,6 +196,9 @@ const AddForm = (props) => {
             aria-label="website"
             id="website"
           />
+          <small>
+            <i> (Ex: https://www.myclubtap.com)</i>
+          </small>
           {formik.errors.website && formik.touched.website && (
             <CFormFeedback invalid>{formik.errors.website}</CFormFeedback>
           )}
@@ -145,6 +218,9 @@ const AddForm = (props) => {
             aria-label="facebook"
             id="facebook"
           />
+          <small>
+            <i> (Ex: https://www.facebook.com/myclubtap)</i>
+          </small>
           {formik.errors.facebook && formik.touched.facebook && (
             <CFormFeedback invalid>{formik.errors.facebook}</CFormFeedback>
           )}
@@ -164,6 +240,9 @@ const AddForm = (props) => {
             aria-label="twitter"
             id="twitter"
           />
+          <small>
+            <i> (Ex: https://www.twitter.com/myclubtap)</i>
+          </small>
           {formik.errors.twitter && formik.touched.twitter && (
             <CFormFeedback invalid>{formik.errors.twitter}</CFormFeedback>
           )}
@@ -183,6 +262,9 @@ const AddForm = (props) => {
             aria-label="instagram"
             id="instagram"
           />
+          <small>
+            <i> (Ex: https://www.instagram.com/myclubtap)</i>
+          </small>
           {formik.errors.instagram && formik.touched.instagram && (
             <CFormFeedback invalid>{formik.errors.instagram}</CFormFeedback>
           )}
@@ -228,11 +310,13 @@ const AddForm = (props) => {
           <CFormLabel className="fw-bold" htmlFor="Entry Fee Info">
             About
           </CFormLabel>
-          <Editor
-            toolbarHidden={false}
-            editorState={description.editorState}
-            onEditorStateChange={onEditorStateChange}
-            editorStyle={{ border: '1px solid', height: '150px' }}
+          <ReactQuill
+            theme="snow"
+            ref={quillRef}
+            value={value}
+            onChange={setValue}
+            modules={modules}
+            style={{ border: '1px solid' }}
           />
         </CCol>
         <CCol md={6}>
